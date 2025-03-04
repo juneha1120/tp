@@ -317,9 +317,50 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1.  Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
-2.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-3.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+**Data Requirements**
+1. Persistency: All user data, including contacts, events, and notes, must be stored locally in a human-editable text file.
+2. Data Size: The application should efficiently handle up to 10,000 contacts and 50,000 event entries without noticeable performance degradation.
+3. Data Volatility: Changes to data should be saved immediately upon execution of commands to prevent data loss.
+
+**Environment Requirements**
+1. Platform Independence: The application should run on Windows, macOS, and Linux without requiring platform-specific modifications.
+2. Java Compatibility: The application must be compatible with Java 17 and should not require any additional dependencies beyond those included in the JAR package.
+3. Portability: The application should function without an installation process and be packaged as a single executable JAR file.
+4. Resolution Compatibility: The GUI (if present) should work seamlessly at 1920x1080 and 125% scaling and remain usable at 1280x720 and 150% scaling.
+
+**Accessibility & Usability**
+1. Typing-Optimised: The application must prioritise CLI-based input to cater to users who type fast, allowing all actions to be performed through text commands.
+2. Minimal GUI Elements: If a GUI is implemented, it should primarily provide visual feedback rather than serve as the primary input method.
+3. Learnability: The application should provide a quick-start tutorial that allows new users to become proficient within 10 minutes.
+   
+**Performance Requirements**
+1. Response Time: Commands should execute within 500ms under normal operation (10,000 contacts, 50,000 event entries).
+2. Memory Usage: The application should not exceed 200MB of RAM usage during peak operations.
+3. Startup Time: The application should launch and be ready for use within 2 seconds on a modern system (Intel i5 8th Gen, 8GB RAM, SSD).
+   
+**Security & Privacy**
+1. Data Confidentiality: User data must remain local and should not be transmitted over the internet.
+2. No External Storage: The application should not rely on remote servers for storage or functionality.
+3. User Control: Users should have complete control over their data, with the ability to edit, back up, and delete it manually.
+   
+**Maintainability & Extensibility**
+1. Modular Codebase: The system should follow Object-Oriented Programming principles to facilitate maintainability.
+2. Incremental Development: Features should be added in small, working increments to ensure continuous functionality.
+3. Extensibility: New features should be implementable without breaking existing functionality, following Open/Closed Principle (OCP).
+   
+**Reliability & Fault Tolerance**
+1. Error Handling: The application should provide meaningful error messages for invalid user input.
+2. Fault Recovery: The application should automatically recover from crashes by restoring the last saved state.
+3. Data Integrity: Data should not be corrupted even in the event of an unexpected shutdown.
+   
+**Testability**
+1. Automated Testing: The application should support unit and integration testing to ensure correctness.
+2. Manual Testing Feasibility: The application should be testable by peer testers without requiring complex setups.
+3. Regression Prevention: Existing functionalities should remain functional after new feature additions.
+   
+**Scalability & Stability**
+1. Scalability: The application should handle an increasing number of contacts and events without performance degradation.
+2. Stability: The application should function without crashes or major bugs under normal operating conditions.
 
 *{More to be added}*
 
