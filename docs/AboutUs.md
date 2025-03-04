@@ -11,13 +11,22 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ### Ha Jiwoon
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/juneha1120.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/juneha1120)]
+[[portfolio](team/juneha1120.md)]
 
 * Role: Project Advisor
+
+### Zhang Jikun
+
+<img src="images/caando.png" width="200px">
+
+[[github](http://github.com/caando)]
+[[portfolio](team/caando.md)]
+
+* Role: Code Monkey
+* Responsibilities: Code
 
 ### Arshin Sikka
 
@@ -29,16 +38,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data Management
 
-### Arshin Sikka
-
-<img src="images/arshinsikka.png" width="200px">
-
-[[github](http://github.com/arshinsikka)]
-[[portfolio](team/arshinsikka.md)]
-
-* Role: Developer
-* Responsibilities: Data Manage
 
 
+### Chen Fan
 
+<img src="images/chi-me.png" width="200px">
 
+[[github](http://github.com/chi-me)]
+[[portfolio](team/chi-me.md)]
+
+* Role: Coder
+* Responsibilities: Code
