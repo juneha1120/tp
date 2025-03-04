@@ -326,7 +326,10 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Glossary
 
 * **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Private contact detail**: A contact detail that is not meant to be shared with others
+* **Contact**: A contact detail that usually contains a name, phone number, email address and mailing address
+* **Event**: An event with a starting datetime, ending datetime, a description, and optionally an associated contact
+* **Note**: Additional information that must be associated to a either a contact or an event
+* **Tag**: A short phrase that describes a contact
 
 --------------------------------------------------------------------------------------------------------------------
 
