@@ -48,12 +48,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Dev Ops + Threading
 
-### James Doe
+### Chen Fan
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/chi-me.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/chi-me)]
+[[portfolio](team/chi-me.md)]
 
-* Role: Developer
-* Responsibilities: UI
+* Role: Coder
+* Responsibilities: Code
