@@ -9,25 +9,24 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 ## Project team
 
-### John Doe
+### Ha Jiwoon
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/juneha1120.png" width="200px">
 
-[[homepage](http://www.comp.nus.edu.sg/~damithch)]
-[[github](https://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](https://github.com/juneha1120)]
+[[portfolio](team/juneha1120.md)]
 
 * Role: Project Advisor
 
-### Jane Doe
+### Zhang Jikun
 
-<img src="images/johndoe.png" width="200px">
+<img src="images/caando.png" width="200px">
 
-[[github](http://github.com/johndoe)]
-[[portfolio](team/johndoe.md)]
+[[github](http://github.com/caando)]
+[[portfolio](team/caando.md)]
 
-* Role: Team Lead
-* Responsibilities: UI
+* Role: Code Monkey
+* Responsibilities: Code
 
 ### Arshin Sikka
 
@@ -39,6 +38,12 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 * Role: Developer
 * Responsibilities: Data Management
 
+### Chen Fan
 
+<img src="images/chi-me.png" width="200px">
 
+[[github](http://github.com/chi-me)]
+[[portfolio](team/chi-me.md)]
 
+* Role: Coder
+* Responsibilities: Code
