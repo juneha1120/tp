@@ -325,11 +325,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Glossary
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Contact**: A contact detail that usually contains a name, phone number, email address and mailing address
-* **Event**: An event with a starting datetime, ending datetime, a description, and optionally an associated contact
-* **Note**: Additional information that must be associated to a either a contact or an event
-* **Tag**: A short phrase that describes a contact
+**Glossary**
+
+* **Command** A textual input used to execute a specific function within the application.
+* **Mainstream OS** Operating systems commonly used, such as Windows, Linux, Unix, and macOS.
+* **Contact** A contact entry that usually contains a name, phone number, email address, and mailing address.
+* **Event** An occurrence with a starting datetime, ending datetime, description, and optionally an associated contact.
+* **Note** Additional information that must be associated with either a contact or an event.
+* **Tag** A short phrase that describes a contact.
+* **Duplicate Handling** A system mechanism that ensures contacts with identical names, emails, and phone numbers are not duplicated.
+* **Error Message** A notification displayed when an invalid input or operation is attempted.
+* **Indexing** A numerical representation of items in a list to help users select a specific entry.
+* **Parameter** A required or optional input that modifies the behavior of a command.
+* **Pagination** A method of displaying large lists in smaller, more manageable sections.
+* **Sorting** Arranging displayed contacts in a specified order, such as alphabetically.
 
 --------------------------------------------------------------------------------------------------------------------
 
