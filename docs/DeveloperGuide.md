@@ -262,9 +262,13 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* business owners and startup founders
-* seeking to manage and track relationships 
-* with clients and investors, streamline follow-ups, and efficiently organise events.
+* is business owner/startup founder
+* needs to manage and track contacts of clients and investors
+* needs to manage and track events with clients and investors
+* prefer desktop apps over other types
+* can type fast
+* prefers typing to mouse interactions
+* is reasonably comfortable using CLI apps
 
 **Value proposition**: A fast, local-first tool for business owners to track contacts and events. It centralises key business information, streamlining workflows, improving decision-making, and enhancing productivity with intuitive features for logging interactions, scheduling events, and accessing notes—whether in the office or on the move.
 
