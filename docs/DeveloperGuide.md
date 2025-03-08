@@ -262,29 +262,55 @@ _{Explain here how the data archiving feature will be implemented}_
 
 **Target user profile**:
 
-* has a need to manage a significant number of contacts
+* is business owner/startup founder
+* needs to manage and track contacts of clients and investors
+* needs to manage and track events with clients and investors
 * prefer desktop apps over other types
 * can type fast
 * prefers typing to mouse interactions
 * is reasonably comfortable using CLI apps
 
-**Value proposition**: manage contacts faster than a typical mouse/GUI driven app
-
+**Value proposition**: A fast, local-first tool for business owners to track contacts and events. It centralises key business information, streamlining workflows, improving decision-making, and enhancing productivity with intuitive features for logging interactions, scheduling events, and accessing notes—whether in the office or on the move.
 
 ### User stories
 
-Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unlikely to have) - `*`
-
-| Priority | As a …​                                    | I want to …​                     | So that I can…​                                                        |
-| -------- | ------------------------------------------ | ------------------------------ | ---------------------------------------------------------------------- |
-| `* * *`  | new user                                   | see usage instructions         | refer to instructions when I forget how to use the App                 |
-| `* * *`  | user                                       | add a new person               |                                                                        |
-| `* * *`  | user                                       | delete a person                | remove entries that I no longer need                                   |
-| `* * *`  | user                                       | find a person by name          | locate details of persons without having to go through the entire list |
-| `* *`    | user                                       | hide private contact details   | minimize chance of someone else seeing them by accident                |
-| `*`      | user with many persons in the address book | sort persons by name           | locate a person easily                                                 |
-
-*{More to be added}*
+| Priority | As a            | I can...                                                 | So that I can                                                   |
+|----------|-----------------|----------------------------------------------------------|-----------------------------------------------------------------|
+| * * *    | Potential user  | see the system populated with placeholder data           | see how it works before fully committing                        |
+| * * *    | Potential user  | receive guided prompts                                   | understand the main features of the tool                        |
+| * * *    | Potential user  | interact with a chatbot for my queries                   | clarify doubts before committing                                |
+| * * *    | Potential user  | browse through a feature overview                        | understand the main features of the tool                        |
+| * * *    | Potential user  | read a clear and concise value proposition               | understand how this tool benefits my business                   |
+| * * *    | New user        | follow a "Getting Started" checklist                     | complete key setup steps efficiently                            |
+| * * *    | New user        | import my existing contacts                              | avoid having to manually enter each one                         |
+| * * *    | New user        | go through a tutorial mode                               | understand the basics quickly                                   |
+| * * *    | New user        | access a help center or FAQs within the app              | find answers without leaving the tool                           |
+| * * *    | New user        | reset my data if I make mistakes during my initial setup | start fresh if needed                                           |
+| * * *    | New user        | explore example use cases                                | learn how others use the tool                                   |
+| * * *    | 2nd time user   | categorize contacts into clients, investors and partners | manage them separately                                          |
+| * * *    | 2nd time user   | filter the contacts based on tags                        | see the contacts that im interested in                          |
+| * * *    | 2nd time user   | add and edit client details                              | keep my contact list up to date                                 |
+| * *      | 2nd time user   | attachs notes to contacts                                | keep my contact list up to date                                 |
+| * *      | 2nd time user   | customize fields for contact information                 | store only data relevant to business needs                      |
+| * *      | 10th time user  | mark contact priority                                    | quickly identify my most important clients                      |
+| * *      | 10th time user  | merge duplicated contacts                                | keep my contacts clean and organized                            |
+| * *      | 10th time user  | archive inactive contacts                                | active contacts remains relevant                                |
+| * * *    | 10th time user  | log interactions (calls, emails, meetings) with contacts | track communication history                                     |
+| * * *    | 10th time user  | set follow up remainders after interactions              | avoid forgetting to check in                                    |
+| * * *    | 10th time user  | search interactions by keyword                           | find details in past conversations                              |
+| * *      | 10th time user  | tag interactions with custom labels                      | organize them effectively                                       |
+| * * *    | 10th time user  | set reminders for events                                 | never miss important meetings                                   |
+| * * *    | 10th time user  | receive reminders for pending tasks related to contacts  | stay on top of to-dos                                           |
+| *        | 10th time user  | categorize contacts by industry or company size          | tailer my communication approach based on business type         |
+| *        | 100th time user | generate reports on client interactions                  | analyze engagement trends                                       |
+| *        | 100th time user | track conversion rates from leads to clients             | measure business growth                                         |
+| *        | 100th time user | receive automated insights on neglected contacts         | re-engage them                                                  |
+| * *      | 100th time user | create customizable dashboards                           | focus on the metrics that matter                                |
+| *        | 100th time user | shortcuts for frequently performed tasks                 | work more efficiently                                           |
+| *        | 100th time user | batch process multiple contacts                          | save time on repetitive tasks                                   |
+| *        | 100th time user | automate follow-ups                                      | streamline client engagement                                    |
+| * *      | 100th time user | export my contacts, events and interaction history       | share or back up my data                                        |
+| * *      | 100th time user | receive notifications for important client anniversaries | strengthen client relationships through personalized engagement |
 
 ### Use cases
 
