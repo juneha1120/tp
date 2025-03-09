@@ -316,6 +316,77 @@ _{Explain here how the data archiving feature will be implemented}_
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
+**Use case: Add a tag to a person**
+
+**MSS**
+1. User requests to list persons.
+2. AddressBook shows a list of persons.
+3. User requests to add a tag to a specific person in the list.
+4. AddressBook adds the tag to the person.
+
+   Use case ends.
+
+**Extensions**
+- 2a. The list is empty.
+    - Use case ends.
+
+- 3a. The given index is invalid.
+    - 3a1. AddressBook shows an error message.
+    - Use case resumes at step 2.
+
+- 3b. The tag already exists.
+    - 3b1. AddressBook shows a message that the tag is already assigned.
+    - Use case resumes at step 2.
+
+**Use case: View all contacts**
+
+**MSS**
+1. User requests to view all contacts.
+2. AddressBook displays all saved contacts.
+
+   Use case ends.
+
+**Extensions**
+- 2a. The list is empty.
+    - 2a1. AddressBook shows a message: "No contacts found."
+    - Use case ends.
+
+Use case: Edit a contact
+
+MSS (Main Success Scenario):
+
+User requests to list all contacts.
+
+AddressBook displays the list of contacts.
+
+User requests to edit a specific contact in the list, specifying the new details.
+
+AddressBook updates the contact's details.
+
+AddressBook displays a confirmation message.
+
+Use case ends.
+
+Extensions:
+
+2a. The list is empty.
+
+2a1. AddressBook shows a message: "No contacts found."
+Use case ends.
+3a. The specified contact index is invalid.
+
+3a1. AddressBook shows an error message: "Invalid contact index. Please enter a valid number."
+Use case resumes at step 2.
+3b. The new details are the same as the existing details.
+
+3b1. AddressBook shows a message: "No changes detected. Contact remains unchanged."
+Use case ends.
+3c. The new details contain invalid inputs (e.g., incorrect phone format, missing required fields).
+
+3c1. AddressBook shows an error message specifying the issue.
+Use case resumes at step 2.
+
+
 **Use case: Delete a person**
 
 **MSS**
