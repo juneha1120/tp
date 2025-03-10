@@ -316,45 +316,49 @@ _{Explain here how the data archiving feature will be implemented}_
 
 (For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
 
-**Use case: Add a tag to a person**
+Use case: Add a tag to a person
 
-**MSS**
-1. User requests to list persons.
-2. AddressBook shows a list of persons.
-3. User requests to add a tag to a specific person in the list.
-4. AddressBook adds the tag to the person.
+MSS (Main Success Scenario)
+User requests to list persons.
 
-   Use case ends.
+AddressBook shows a list of persons.
 
-**Extensions**
-- 2a. The list is empty.
-    - Use case ends.
+User requests to add a tag to a specific person in the list.
 
-- 3a. The given index is invalid.
-    - 3a1. AddressBook shows an error message.
-    - Use case resumes at step 2.
+AddressBook adds the tag to the person.
 
-- 3b. The tag already exists.
-    - 3b1. AddressBook shows a message that the tag is already assigned.
-    - Use case resumes at step 2.
+Use case ends.
 
-**Use case: View all contacts**
+Extensions
+2a. The list is empty.
 
-**MSS**
-1. User requests to view all contacts.
-2. AddressBook displays all saved contacts.
+2a1. Use case ends.
+3a. The given index is invalid.
 
-   Use case ends.
+3a1. AddressBook shows an error message.
+Use case resumes at step 2.
+3b. The tag already exists.
 
-**Extensions**
-- 2a. The list is empty.
-    - 2a1. AddressBook shows a message: "No contacts found."
-    - Use case ends.
+3b1. AddressBook shows a message that the tag is already assigned.
+Use case resumes at step 2.
+
+Use case: View all contacts
+
+MSS (Main Success Scenario)
+User requests to view all contacts.
+
+AddressBook displays all saved contacts.
+
+Use case ends.
+
+Extensions
+2a. The contact list is empty.
+2a1. AddressBook shows a message: "No contacts found."
+Use case ends.
 
 Use case: Edit a contact
 
-MSS (Main Success Scenario):
-
+MSS (Main Success Scenario)
 User requests to list all contacts.
 
 AddressBook displays the list of contacts.
@@ -367,9 +371,8 @@ AddressBook displays a confirmation message.
 
 Use case ends.
 
-Extensions:
-
-2a. The list is empty.
+Extensions
+2a. The contact list is empty.
 
 2a1. AddressBook shows a message: "No contacts found."
 Use case ends.
@@ -387,28 +390,27 @@ Use case ends.
 Use case resumes at step 2.
 
 
-**Use case: Delete a person**
+Use case: Delete a person
 
-**MSS**
+MSS (Main Success Scenario)
+User requests to list persons.
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+AddressBook shows a list of persons.
 
-    Use case ends.
+User requests to delete a specific person in the list.
 
-**Extensions**
+AddressBook deletes the person.
 
-* 2a. The list is empty.
+Use case ends.
 
-  Use case ends.
+Extensions
+2a. The contact list is empty.
 
-* 3a. The given index is invalid.
+2a1. Use case ends.
+3a. The given index is invalid.
 
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
+3a1. AddressBook shows an error message.
+Use case resumes at step 2.
 
 *{More to be added}*
 
