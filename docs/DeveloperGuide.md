@@ -312,57 +312,6 @@ _{Explain here how the data archiving feature will be implemented}_
 | * *      | 100th time user | export my contacts, events and interaction history       | share or back up my data                                        |
 | * *      | 100th time user | receive notifications for important client anniversaries | strengthen client relationships through personalized engagement |
 
-### Use cases
-
-Here is the **correctly formatted** version of the **Use Cases** section for `DeveloperGuide.md` that maintains proper bold formatting, consistent numbering, and indentation.
-
-<<<<<<< HEAD
-Use case: Add a tag to a person
-
-MSS (Main Success Scenario)
-User requests to list persons.
-
-AddressBook shows a list of persons.
-
-User requests to add a tag to a specific person in the list.
-
-AddressBook adds the tag to the person.
-
-Use case ends.
-
-Extensions
-2a. The list is empty.
-
-2a1. Use case ends.
-3a. The given index is invalid.
-
-3a1. AddressBook shows an error message.
-Use case resumes at step 2.
-3b. The tag already exists.
-
-3b1. AddressBook shows a message that the tag is already assigned.
-Use case resumes at step 2.
-
-Use case: View all contacts
-
-MSS (Main Success Scenario)
-User requests to view all contacts.
-
-AddressBook displays all saved contacts.
-
-Use case ends.
-
-Extensions
-2a. The contact list is empty.
-2a1. AddressBook shows a message: "No contacts found."
-Use case ends.
-=======
----
-
-### **Conflict Resolution for Use Cases in Developer Guide**
-Below is the **corrected** and **properly formatted** version of the **Use Cases** section after resolving merge conflicts.
-
----
 
 ## **Use Cases**
 
