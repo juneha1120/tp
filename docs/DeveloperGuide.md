@@ -312,11 +312,6 @@ _{Explain here how the data archiving feature will be implemented}_
 | * *      | 100th time user | export my contacts, events and interaction history       | share or back up my data                                        |
 | * *      | 100th time user | receive notifications for important client anniversaries | strengthen client relationships through personalized engagement |
 
-### Use cases
-
-Here is the **correctly formatted** version of the **Use Cases** section for `DeveloperGuide.md` that maintains proper bold formatting, consistent numbering, and indentation.
-
----
 
 ## **Use Cases**
 
@@ -392,7 +387,6 @@ Here is the **correctly formatted** version of the **Use Cases** section for `De
     - **3c1.** TrackUp shows an error message specifying the issue.
     - **Use case resumes at step 2.**
 
----
 
 ### **Use Case: Delete a Contact**
 
@@ -413,6 +407,7 @@ Here is the **correctly formatted** version of the **Use Cases** section for `De
     - **3a1.** TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
     - **Use case resumes at step 2.**
 
+---
 
 *{More to be added}*
 
