@@ -314,101 +314,105 @@ _{Explain here how the data archiving feature will be implemented}_
 
 ### Use cases
 
-(For all use cases below, the **System** is the `AddressBook` and the **Actor** is the `user`, unless specified otherwise)
+Here is the **correctly formatted** version of the **Use Cases** section for `DeveloperGuide.md` that maintains proper bold formatting, consistent numbering, and indentation.
 
-**Use case: Add a tag to a person**
+---
 
-**MSS**
-1. User requests to list persons.
-2. AddressBook shows a list of persons.
-3. User requests to add a tag to a specific person in the list.
-4. AddressBook adds the tag to the person.
+## **Use Cases**
 
-   Use case ends.
+*(For all use cases below, the **System** is `TrackUp`, and the **Actor** is the `User`, unless specified otherwise.)*
 
-**Extensions**
-- 2a. The list is empty.
-    - Use case ends.
+---
 
-- 3a. The given index is invalid.
-    - 3a1. AddressBook shows an error message.
-    - Use case resumes at step 2.
+### **Use Case: Add a Tag to a Contact**
 
-- 3b. The tag already exists.
-    - 3b1. AddressBook shows a message that the tag is already assigned.
-    - Use case resumes at step 2.
+#### **Main Success Scenario (MSS)**
+1. **User requests to list contacts.**
+2. **TrackUp displays a list of contacts.**
+3. **User requests to add a tag to a specific contact in the list.**
+4. **TrackUp adds the tag to the contact and displays a confirmation message.**
 
-**Use case: View all contacts**
+   **Use case ends.**
 
-**MSS**
-1. User requests to view all contacts.
-2. AddressBook displays all saved contacts.
+#### **Extensions**
+- **2a.** The contact list is empty.
+    - **2a1.** TrackUp shows: `"No contacts found."`
+    - **Use case ends.**
 
-   Use case ends.
+- **3a.** The specified contact index is invalid.
+    - **3a1.** TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
+    - **Use case resumes at step 2.**
 
-**Extensions**
-- 2a. The list is empty.
-    - 2a1. AddressBook shows a message: "No contacts found."
-    - Use case ends.
+- **3b.** The tag already exists.
+    - **3b1.** TrackUp shows a message: `"This tag is already assigned to the contact."`
+    - **Use case resumes at step 2.**
 
-Use case: Edit a contact
+---
 
-MSS (Main Success Scenario):
+### **Use Case: View All Contacts**
 
-User requests to list all contacts.
+#### **Main Success Scenario (MSS)**
+1. **User requests to view all contacts.**
+2. **TrackUp displays all saved contacts.**
 
-AddressBook displays the list of contacts.
+   **Use case ends.**
 
-User requests to edit a specific contact in the list, specifying the new details.
+#### **Extensions**
+- **2a.** The contact list is empty.
+    - **2a1.** TrackUp shows a message: `"No contacts found."`
+    - **Use case ends.**
 
-AddressBook updates the contact's details.
+---
 
-AddressBook displays a confirmation message.
+### **Use Case: Edit a Contact**
 
-Use case ends.
+#### **Main Success Scenario (MSS)**
+1. **User requests to list all contacts.**
+2. **TrackUp displays the list of contacts.**
+3. **User requests to edit a specific contact in the list, specifying the new details.**
+4. **TrackUp updates the contact's details.**
+5. **TrackUp displays a confirmation message.**
 
-Extensions:
+   **Use case ends.**
 
-2a. The list is empty.
+#### **Extensions**
+- **2a.** The contact list is empty.
+    - **2a1.** TrackUp shows a message: `"No contacts found."`
+    - **Use case ends.**
 
-2a1. AddressBook shows a message: "No contacts found."
-Use case ends.
-3a. The specified contact index is invalid.
+- **3a.** The specified contact index is invalid.
+    - **3a1.** TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
+    - **Use case resumes at step 2.**
 
-3a1. AddressBook shows an error message: "Invalid contact index. Please enter a valid number."
-Use case resumes at step 2.
-3b. The new details are the same as the existing details.
+- **3b.** The new details are the same as the existing details.
+    - **3b1.** TrackUp shows a message: `"No changes detected. Contact remains unchanged."`
+    - **Use case ends.**
 
-3b1. AddressBook shows a message: "No changes detected. Contact remains unchanged."
-Use case ends.
-3c. The new details contain invalid inputs (e.g., incorrect phone format, missing required fields).
+- **3c.** The new details contain invalid inputs (e.g., incorrect phone format, missing required fields).
+    - **3c1.** TrackUp shows an error message specifying the issue.
+    - **Use case resumes at step 2.**
 
-3c1. AddressBook shows an error message specifying the issue.
-Use case resumes at step 2.
+---
 
+### **Use Case: Delete a Contact**
 
-**Use case: Delete a person**
+#### **Main Success Scenario (MSS)**
+1. **User requests to list contacts.**
+2. **TrackUp displays a list of contacts.**
+3. **User requests to delete a specific contact in the list.**
+4. **TrackUp deletes the contact and displays a confirmation message.**
 
-**MSS**
+   **Use case ends.**
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+#### **Extensions**
+- **2a.** The contact list is empty.
+    - **2a1.** TrackUp shows: `"No contacts found."`
+    - **Use case ends.**
 
-    Use case ends.
+- **3a.** The given index is invalid.
+    - **3a1.** TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
+    - **Use case resumes at step 2.**
 
-**Extensions**
-
-* 2a. The list is empty.
-
-  Use case ends.
-
-* 3a. The given index is invalid.
-
-    * 3a1. AddressBook shows an error message.
-
-      Use case resumes at step 2.
 
 *{More to be added}*
 
