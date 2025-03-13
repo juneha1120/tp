@@ -18,7 +18,7 @@ public class HelpCommand extends Command {
             + "- delete: Removes a contact\n"
             + "- list: Displays stored contacts";
 
-    private String SHOWING_COMMAND_MESSAGE = "";
+    private String showingCommandMessage = "";
     /**
      * Creates an HelpCommand
      */
@@ -35,13 +35,13 @@ public class HelpCommand extends Command {
         String message = "Command:" + command
                 + "\nUsage:" + usage
                 + "\nDescription:" + description;
-        this.SHOWING_COMMAND_MESSAGE = message;
+        this.showingCommandMessage = message;
     }
 
     @Override
     public CommandResult execute(Model model) {
-        if (!SHOWING_COMMAND_MESSAGE.isEmpty()) {
-            return new CommandResult(SHOWING_COMMAND_MESSAGE, true, false);
+        if (!showingCommandMessage.isEmpty()) {
+            return new CommandResult(showingCommandMessage, true, false);
         }
         return new CommandResult(SHOWING_HELP_MESSAGE, true, false);
     }
