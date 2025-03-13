@@ -1,5 +1,7 @@
 package seedu.address.logic.parser;
 
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,6 +9,8 @@ import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
 
 /**
  * Parses input arguments and creates a new HelpCommand object
@@ -19,7 +23,7 @@ public class HelpCommandParser implements Parser<HelpCommand> {
      * Parses the given {@code String} of arguments in the context of the HelpCommand
      * and returns a HelpCommand object for execution.
      */
-    public HelpCommand parse(String args) {
+    public HelpCommand parse(String args) throws ParseException {
 
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
@@ -43,7 +47,7 @@ public class HelpCommandParser implements Parser<HelpCommand> {
                     "Lists out the contact in the database with optional category.");
 
         default:
-            return new HelpCommand();
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE));
         }
     }
 
