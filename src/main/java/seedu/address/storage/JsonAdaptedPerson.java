@@ -61,7 +61,7 @@ class JsonAdaptedPerson {
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
-        category = source.getCategory().get().categoryName;
+        category = source.getCategory().map(c -> c.categoryName).orElse(null);
     }
 
     /**
@@ -109,12 +109,18 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
-        if (!Category.isValidCategoryName(category)) {
-            throw new IllegalValueException(Category.MESSAGE_CONSTRAINTS);
+        final Category modelCategory;
+        if (category == null) {
+            modelCategory = null;
+        } else {
+            if (!Category.isValidCategoryName(category)) {
+                throw new IllegalValueException(Category.MESSAGE_CONSTRAINTS);
+            }
+            modelCategory = new Category(category);
         }
-        final Category modelCategory = new Category(category);
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, Optional.of(modelCategory));
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags,
+                Optional.ofNullable(modelCategory));
     }
 
 }

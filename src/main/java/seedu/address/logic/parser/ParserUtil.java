@@ -132,6 +132,11 @@ public class ParserUtil {
      */
     public static Category parseCategory(String category) throws ParseException {
         requireNonNull(category);
+
+        if (category.isEmpty()) {
+            throw new ParseException(Category.MESSAGE_CONSTRAINTS);
+        }
+
         String formattedCategory = category.trim().substring(0, 1).toUpperCase()
                 + category.trim().substring(1).toLowerCase();
 
