@@ -16,6 +16,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -23,6 +24,7 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.Messages;
 import seedu.address.logic.commands.DeleteByCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
@@ -95,26 +97,26 @@ public class DeleteByCommandParserTest {
         // multiple names
         assertParseFailure(parser, NAME_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                         + ADDRESS_DESC_AMY,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByCommand.MESSAGE_USAGE));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
 
         // multiple phones
         assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                         + ADDRESS_DESC_AMY,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByCommand.MESSAGE_USAGE));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // multiple emails
         assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + EMAIL_DESC_AMY
                         + ADDRESS_DESC_AMY,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByCommand.MESSAGE_USAGE));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
 
         // multiple addresses
         assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                         + ADDRESS_DESC_AMY,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByCommand.MESSAGE_USAGE));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
 
         // multiple tags
         assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                         + TAG_DESC_FRIEND + TAG_DESC_FRIEND,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteByCommand.MESSAGE_USAGE));
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_TAG));
     }
 }
