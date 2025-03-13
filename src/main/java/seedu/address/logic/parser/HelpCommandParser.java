@@ -29,7 +29,6 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         if (!matcher.matches()) {
             return new HelpCommand();
         }
-
         final String commandWord = matcher.group("commandWord");
 
         switch (commandWord) {
