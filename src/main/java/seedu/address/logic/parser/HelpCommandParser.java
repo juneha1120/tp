@@ -1,13 +1,8 @@
 package seedu.address.logic.parser;
 
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
-
-import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.*;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,7 +20,6 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         final String commandWord = matcher.group("commandWord");
 
         switch (commandWord) {
-
             case AddCommand.COMMAND_WORD:
                 return new HelpCommand(AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE,
                         "Adds a new contact to the database with optional details.");
