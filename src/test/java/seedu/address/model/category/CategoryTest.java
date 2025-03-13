@@ -51,4 +51,27 @@ public class CategoryTest {
         // different values -> returns false
         assertFalse(category.equals(new Category("Investor")));
     }
+
+    @Test
+    public void hashCode_test() {
+        Category category = new Category("Client");
+
+        // same values -> returns same hash code
+        assertTrue(category.hashCode() == new Category("Client").hashCode());
+
+        // different values -> returns different hash code
+        assertFalse(category.hashCode() == new Category("Investor").hashCode());
+    }
+
+    @Test
+    public void toString_test() {
+        Category category = new Category("Partner");
+
+        // correct format -> returns true
+        assertTrue(category.toString().equals("[Partner]"));
+
+        // incorrect format -> returns false
+        assertFalse(category.toString().equals("Partner"));
+        assertFalse(category.toString().equals("[Client]"));
+    }
 }
