@@ -1,23 +1,39 @@
 package seedu.address.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import org.junit.jupiter.api.Test;
 
+import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 public class HelpCommandParserTest {
 
-    private HelpCommandParser parser = new HelpCommandParser();
+    private final HelpCommandParser parser = new HelpCommandParser();
 
     @Test
-    public void parse_validArgs_returnsHelpCommand() throws ParseException {
-        assertNotNull(parser.parse(""));
-        HelpCommand expectedHelpCommand = new HelpCommand();
-        assertParseSuccess(parser, " ", expectedHelpCommand);
-        //can't pass, to be fixed
+    public void parse_validAddCommand_returnsHelpCommand() throws ParseException {
+        String args = AddCommand.COMMAND_WORD;
+        HelpCommand expectedCommand = new HelpCommand(AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE,
+                "Adds a new contact to the database with optional details.");
+        assertEquals(expectedCommand, parser.parse(args));
+    }
+
+    @Test
+    public void parse_emptyArgs_returnsDefaultHelpCommand() throws ParseException {
+        String args = "";
+        HelpCommand expectedCommand = new HelpCommand();
+        assertEquals(expectedCommand, parser.parse(args));
+    }
+
+    @Test
+    public void parse_invalidCommand_throwsParseException() {
+        String args = "invalidCommand";
+        ParseException exception = assertThrows(ParseException.class, () -> parser.parse(args));
+        assertEquals(String.format(MESSAGE_INVALID_COMMAND_FORMAT, HelpCommand.MESSAGE_USAGE), exception.getMessage());
     }
 
 }

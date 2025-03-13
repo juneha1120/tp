@@ -18,11 +18,12 @@ public class HelpCommand extends Command {
             + "- delete: Removes a contact\n"
             + "- list: Displays stored contacts";
 
-    private String showingCommandMessage = "";
+    private final String ShowingCommandMessage;
     /**
      * Creates an HelpCommand
      */
     public HelpCommand() {
+        this.ShowingCommandMessage = "";
     }
 
     /**
@@ -35,13 +36,27 @@ public class HelpCommand extends Command {
         String message = "Command:" + command
                 + "\nUsage:" + usage
                 + "\nDescription:" + description;
-        this.showingCommandMessage = message;
+        this.ShowingCommandMessage = message;
+    }
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof HelpCommand)) {
+            return false;
+        }
+
+        HelpCommand otherFindCommand = (HelpCommand) other;
+        return ShowingCommandMessage.equals(otherFindCommand.ShowingCommandMessage);
     }
 
     @Override
     public CommandResult execute(Model model) {
-        if (!showingCommandMessage.isEmpty()) {
-            return new CommandResult(showingCommandMessage, true, false);
+        if (!ShowingCommandMessage.isEmpty()) {
+            return new CommandResult(ShowingCommandMessage, true, false);
         }
         return new CommandResult(SHOWING_HELP_MESSAGE, true, false);
     }
