@@ -57,6 +57,11 @@ public class PersonCard extends UiPart<Region> {
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        category.setText(person.getCategory().get().categoryName);
+        if (person.getCategory().isPresent()) {
+            category.setText(person.getCategory().get().categoryName);
+        } else {
+            category.setVisible(false);
+            category.setManaged(false);
+        }
     }
 }
