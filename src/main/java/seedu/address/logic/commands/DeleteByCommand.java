@@ -21,7 +21,7 @@ import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
- * Deletes a person identified using it's displayed index from the address book.
+ * Deletes a person identified using it's attributes from the address book.
  */
 public class DeleteByCommand extends Command {
 
@@ -60,6 +60,13 @@ public class DeleteByCommand extends Command {
         this.deleteByTag = tag;
     }
 
+    /**
+     * Creates a predicate to filter persons based on optional deletion criteria.
+     * If a criterion is present, it checks if the person's attribute matches the given value.
+     * If a criterion is absent, it does not filter by that attribute.
+     *
+     * @return A {@link Predicate} that can be used to filter a list of {@link Person} objects.
+     */
     private Predicate<Person> getPredicate() {
         return person -> deleteByName.map(name -> name.equals(person.getName())).orElse(true) &&
                 deleteByPhone.map(phone -> phone.equals(person.getPhone())).orElse(true) &&
@@ -68,6 +75,12 @@ public class DeleteByCommand extends Command {
                 deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true);
     }
 
+    /**
+     * Adds optional deletion criteria to a {@link ToStringBuilder} instance.
+     * If a criterion is present, it is included in the string representation.
+     *
+     * @param stringBuilder The {@link ToStringBuilder} instance to append criteria to.
+     */
     private void AddCriteriaToStringBuilder(ToStringBuilder stringBuilder) {
         deleteByName.ifPresent(value -> stringBuilder.add("name", value));
         deleteByPhone.ifPresent(value -> stringBuilder.add("phone", value));
@@ -76,7 +89,13 @@ public class DeleteByCommand extends Command {
         deleteByTag.ifPresent(value -> stringBuilder.add("tag", value));
     }
 
-    public String formatPersonDetails() {
+    /**
+     * Formats the deletion criteria into a human-readable string.
+     * The output includes only the criteria that are present.
+     *
+     * @return A formatted string representation of the deletion criteria.
+     */
+    private String formatPersonDetails() {
         ToStringBuilder stringBuilder = new ToStringBuilder("Criteria");
         AddCriteriaToStringBuilder(stringBuilder);
         return stringBuilder.toString();
