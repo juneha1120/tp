@@ -1,9 +1,12 @@
 package seedu.address.logic.parser;
 
-import seedu.address.logic.commands.*;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
 
 /**
  * Parses input arguments and creates a new HelpCommand object
@@ -26,20 +29,21 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         final String commandWord = matcher.group("commandWord");
 
         switch (commandWord) {
-            case AddCommand.COMMAND_WORD:
-                return new HelpCommand(AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE,
-                        "Adds a new contact to the database with optional details.");
+            
+        case AddCommand.COMMAND_WORD:
+            return new HelpCommand(AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE,
+                    "Adds a new contact to the database with optional details.");
 
-            case DeleteCommand.COMMAND_WORD:
-                return new HelpCommand(DeleteCommand.COMMAND_WORD, DeleteCommand.MESSAGE_USAGE,
-                        "Deletes a existing contact from the database with optional details.");
+        case DeleteCommand.COMMAND_WORD:
+            return new HelpCommand(DeleteCommand.COMMAND_WORD, DeleteCommand.MESSAGE_USAGE,
+                    "Deletes a existing contact from the database with optional details.");
 
-            case ListCommand.COMMAND_WORD:
-                return new HelpCommand(ListCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
-                        "Lists out the contact in the database with optional category.");
+        case ListCommand.COMMAND_WORD:
+            return new HelpCommand(ListCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
+                    "Lists out the contact in the database with optional category.");
 
-            default:
-                return new HelpCommand();
+        default:
+            return new HelpCommand();
         }
     }
 

@@ -27,9 +27,9 @@ public class HelpCommand extends Command {
 
     /**
      * Creates an HelpCommand according to the specified {@code Command}'s
-     * @param command: {@code COMMAND_WORD} of the command
-     * @param usage: {@code COMMAND_USAGE} of the command
-     * @param description: the description of the command
+     * @param command {@code COMMAND_WORD} of the command
+     * @param usage {@code COMMAND_USAGE} of the command
+     * @param description the description of the command
      */
     public HelpCommand(String command, String usage, String description) {
         String message = "Command:" + command
