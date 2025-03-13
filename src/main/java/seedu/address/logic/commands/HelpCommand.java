@@ -12,17 +12,17 @@ public class HelpCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
             + "Example: " + COMMAND_WORD;
 
-    private final String showing_help_message;
+    public static final String SHOWING_HELP_MESSAGE = "Available Commands:\n"
+            + "- help: Shows details on available commands\n"
+            + "- add: Adds a new contact\n"
+            + "- delete: Removes a contact\n"
+            + "- list: Displays stored contacts";
 
+    private String SHOWING_COMMAND_MESSAGE = "";
     /**
      * Creates an HelpCommand
      */
     public HelpCommand() {
-        this.showing_help_message = "Available Commands:\n"
-                + "- help: Shows details on available commands\n"
-                + "- add: Adds a new contact\n"
-                + "- delete: Removes a contact\n"
-                + "- list: Displays stored contacts";
     }
 
     /**
@@ -35,11 +35,14 @@ public class HelpCommand extends Command {
         String message = "Command:" + command
                 + "\nUsage:" + usage
                 + "\nDescription:" + description;
-        this.showing_help_message = message;
+        this.SHOWING_COMMAND_MESSAGE = message;
     }
 
     @Override
     public CommandResult execute(Model model) {
-        return new CommandResult(showing_help_message, true, false);
+        if (!SHOWING_COMMAND_MESSAGE.isEmpty()) {
+            return new CommandResult(SHOWING_COMMAND_MESSAGE, true, false);
+        }
+        return new CommandResult(SHOWING_HELP_MESSAGE, true, false);
     }
 }

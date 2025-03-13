@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,12 +14,7 @@ public class HelpCommandTest {
 
     @Test
     public void execute_help_success() {
-        String help_message = "Available Commands:\n"
-                + "- help: Shows details on available commands\n"
-                + "- add: Adds a new contact\n"
-                + "- delete: Removes a contact\n"
-                + "- list: Displays stored contacts";
-        CommandResult expectedCommandResult = new CommandResult(help_message, true, false);
+        CommandResult expectedCommandResult = new CommandResult(SHOWING_HELP_MESSAGE, true, false);
         assertCommandSuccess(new HelpCommand(), model, expectedCommandResult, expectedModel);
     }
 }
