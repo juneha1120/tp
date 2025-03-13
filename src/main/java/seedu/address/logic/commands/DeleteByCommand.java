@@ -21,11 +21,11 @@ import static seedu.address.logic.parser.CliSyntax.*;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
- * Deletes a person identified using it's attributes from the address book.
+ * Deletes a person identified using its attributes from the address book.
  */
 public class DeleteByCommand extends Command {
 
-    public static final String COMMAND_WORD = "delete by";
+    public static final String COMMAND_WORD = "deleteby";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by any attribute used to identify the person.\n"
@@ -44,6 +44,7 @@ public class DeleteByCommand extends Command {
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
     public static final String MESSAGE_NO_PERSON_TO_DELETE = "No Person Matches Criteria: %1$s";
     public static final String MESSAGE_MULTIPLE_PEOPLE_TO_DELETE = "Multiple People Matches Criteria: %1$s";
+    public static final String MESSAGE_NO_CRITERIA_SPECIFIED = "At least one field to edit must be provided.";
 
     private final Optional<Name> deleteByName;
     private final Optional<Phone> deleteByPhone;
