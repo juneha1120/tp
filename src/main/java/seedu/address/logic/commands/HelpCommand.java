@@ -12,7 +12,22 @@ public class HelpCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String SHOWING_HELP_MESSAGE = "Opened help window.";
+    public static String SHOWING_HELP_MESSAGE;
+
+    public HelpCommand() {
+        SHOWING_HELP_MESSAGE = "Available Commands:\n" +
+                "- help: Shows details on available commands\n" +
+                "- add: Adds a new contact\n" +
+                "- delete: Removes a contact\n" +
+                "- list: Displays stored contacts";
+    }
+
+    public HelpCommand(String command, String usage, String description) {
+        String message = "Command:" + command +
+                "\nUsage:" + usage +
+                "\nDescription:" + description;
+        SHOWING_HELP_MESSAGE = message;
+    }
 
     @Override
     public CommandResult execute(Model model) {
