@@ -1,6 +1,14 @@
 package seedu.address.logic.parser;
 
-import seedu.address.commons.core.index.Index;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
+import java.util.Optional;
+
 import seedu.address.logic.commands.DeleteByCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
@@ -8,12 +16,6 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
-
-import java.util.Optional;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.*;
 
 /**
  * Parses input arguments and creates a new DeleteByCommand object
@@ -55,8 +57,8 @@ public class DeleteByCommandParser implements Parser<DeleteByCommand> {
             deleteByTag = Optional.of(ParserUtil.parseTag(argMultimap.getValue(PREFIX_TAG).get()));
         }
 
-        if (deleteByName.isEmpty() && deleteByPhone.isEmpty() && deleteByEmail.isEmpty() &&
-                deleteByAddress.isEmpty() && deleteByTag.isEmpty()) {
+        if (deleteByName.isEmpty() && deleteByPhone.isEmpty() && deleteByEmail.isEmpty()
+                && deleteByAddress.isEmpty() && deleteByTag.isEmpty()) {
             throw new ParseException(DeleteByCommand.MESSAGE_NO_CRITERIA_SPECIFIED);
         }
 

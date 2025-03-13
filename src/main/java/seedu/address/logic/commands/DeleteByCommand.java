@@ -1,5 +1,17 @@
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Predicate;
+
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -11,14 +23,6 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 
-import java.util.function.Predicate;
-import java.util.List;
-import java.util.Optional;
-import java.util.StringJoiner;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.*;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 /**
  * Deletes a person identified using its attributes from the address book.
@@ -52,6 +56,18 @@ public class DeleteByCommand extends Command {
     private final Optional<Address> deleteByAddress;
     private final Optional<Tag> deleteByTag;
 
+    /**
+     * Constructs a {@code DeleteByCommand} with optional filtering criteria.
+     * Each parameter represents an optional field that may be used to identify
+     * a person for deletion. If a parameter is present, it will be used as a
+     * criterion for filtering. If all parameters are empty, the command is invalid.
+     *
+     * @param name    An optional {@link Name} used as a deletion criterion.
+     * @param phone   An optional {@link Phone} used as a deletion criterion.
+     * @param email   An optional {@link Email} used as a deletion criterion.
+     * @param address An optional {@link Address} used as a deletion criterion.
+     * @param tag     An optional {@link Tag} used as a deletion criterion.
+     */
     public DeleteByCommand(Optional<Name> name, Optional<Phone> phone, Optional<Email> email, Optional<Address> address,
                            Optional<Tag> tag) {
         this.deleteByName = name;
@@ -69,11 +85,11 @@ public class DeleteByCommand extends Command {
      * @return A {@link Predicate} that can be used to filter a list of {@link Person} objects.
      */
     private Predicate<Person> getPredicate() {
-        return person -> deleteByName.map(name -> name.equals(person.getName())).orElse(true) &&
-                deleteByPhone.map(phone -> phone.equals(person.getPhone())).orElse(true) &&
-                deleteByEmail.map(email -> email.equals(person.getEmail())).orElse(true) &&
-                deleteByAddress.map(address -> address.equals(person.getAddress())).orElse(true) &&
-                deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true);
+        return person -> deleteByName.map(name -> name.equals(person.getName())).orElse(true)
+                && deleteByPhone.map(phone -> phone.equals(person.getPhone())).orElse(true)
+                && deleteByEmail.map(email -> email.equals(person.getEmail())).orElse(true)
+                && deleteByAddress.map(address -> address.equals(person.getAddress())).orElse(true)
+                && deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true);
     }
 
     /**
@@ -82,7 +98,7 @@ public class DeleteByCommand extends Command {
      *
      * @param stringBuilder The {@link ToStringBuilder} instance to append criteria to.
      */
-    private void AddCriteriaToStringBuilder(ToStringBuilder stringBuilder) {
+    private void addCriteriaToStringBuilder(ToStringBuilder stringBuilder) {
         deleteByName.ifPresent(value -> stringBuilder.add("name", value));
         deleteByPhone.ifPresent(value -> stringBuilder.add("phone", value));
         deleteByEmail.ifPresent(value -> stringBuilder.add("email", value));
@@ -98,7 +114,7 @@ public class DeleteByCommand extends Command {
      */
     private String formatPersonDetails() {
         ToStringBuilder stringBuilder = new ToStringBuilder("Criteria");
-        AddCriteriaToStringBuilder(stringBuilder);
+        addCriteriaToStringBuilder(stringBuilder);
         return stringBuilder.toString();
     }
 
@@ -136,17 +152,17 @@ public class DeleteByCommand extends Command {
             return false;
         }
 
-        return deleteByName.equals(otherDeleteCommand.deleteByName) &&
-                deleteByPhone.equals(otherDeleteCommand.deleteByPhone) &&
-                deleteByEmail.equals(otherDeleteCommand.deleteByEmail) &&
-                deleteByAddress.equals(otherDeleteCommand.deleteByAddress) &&
-                deleteByTag.equals(otherDeleteCommand.deleteByTag);
+        return deleteByName.equals(otherDeleteCommand.deleteByName)
+                && deleteByPhone.equals(otherDeleteCommand.deleteByPhone)
+                && deleteByEmail.equals(otherDeleteCommand.deleteByEmail)
+                && deleteByAddress.equals(otherDeleteCommand.deleteByAddress)
+                && deleteByTag.equals(otherDeleteCommand.deleteByTag);
     }
 
     @Override
     public String toString() {
         ToStringBuilder stringBuilder = new ToStringBuilder(this);
-        AddCriteriaToStringBuilder(stringBuilder);
+        addCriteriaToStringBuilder(stringBuilder);
         return stringBuilder.toString();
     }
 }
