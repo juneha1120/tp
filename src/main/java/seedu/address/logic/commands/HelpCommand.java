@@ -14,6 +14,9 @@ public class HelpCommand extends Command {
 
     private final String showing_help_message;
 
+    /**
+     * Creates an HelpCommand
+     */
     public HelpCommand() {
         this.showing_help_message = "Available Commands:\n"
                 + "- help: Shows details on available commands\n"
@@ -22,6 +25,12 @@ public class HelpCommand extends Command {
                 + "- list: Displays stored contacts";
     }
 
+    /**
+     * Creates an HelpCommand according to the specified {@code Command}'s
+     * @param command: {@code COMMAND_WORD} of the command
+     * @param usage: {@code COMMAND_USAGE} of the command
+     * @param description: the description of the command
+     */
     public HelpCommand(String command, String usage, String description) {
         String message = "Command:" + command
                 + "\nUsage:" + usage

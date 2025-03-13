@@ -1,16 +1,22 @@
 package seedu.address.logic.parser;
 
 import seedu.address.logic.commands.*;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Parses input arguments and creates a new HelpCommand object
+ */
 public class HelpCommandParser implements Parser<HelpCommand> {
 
     private static final Pattern BASIC_COMMAND_FORMAT = Pattern.compile("(?<commandWord>\\S+)(?<arguments>.*)");
 
-    public HelpCommand parse(String args) throws ParseException {
+    /**
+     * Parses the given {@code String} of arguments in the context of the HelpCommand
+     * and returns a HelpCommand object for execution.
+     */
+    public HelpCommand parse(String args) {
 
         final Matcher matcher = BASIC_COMMAND_FORMAT.matcher(args.trim());
         if (!matcher.matches()) {
