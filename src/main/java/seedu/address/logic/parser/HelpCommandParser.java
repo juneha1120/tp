@@ -32,7 +32,6 @@ public class HelpCommandParser implements Parser<HelpCommand> {
         final String commandWord = matcher.group("commandWord");
 
         switch (commandWord) {
-            
         case AddCommand.COMMAND_WORD:
             return new HelpCommand(AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE,
                     "Adds a new contact to the database with optional details.");
