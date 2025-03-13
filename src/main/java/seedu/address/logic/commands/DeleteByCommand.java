@@ -60,36 +60,43 @@ public class DeleteByCommand extends Command {
         this.deleteByTag = tag;
     }
 
-    public String formatPersonDetails() {
-        ToStringBuilder stringBuilder = new ToStringBuilder("Criteria");
+    private Predicate<Person> getPredicate() {
+        return person -> deleteByName.map(name -> name.equals(person.getName())).orElse(true) &&
+                deleteByPhone.map(phone -> phone.equals(person.getPhone())).orElse(true) &&
+                deleteByEmail.map(email -> email.equals(person.getEmail())).orElse(true) &&
+                deleteByAddress.map(address -> address.equals(person.getAddress())).orElse(true) &&
+                deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true);
+    }
 
+    private void AddCriteriaToStringBuilder(ToStringBuilder stringBuilder) {
         deleteByName.ifPresent(value -> stringBuilder.add("name", value));
         deleteByPhone.ifPresent(value -> stringBuilder.add("phone", value));
         deleteByEmail.ifPresent(value -> stringBuilder.add("email", value));
         deleteByAddress.ifPresent(value -> stringBuilder.add("address", value));
         deleteByTag.ifPresent(value -> stringBuilder.add("tag", value));
+    }
 
+    public String formatPersonDetails() {
+        ToStringBuilder stringBuilder = new ToStringBuilder("Criteria");
+        AddCriteriaToStringBuilder(stringBuilder);
         return stringBuilder.toString();
     }
 
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        List<Person> lastShownList = model.getFilteredPersonList();
-        Predicate<Person> predicate = person ->
-                deleteByName.map(name -> name.equals(person.getName())).orElse(true) &&
-                deleteByPhone.map(phone -> phone.equals(person.getPhone())).orElse(true) &&
-                deleteByEmail.map(email -> email.equals(person.getEmail())).orElse(true) &&
-                deleteByAddress.map(address -> address.equals(person.getAddress())).orElse(true) &&
-                deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true);
 
-        List<Person> filteredList = lastShownList.stream().filter(predicate).toList();
+        // delete by should always draw from full address book
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
+        Predicate<Person> predicate = getPredicate();
+
+        List<Person> filteredList = model.getFilteredPersonList().stream().filter(getPredicate()).toList();
 
         if (filteredList.isEmpty()) {
             return new CommandResult(String.format(MESSAGE_NO_PERSON_TO_DELETE, formatPersonDetails()));
         } else if (filteredList.size() == 1) {
-            Person personToDelete = lastShownList.get(0);
+            Person personToDelete = filteredList.get(0);
             model.deletePerson(personToDelete);
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
         } else {
@@ -119,13 +126,7 @@ public class DeleteByCommand extends Command {
     @Override
     public String toString() {
         ToStringBuilder stringBuilder = new ToStringBuilder(this);
-
-        deleteByName.ifPresent(value -> stringBuilder.add("name", value));
-        deleteByPhone.ifPresent(value -> stringBuilder.add("phone", value));
-        deleteByEmail.ifPresent(value -> stringBuilder.add("email", value));
-        deleteByAddress.ifPresent(value -> stringBuilder.add("address", value));
-        deleteByTag.ifPresent(value -> stringBuilder.add("tag", value));
-
+        AddCriteriaToStringBuilder(stringBuilder);
         return stringBuilder.toString();
     }
 }
