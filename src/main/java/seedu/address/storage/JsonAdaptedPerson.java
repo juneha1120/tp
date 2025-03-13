@@ -109,6 +109,9 @@ class JsonAdaptedPerson {
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
 
+        if (!Category.isValidCategoryName(category)) {
+            throw new IllegalValueException(Category.MESSAGE_CONSTRAINTS);
+        }
         final Category modelCategory = new Category(category);
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags, Optional.of(modelCategory));
