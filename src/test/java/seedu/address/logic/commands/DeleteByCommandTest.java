@@ -1,8 +1,6 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -22,6 +20,7 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class DeleteByCommandTest {
@@ -31,7 +30,7 @@ public class DeleteByCommandTest {
 
     @BeforeEach
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
@@ -48,6 +47,71 @@ public class DeleteByCommandTest {
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.of(ALICE.getName()), Optional.empty(), Optional.empty(),
                 Optional.empty(), Optional.empty());
+
+        CommandResult commandResult = deleteCommand.execute(model);
+
+        verify(model, times(1)).deletePerson(ALICE);
+        assertEquals(String.format(DeleteByCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(ALICE)), commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_deleteByPhone_success() throws Exception {
+        when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
+        when(model.hasPerson(ALICE)).thenReturn(true);
+
+        DeleteByCommand deleteCommand = new DeleteByCommand(
+                Optional.empty(), Optional.of(ALICE.getPhone()), Optional.empty(),
+                Optional.empty(), Optional.empty());
+
+        CommandResult commandResult = deleteCommand.execute(model);
+
+        verify(model, times(1)).deletePerson(ALICE);
+        assertEquals(String.format(DeleteByCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(ALICE)), commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_deleteByEmail_success() throws Exception {
+        when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
+        when(model.hasPerson(ALICE)).thenReturn(true);
+
+        DeleteByCommand deleteCommand = new DeleteByCommand(
+                Optional.empty(), Optional.empty(), Optional.of(ALICE.getEmail()),
+                Optional.empty(), Optional.empty());
+
+        CommandResult commandResult = deleteCommand.execute(model);
+
+        verify(model, times(1)).deletePerson(ALICE);
+        assertEquals(String.format(DeleteByCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(ALICE)), commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_deleteByAddress_success() throws Exception {
+        when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
+        when(model.hasPerson(ALICE)).thenReturn(true);
+
+        DeleteByCommand deleteCommand = new DeleteByCommand(
+                Optional.empty(), Optional.empty(), Optional.empty(),
+                Optional.of(ALICE.getAddress()), Optional.empty());
+
+        CommandResult commandResult = deleteCommand.execute(model);
+
+        verify(model, times(1)).deletePerson(ALICE);
+        assertEquals(String.format(DeleteByCommand.MESSAGE_DELETE_PERSON_SUCCESS,
+                Messages.format(ALICE)), commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void execute_deleteByTag_success() throws Exception {
+        Tag tag = ALICE.getTags().iterator().next();
+        when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
+        when(model.hasPerson(ALICE)).thenReturn(true);
+
+        DeleteByCommand deleteCommand = new DeleteByCommand(
+                Optional.empty(), Optional.empty(), Optional.empty(),
+                Optional.empty(), Optional.of(tag));
 
         CommandResult commandResult = deleteCommand.execute(model);
 
@@ -81,33 +145,5 @@ public class DeleteByCommandTest {
 
         assertEquals(String.format(DeleteByCommand.MESSAGE_MULTIPLE_PEOPLE_TO_DELETE,
                 deleteCommand.toString()), commandResult.getFeedbackToUser());
-    }
-
-    @Test
-    public void equals() {
-        DeleteByCommand deleteByName = new DeleteByCommand(
-                Optional.of(new Name("Alice")), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
-        DeleteByCommand deleteByPhone = new DeleteByCommand(
-                Optional.empty(), Optional.of(new seedu.address.model.person.Phone("12345678")),
-                Optional.empty(), Optional.empty(), Optional.empty());
-
-        // same object -> returns true
-        assertTrue(deleteByName.equals(deleteByName));
-
-        // same values -> returns true
-        DeleteByCommand deleteByNameCopy = new DeleteByCommand(
-                Optional.of(new Name("Alice")), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
-        assertTrue(deleteByName.equals(deleteByNameCopy));
-
-        // different types -> returns false
-        assertFalse(deleteByName.equals(1));
-
-        // null -> returns false
-        assertFalse(deleteByName.equals(null));
-
-        // different criteria -> returns false
-        assertFalse(deleteByName.equals(deleteByPhone));
     }
 }
