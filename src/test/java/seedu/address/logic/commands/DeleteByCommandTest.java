@@ -1,6 +1,7 @@
 package seedu.address.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -145,5 +146,33 @@ public class DeleteByCommandTest {
 
         assertEquals(String.format(DeleteByCommand.MESSAGE_MULTIPLE_PEOPLE_TO_DELETE,
                 deleteCommand.toString()), commandResult.getFeedbackToUser());
+    }
+
+    @Test
+    public void equals() {
+        DeleteByCommand deleteByName = new DeleteByCommand(
+                Optional.of(new Name("Alice")), Optional.empty(),
+                Optional.empty(), Optional.empty(), Optional.empty());
+        DeleteByCommand deleteByPhone = new DeleteByCommand(
+                Optional.empty(), Optional.of(new seedu.address.model.person.Phone("12345678")),
+                Optional.empty(), Optional.empty(), Optional.empty());
+
+        // same object -> returns true
+        assertEquals(deleteByName, deleteByName);
+
+        // same values -> returns true
+        DeleteByCommand deleteByNameCopy = new DeleteByCommand(
+                Optional.of(new Name("Alice")), Optional.empty(),
+                Optional.empty(), Optional.empty(), Optional.empty());
+        assertEquals(deleteByName, deleteByNameCopy);
+
+        // different types -> returns false
+        assertNotEquals(1, deleteByName);
+
+        // null -> returns false
+        assertNotEquals(null, deleteByName);
+
+        // different criteria -> returns false
+        assertNotEquals(deleteByName, deleteByPhone);
     }
 }
