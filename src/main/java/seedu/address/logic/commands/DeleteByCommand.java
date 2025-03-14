@@ -70,6 +70,11 @@ public class DeleteByCommand extends Command {
      */
     public DeleteByCommand(Optional<Name> name, Optional<Phone> phone, Optional<Email> email, Optional<Address> address,
                            Optional<Tag> tag) {
+        requireNonNull(name);
+        requireNonNull(phone);
+        requireNonNull(email);
+        requireNonNull(address);
+        requireNonNull(tag);
         this.deleteByName = name;
         this.deleteByPhone = phone;
         this.deleteByEmail = email;
@@ -106,18 +111,6 @@ public class DeleteByCommand extends Command {
         deleteByTag.ifPresent(value -> stringBuilder.add("tag", value));
     }
 
-    /**
-     * Formats the deletion criteria into a human-readable string.
-     * The output includes only the criteria that are present.
-     *
-     * @return A formatted string representation of the deletion criteria.
-     */
-    private String formatPersonDetails() {
-        ToStringBuilder stringBuilder = new ToStringBuilder("Criteria");
-        addCriteriaToStringBuilder(stringBuilder);
-        return stringBuilder.toString();
-    }
-
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
@@ -130,14 +123,14 @@ public class DeleteByCommand extends Command {
         List<Person> filteredList = model.getFilteredPersonList().stream().filter(getPredicate()).toList();
 
         if (filteredList.isEmpty()) {
-            return new CommandResult(String.format(MESSAGE_NO_PERSON_TO_DELETE, formatPersonDetails()));
+            throw new CommandException(String.format(MESSAGE_NO_PERSON_TO_DELETE, this.toString()));
         } else if (filteredList.size() == 1) {
             Person personToDelete = filteredList.get(0);
             model.deletePerson(personToDelete);
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
         } else {
             model.updateFilteredPersonList(predicate);
-            return new CommandResult(String.format(MESSAGE_MULTIPLE_PEOPLE_TO_DELETE, formatPersonDetails()));
+            return new CommandResult(String.format(MESSAGE_MULTIPLE_PEOPLE_TO_DELETE, this.toString()));
         }
     }
 
