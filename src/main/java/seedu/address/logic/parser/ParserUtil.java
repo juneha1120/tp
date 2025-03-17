@@ -133,7 +133,7 @@ public class ParserUtil {
         requireNonNull(category);
 
         if (category.isEmpty()) {
-            throw new ParseException(Category.MESSAGE_CONSTRAINTS);
+            return null;
         }
 
         String formattedCategory = category.trim().substring(0, 1).toUpperCase()
