@@ -68,6 +68,9 @@ public class EditCommand extends Command {
 
         this.index = index;
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        if (editPersonDescriptor.shouldKeepOriginalCategory()) {
+            this.editPersonDescriptor.setToKeepOriginalCategory();
+        }
     }
 
     @Override
@@ -103,7 +106,10 @@ public class EditCommand extends Command {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-        Optional<Category> updatedCategory = editPersonDescriptor.getCategory();
+        Optional<Category> updatedCategory = personToEdit.getCategory();
+        if (!editPersonDescriptor.shouldKeepOriginalCategory()) {
+            updatedCategory = editPersonDescriptor.getCategory();
+        }
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedCategory);
     }
@@ -143,6 +149,7 @@ public class EditCommand extends Command {
         private Address address;
         private Set<Tag> tags;
         private Category category;
+        private boolean keepOriginalCategory;
 
         public EditPersonDescriptor() {}
 
@@ -163,7 +170,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, tags) || !this.shouldKeepOriginalCategory();
         }
 
         public void setName(Name name) {
@@ -221,6 +228,14 @@ public class EditCommand extends Command {
 
         public Optional<Category> getCategory() {
             return Optional.ofNullable(category);
+        }
+
+        public void setToKeepOriginalCategory() {
+            this.keepOriginalCategory = true;
+        }
+
+        public boolean shouldKeepOriginalCategory() {
+            return this.keepOriginalCategory;
         }
 
         @Override
