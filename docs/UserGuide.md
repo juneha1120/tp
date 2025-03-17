@@ -93,9 +93,18 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of contacts in TrackUp, optionally filtering them by a specified category.
 
-Format: `list`
+Format: `list [<CATEGORY>]`
+
+* Displays all contacts if no category is specified.
+* If a category is provided, only contacts from that category are shown.
+* Categories are case-insensitive.
+
+Examples:
+* `list` Displays all contacts.
+* `list Client` Displays only contacts categorized as Client.
+* `list Partner` Displays only contacts categorized as Partner.
 
 ### Editing a person : `edit`
 
