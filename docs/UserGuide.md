@@ -142,6 +142,25 @@ Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
+### Deleting a person by attributes: `deleteby`
+
+Deletes a person from the address book using one or more attributes.
+
+Format: `deleteby [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
+
+* At least **one** attribute must be specified.
+* Deletes the person that matches the provided attributes.
+* If multiple people match the criteria, a message will be shown instead of deletion.
+* Attribute comparisons are **case-sensitive** and must be an exact match.
+
+Examples:
+* `deleteby n/John Doe` deletes the person named **John Doe** from the address book.
+* `deleteby p/98765432` deletes the person with phone number **98765432**.
+* `deleteby e/johnd@example.com` deletes the person with email **johnd@example.com**.
+* `deleteby a/311, Clementi Ave 2, #02-25` deletes the person living at **311, Clementi Ave 2, #02-25**.
+* `deleteby t/friends` deletes the person with the tag **friends**.
+* `deleteby n/John Doe p/98765432` deletes the person named **John Doe** with phone number **98765432**.
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.

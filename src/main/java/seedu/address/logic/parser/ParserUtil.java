@@ -123,7 +123,6 @@ public class ParserUtil {
         return tagSet;
     }
 
-
     /**
      * Parses a {@code String category} into a {@code Category}.
      * Leading and trailing whitespaces will be trimmed.
