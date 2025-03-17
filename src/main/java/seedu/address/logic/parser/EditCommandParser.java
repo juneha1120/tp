@@ -47,6 +47,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
+        boolean keepOriginalCategory = false;
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             editPersonDescriptor.setName(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
@@ -65,6 +66,11 @@ public class EditCommandParser implements Parser<EditCommand> {
 
         if (argMultimap.getValue(PREFIX_CATEGORY).isPresent()) {
             editPersonDescriptor.setCategory(ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get()));
+        } else {
+            editPersonDescriptor.setToKeepOriginalCategory();
+            // To differentiate
+            // 1) Category being changed to null and
+            // 2) Category field not being provided and therefore null
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {

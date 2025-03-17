@@ -50,7 +50,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Optional<Category> category;
         if (argMultimap.getValue(PREFIX_CATEGORY).isPresent()) {
-            category = Optional.of(ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get()));
+            category = Optional.ofNullable(ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get()));
         } else {
             category = Optional.empty();
         }
