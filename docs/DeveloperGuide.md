@@ -347,28 +347,26 @@ _{Explain here how the data archiving feature will be implemented}_
 ### **Use Case: View All Contacts**
 
 #### **Main Success Scenario (MSS)**
-1. **User requests to view all contacts.**
-2. **TrackUp displays all contacts.**
-
-   **Use case ends.**
+1. User requests to view all contacts.
+2. TrackUp displays all contacts.  
+   Use case ends.
 
 #### **Extensions**
 - **2a.** The contact list is empty.
-    - **Use case ends.**
+    - Use case ends.
 
 ---
 
 ### **Use Case: View Contacts with Client Category**
 
 #### **Main Success Scenario (MSS)**
-1. **User requests to view contacts with the category `Client`.**
-2. **TrackUp displays only the contacts categorised as `Client`.**
-
-   **Use case ends.**
+1. User requests to view contacts with the category `Client`.
+2. TrackUp displays only the contacts categorised as `Client`.
+   Use case ends.
 
 #### **Extensions**
 - **2a.** The contact list under the `Client` category is empty.
-    - **Use case ends.**
+    - Use case ends.
 
 ---
 
