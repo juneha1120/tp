@@ -70,8 +70,12 @@ Shows a message explaning how to access the help page.
 
 ![help message](images/helpMessage.png)
 
-Format: `help`
+Format: `help` `help COMMAND_WORD`
 
+Examples:
+* `help`
+* `help add`
+* `help delete`
 
 ### Adding a person: `add`
 
