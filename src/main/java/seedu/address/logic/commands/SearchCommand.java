@@ -32,7 +32,7 @@ public class SearchCommand extends Command {
      */
     public SearchCommand(String keyword) {
         requireNonNull(keyword);
-        this.keyword = keyword.toLowerCase();
+        this.keyword = keyword;
     }
 
     /**
@@ -43,16 +43,17 @@ public class SearchCommand extends Command {
      */
     @Override
     public CommandResult execute(Model model) {
+        String lowerKeyword = this.keyword.toLowerCase();
         requireNonNull(model);
         Predicate<Person> matchesKeyword = person ->
-                person.getName().fullName.toLowerCase().contains(keyword)
-                        || person.getPhone().value.contains(keyword)
-                        || person.getEmail().value.toLowerCase().contains(keyword)
-                        || person.getAddress().value.toLowerCase().contains(keyword)
+                person.getName().fullName.toLowerCase().contains(lowerKeyword)
+                        || person.getPhone().value.contains(lowerKeyword)
+                        || person.getEmail().value.toLowerCase().contains(lowerKeyword)
+                        || person.getAddress().value.toLowerCase().contains(lowerKeyword)
                         || person.getTags().stream().map(Tag::toString).collect(Collectors.joining(" "))
-                        .toLowerCase().contains(keyword)
+                        .toLowerCase().contains(lowerKeyword)
                         || (person.getCategory().isPresent() && person.getCategory().get().toString().toLowerCase()
-                        .contains(keyword));
+                        .contains(lowerKeyword));
 
         model.updateFilteredPersonList(matchesKeyword);
         return new CommandResult(String.format(MESSAGE_SUCCESS, keyword));
