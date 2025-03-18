@@ -89,7 +89,7 @@ public class DeleteByCommand extends Command {
      *
      * @return A {@link Predicate} that can be used to filter a list of {@link Person} objects.
      */
-    private Predicate<Person> getPredicate() {
+    Predicate<Person> getPredicate() {
         return person -> deleteByName.map(name -> name.equals(person.getName())).orElse(true)
                 && deleteByPhone.map(phone -> phone.equals(person.getPhone())).orElse(true)
                 && deleteByEmail.map(email -> email.equals(person.getEmail())).orElse(true)
@@ -103,7 +103,7 @@ public class DeleteByCommand extends Command {
      *
      * @param stringBuilder The {@link ToStringBuilder} instance to append criteria to.
      */
-    private void addCriteriaToStringBuilder(ToStringBuilder stringBuilder) {
+    void addCriteriaToStringBuilder(ToStringBuilder stringBuilder) {
         deleteByName.ifPresent(value -> stringBuilder.add("name", value));
         deleteByPhone.ifPresent(value -> stringBuilder.add("phone", value));
         deleteByEmail.ifPresent(value -> stringBuilder.add("email", value));
