@@ -165,6 +165,26 @@ Examples:
 * `deleteby t/friends` deletes the person with the tag **friends**.
 * `deleteby n/John Doe p/98765432` deletes the person named **John Doe** with phone number **98765432**.
 
+### Searching for a person: `search`
+
+Finds persons whose **name, phone, email, address, tags, or category** contain the specified keyword.
+
+Format: `search KEYWORD`
+
+* The search is **case-insensitive**. e.g., `john` will match `John`.
+* Partial matches are supported. e.g., `son` will match `Johnson`.
+* The search applies to **all attributes** (name, phone, email, address, tags, and category).
+* Persons matching the keyword will be returned.
+
+Examples:
+* `search John` returns persons with names like **John Doe** and **Johnny Smith**.
+* `search 98765432` returns persons with the phone number **98765432**.
+* `search johnd@example.com` returns persons with the email **johnd@example.com**.
+* `search Clementi` returns persons whose address contains **Clementi**.
+* `search friends` returns persons who have the tag **friends**.
+* `search client` returns persons categorized as **Client**.
+* `search doe` returns persons whose attributes contain **"doe"**, such as **John Doe** and **johnd@example.com**.
+
 ### Clearing all entries : `clear`
 
 Clears all entries from the address book.
