@@ -47,19 +47,12 @@ title: User Guide
 **:information_source: Notes about the command format:**<br>
 
 - Words in `UPPER_CASE` indicate the parameters to be supplied by the user. 
-
   e.g., in `add -n <NAME>`, `<NAME>` is a parameter which can be used as `add -n "John Doe"`.
-
 - Items in square brackets are optional.  
-
   e.g., `-c <CATEGORY>` is optional.
-
 - The order of parameters is flexible.  
-
   e.g., `add -n "John Doe" -p 98765432` is equivalent to `add -p 98765432 -n "John Doe"`.
-
 - Extraneous parameters for commands that do not require any (such as `help`, `list`, `exit`, and `clear`) will be ignored.
-
 - When copying commands from this PDF version, ensure that line breaks do not remove necessary spaces.
 </div>
 
@@ -224,7 +217,7 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 
 ### Archiving data files `[coming in v2.0]`
 
-_Details coming soon ..._
+_Details coming soon 
 
 --------------------------------------------------------------------------------------------------------------------
 
