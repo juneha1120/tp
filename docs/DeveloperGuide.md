@@ -71,11 +71,12 @@ The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `Re
 The `UI` component uses the JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the [`MainWindow`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/MainWindow.java) is specified in [`MainWindow.fxml`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/resources/view/MainWindow.fxml)
 
 The `UI` component,
+- The `MainWindow` consists of several UI parts (e.g., `CommandBox`, `ResultDisplay`, `ContactListPanel`).
+- Uses JavaFX, with UI layouts defined in `src/main/resources/view/*.fxml`.
+- Interacts with:
+    - **Logic** to execute commands.
+    - **Model** to display data.
 
-* executes user commands using the `Logic` component.
-* listens for changes to `Model` data so that the UI can be updated with the modified data.
-* keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
-* depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
 
 ### Logic component
 
@@ -92,13 +93,11 @@ The sequence diagram below illustrates the interactions within the `Logic` compo
 <div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `DeleteCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline continues till the end of diagram.
 </div>
 
-How the `Logic` component works:
-
-1. When `Logic` is called upon to execute a command, it is passed to an `AddressBookParser` object which in turn creates a parser that matches the command (e.g., `DeleteCommandParser`) and uses it to parse the command.
-1. This results in a `Command` object (more precisely, an object of one of its subclasses e.g., `DeleteCommand`) which is executed by the `LogicManager`.
-1. The command can communicate with the `Model` when it is executed (e.g. to delete a person).<br>
-   Note that although this is shown as a single step in the diagram above (for simplicity), in the code it can take several interactions (between the command object and the `Model`) to achieve.
-1. The result of the command execution is encapsulated as a `CommandResult` object which is returned back from `Logic`.
+💡 **How it works:**
+1. A user enters a command.
+2. `AddressBookParser` determines the appropriate `XYZCommandParser` (e.g., `DeleteCommandParser`).
+3. This creates a corresponding `XYZCommand` (e.g., `DeleteCommand`), executed by `LogicManager`.
+4. The command modifies `Model` and returns a `CommandResult`.
 
 Here are the other classes in `Logic` (omitted from the class diagram above) that are used for parsing a user command:
 
