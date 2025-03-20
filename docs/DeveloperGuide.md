@@ -9,7 +9,7 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-* {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+- {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -35,13 +35,13 @@ The ***Architecture Diagram*** given above explains the high-level design of Tra
 Given below is a quick overview of main components and how they interact.
 
 **Main components of the architecture:**
-* **`Main`** (consisting of [`Main`](src/main/java/seedu/address/Main.java) and [`MainApp`](src/main/java/seedu/address/MainApp.java)) handles launching and shutting down the app.
-* The app's core functionality is divided into:
+- **`Main`** (consisting of [`Main`](src/main/java/seedu/address/Main.java) and [`MainApp`](src/main/java/seedu/address/MainApp.java)) handles launching and shutting down the app.
+- The app's core functionality is divided into:
     - [**`UI`**](#ui-component): Handles the user interface.
     - [**`Logic`**](#logic-component): Executes commands.
     - [**`Model`**](#model-component): Manages in-memory data.
     - [**`Storage`**](#storage-component): Reads and writes data to disk.
-* [**`Commons`**](#common-classes) contains utility classes shared across components.
+- [**`Commons`**](#common-classes) contains utility classes shared across components.
 
 ### **How Components Interact**
 Below is a *Sequence Diagram* showing how TrackUp processes the command `delete 1`:
@@ -49,8 +49,8 @@ Below is a *Sequence Diagram* showing how TrackUp processes the command `delete 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
 
 Each component:
-* Defines its API through an `interface`.
-* Implements functionality in `{Component Name}Manager` classes.
+- Defines its API through an `interface`.
+- Implements functionality in `{Component Name}Manager` classes.
 
 For example, `Logic` defines its API in `Logic.java` and implements it in `LogicManager.java`.
 
@@ -58,7 +58,7 @@ For example, `Logic` defines its API in `Logic.java` and implements it in `Logic
 
 ---
 
-The sections below give more details of each component.
+## **Component Breakdown**
 
 ### UI component
 
