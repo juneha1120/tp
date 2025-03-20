@@ -63,11 +63,11 @@ public class PersonCard extends UiPart<Region> {
 
             // Apply different border colors based on categoryName
             String categoryColor = switch (categoryName) {
-                case "Client" -> "rgba(255, 221, 193"; // Light Orange
-                case "Investor" -> "rgba(193, 255, 215"; // Light Green
-                case "Partner" -> "rgba(193, 212, 255"; // Light Blue
-                case "Other" -> "rgba(224, 193, 255"; // Light Purple
-                default -> "rgba(240, 240, 240"; // Default Gray
+            case "Client" -> "rgba(255, 221, 193"; // Light Orange
+            case "Investor" -> "rgba(193, 255, 215"; // Light Green
+            case "Partner" -> "rgba(193, 212, 255"; // Light Blue
+            case "Other" -> "rgba(224, 193, 255"; // Light Purple
+            default -> "rgba(240, 240, 240"; // Default Gray
             };
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
                             + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
