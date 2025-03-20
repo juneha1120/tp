@@ -46,11 +46,11 @@ title: User Guide
 
 **:information_source: Notes about the command format:**<br>
 
-- Words in `UPPER_CASE` indicate the parameters to be supplied by the user. 
+- Words in `UPPER_CASE` indicate the parameters to be supplied by the user.
   e.g., in `add -n <NAME>`, `<NAME>` is a parameter which can be used as `add -n "John Doe"`.
-- Items in square brackets are optional.  
+- Items in square brackets are optional.
   e.g., `-c <CATEGORY>` is optional.
-- The order of parameters is flexible.  
+- The order of parameters is flexible.
   e.g., `add -n "John Doe" -p 98765432` is equivalent to `add -p 98765432 -n "John Doe"`.
 - Extraneous parameters for commands that do not require any (such as `help`, `list`, `exit`, and `clear`) will be ignored.
 - When copying commands from this PDF version, ensure that line breaks do not remove necessary spaces.
@@ -204,10 +204,10 @@ Format: `exit`
 
 ## Saving and Editing Data
 
-- **Saving the Data:**  
+- **Saving the Data:**
   TrackUp automatically saves data as a JSON file in your home folder after any command that changes the data.
 
-- **Editing the Data File:**  
+- **Editing the Data File:**
   The data is stored as a JSON file (e.g., `[JAR file location]/data/trackup.json`). Advanced users can edit this file directly, but be sure to back up the file first.
 
 
@@ -217,7 +217,7 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 
 ### Archiving data files `[coming in v2.0]`
 
-_Details coming soon 
+
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -230,10 +230,10 @@ _Details coming soon
 
 ## Known Issues
 
-1. **Multi-screen Usage:**  
+1. **Multi-screen Usage:** 
    When using multiple screens, if you move the application between screens, the GUI might open off-screen on some setups. Delete the `preferences.json` file in your TrackUp folder to reset the display settings.
 
-2. **Help Window Behavior:**  
+2. **Help Window Behavior:**
    If you minimize the Help Window and then issue the `help` command again, the original Help Window may remain minimized. Manually restore the window to view the help message.
 
 --------------------------------------------------------------------------------------------------------------------
