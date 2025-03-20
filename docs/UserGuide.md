@@ -103,7 +103,7 @@ Format: `list [<CATEGORY>]`
 
 Edits an existing person in TrackUp.
 
-Format: 'edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]'
+Format: `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`
 
 **Notes:**
 - `<INDEX>` refers to the contact's index in the current list (must be a positive integer).
