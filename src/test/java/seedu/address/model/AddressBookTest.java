@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
@@ -87,6 +88,39 @@ public class AddressBookTest {
     public void toStringMethod() {
         String expected = AddressBook.class.getCanonicalName() + "{persons=" + addressBook.getPersonList() + "}";
         assertEquals(expected, addressBook.toString());
+    }
+
+    @Test
+    public void hashCode_sameValues_returnsSameHashCode() {
+        AddressBook newData1 = getTypicalAddressBook();
+        AddressBook newData2 = getTypicalAddressBook();
+        assertEquals(newData1.hashCode(), newData2.hashCode());
+    }
+
+    @Test
+    public void hashCode_differentGuiSettings_returnsDifferentHashCode() {
+        AddressBook newData1 = getTypicalAddressBook();
+        AddressBook newData2 = new AddressBook();
+        assertNotEquals(newData1.hashCode(), newData2.hashCode());
+    }
+
+    @Test
+    public void equals() {
+        AddressBook newData1 = getTypicalAddressBook();
+        AddressBook newData2 = getTypicalAddressBook();
+        AddressBook newData3 = new AddressBook();
+
+        // same object -> returns true
+        assertEquals(newData1, newData1);
+
+        // same values -> returns true
+        assertEquals(newData1, newData2);
+
+        // different type -> returns false
+        assertNotEquals(newData1, 1);
+
+        // different values -> returns false
+        assertNotEquals(newData1, newData3);
     }
 
     /**

@@ -70,8 +70,12 @@ Shows a message explaning how to access the help page.
 
 ![help message](images/helpMessage.png)
 
-Format: `help`
+Format: `help` `help COMMAND_WORD`
 
+Examples:
+* `help`
+* `help add`
+* `help delete`
 
 ### Adding a person: `add`
 
@@ -89,9 +93,18 @@ Examples:
 
 ### Listing all persons : `list`
 
-Shows a list of all persons in the address book.
+Shows a list of contacts in TrackUp, optionally filtering them by a specified category.
 
-Format: `list`
+Format: `list [<CATEGORY>]`
+
+* Displays all contacts if no category is specified.
+* If a category is provided, only contacts from that category are shown.
+* Categories are case-insensitive.
+
+Examples:
+* `list` Displays all contacts.
+* `list Client` Displays only contacts categorized as Client.
+* `list Partner` Displays only contacts categorized as Partner.
 
 ### Editing a person : `edit`
 
@@ -141,6 +154,45 @@ Format: `delete INDEX`
 Examples:
 * `list` followed by `delete 2` deletes the 2nd person in the address book.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+
+### Deleting a person by attributes: `deleteby`
+
+Deletes a person from the address book using one or more attributes.
+
+Format: `deleteby [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
+
+* At least **one** attribute must be specified.
+* Deletes the person that matches the provided attributes.
+* If multiple people match the criteria, a message will be shown instead of deletion.
+* Attribute comparisons are **case-sensitive** and must be an exact match.
+
+Examples:
+* `deleteby n/John Doe` deletes the person named **John Doe** from the address book.
+* `deleteby p/98765432` deletes the person with phone number **98765432**.
+* `deleteby e/johnd@example.com` deletes the person with email **johnd@example.com**.
+* `deleteby a/311, Clementi Ave 2, #02-25` deletes the person living at **311, Clementi Ave 2, #02-25**.
+* `deleteby t/friends` deletes the person with the tag **friends**.
+* `deleteby n/John Doe p/98765432` deletes the person named **John Doe** with phone number **98765432**.
+
+### Searching for a person: `search`
+
+Finds persons whose **name, phone, email, address, tags, or category** contain the specified keyword.
+
+Format: `search KEYWORD`
+
+* The search is **case-insensitive**. e.g., `john` will match `John`.
+* Partial matches are supported. e.g., `son` will match `Johnson`.
+* The search applies to **all attributes** (name, phone, email, address, tags, and category).
+* Persons matching the keyword will be returned.
+
+Examples:
+* `search John` returns persons with names like **John Doe** and **Johnny Smith**.
+* `search 98765432` returns persons with the phone number **98765432**.
+* `search johnd@example.com` returns persons with the email **johnd@example.com**.
+* `search Clementi` returns persons whose address contains **Clementi**.
+* `search friends` returns persons who have the tag **friends**.
+* `search client` returns persons categorized as **Client**.
+* `search doe` returns persons whose attributes contain **"doe"**, such as **John Doe** and **johnd@example.com**.
 
 ### Clearing all entries : `clear`
 
