@@ -148,17 +148,23 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+## **Implementation Details**
 
-#### Proposed Implementation
+### **Undo/Redo Feature (Proposed)**
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+- Implemented in `VersionedTrackUp`, extending `TrackUp`.
+- Stores history as an `addressBookStateList` with a `currentStatePointer`.
+- Supports:
+    - `commit()` - Saves current state.
+    - `undo()` - Restores previous state.
+    - `redo()` - Reapplies undone state.
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+Workflow:
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+1. User executes `delete 5`, committing a new state.
+2. Executes `add n/David …​`, committing another state.
+3. Uses `undo`, restoring the previous state.
+4. Uses `redo`, reapplying the undone state.
 
 Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
 
