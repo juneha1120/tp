@@ -399,6 +399,7 @@ _{Explain here how the data archiving feature will be implemented}_
     - **3c1.** TrackUp shows an error message specifying the issue.
     - **Use case resumes at step 2.**
 
+---
 
 ### **Use Case: Delete a Contact**
 
