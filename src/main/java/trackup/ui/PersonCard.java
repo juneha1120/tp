@@ -60,29 +60,29 @@ public class PersonCard extends UiPart<Region> {
         if (person.getCategory().isPresent()) {
             String categoryName = person.getCategory().get().categoryName;
             category.setText(categoryName);
-            getCategoryColor(categoryName);
+            String categoryColor = getCategoryColor(categoryName);
+            cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
+                    + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
         } else {
             category.setVisible(false);
             category.setManaged(false);
-            getCategoryColor(null);
-        }
-    }
-
-    public void getCategoryColor(String categoryName) {
-        if (categoryName == null) {
-            cardPane.setStyle("-fx-border-color: rgba(240, 240, 240);" + "-fx-border-width: 2px;"
-                    + "-fx-background-color: rgba(240, 240, 240, 0.1);"); // 10% opacity
-        } else {
-            // Apply different border colors based on categoryName
-            String categoryColor = switch (categoryName) {
-            case "Client" -> "rgba(255, 221, 193"; // Light Orange
-            case "Investor" -> "rgba(193, 255, 215"; // Light Green
-            case "Partner" -> "rgba(193, 212, 255"; // Light Blue
-            case "Other" -> "rgba(224, 193, 255"; // Light Purple
-            default -> "rgba(240, 240, 240"; // Default Gray
-            };
+            String categoryColor = getCategoryColor(null);
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
                     + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
         }
+    }
+
+    public String getCategoryColor(String categoryName) {
+        if (categoryName == null) {
+            return "rgba(240, 240, 240";
+        }
+
+        return switch (categoryName) {
+        case "Client" -> "rgba(255, 221, 193"; // Light Orange
+        case "Investor" -> "rgba(193, 255, 215"; // Light Green
+        case "Partner" -> "rgba(193, 212, 255"; // Light Blue
+        case "Other" -> "rgba(224, 193, 255"; // Light Purple
+        default -> "rgba(240, 240, 240"; // Default Gray
+        };
     }
 }
