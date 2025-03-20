@@ -313,7 +313,6 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 | * *      | 100th time user     | receive reminders for important client anniversaries       | strengthen client relationships with personalized attention       |
 
 
-
 ## **Use Cases**
 
 *(For all use cases below, the **System** is `TrackUp`, and the **Actor** is the `User`, unless specified otherwise.)*
@@ -493,7 +492,7 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 
 ## **Appendix: Instructions for manual testing**
 
-Given below are instructions to test the app manually.
+Below are guidelines for performing manual testing of the app.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
 testers are expected to do more *exploratory* testing.
@@ -502,42 +501,41 @@ testers are expected to do more *exploratory* testing.
 
 ### Launch and shutdown
 
-1. Initial launch
+### Launching and shutting down
 
-   1. Download the jar file and copy into an empty folder
+1. **Initial launch**
+    1. Download the JAR file and place it in an empty folder.
+    1. Double-click the JAR file.  
+       **Expected:** The GUI launches with a set of sample contacts displayed. The initial window size may not be optimal.
 
-   1. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+2. **Saving window preferences**
+    1. Resize the window to an optimal size and move it to a preferred location. Close the window.
+    1. Re-launch the app by double-clicking the JAR file.  
+       **Expected:** The most recent window size and position are retained.
 
-1. Saving window preferences
+3. _{ Add additional test scenarios here }_
 
-   1. Resize the window to an optimum size. Move the window to a different location. Close the window.
 
-   1. Re-launch the app by double-clicking the jar file.<br>
-       Expected: The most recent window size and location is retained.
+### Deleting a contact
 
-1. _{ more test cases …​ }_
+1. **Deleting a contact while all contacts are shown**
+    1. **Prerequisites:** List all contacts using the `list` command. Ensure multiple contacts are visible.
+    1. Test case: `delete 1`  
+       **Expected:** The first contact is deleted from the list. The status message displays the details of the deleted contact. The timestamp in the status bar updates.
+    1. Test case: `delete 0`  
+       **Expected:** No contact is deleted. The status message displays an error message. The status bar remains unchanged.
+    1. Other invalid delete commands to test: `delete`, `delete x`, `...` (where `x` exceeds the list size)  
+       **Expected:** Similar error messages appear, and no contact is deleted.
 
-### Deleting a person
+2. _{ Add more delete-related test cases here }_
 
-1. Deleting a person while all persons are being shown
-
-   1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-
-   1. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-
-   1. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-
-   1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
-      Expected: Similar to previous.
-
-1. _{ more test cases …​ }_
+---
 
 ### Saving data
 
-1. Dealing with missing/corrupted data files
+1. **Handling missing or corrupted data files**
+    1. _{ Add instructions to simulate missing or corrupted files and describe the expected system behavior }_
 
-   1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
+2. _{ Add additional test scenarios for data saving and recovery here }_
 
-1. _{ more test cases …​ }_
+---
