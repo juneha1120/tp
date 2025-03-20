@@ -263,15 +263,14 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 
 **Target user profile**:
 
-* is business owner/startup founder
-* needs to manage and track contacts of clients and investors
-* needs to manage and track events with clients and investors
-* prefer desktop apps over other types
-* can type fast
-* prefers typing to mouse interactions
-* is reasonably comfortable using CLI apps
+- Business owners and startup founders
+- Need to manage and keep track of client and investor contacts
+- Regularly track meetings and events with clients and investors
+- Prefer desktop-based applications over web or mobile platforms
+- Type quickly and favor CLI-based interactions over GUI navigation
+- Are reasonably comfortable working with CLI-based tools
 
-**Value proposition**: A fast, local-first tool for business owners to track contacts and events. It centralises key business information, streamlining workflows, improving decision-making, and enhancing productivity with intuitive features for logging interactions, scheduling events, and accessing notes—whether in the office or on the move.
+**Value proposition**: A fast, secure, and offline-first contact management tool designed for business owners to consolidate contacts and event information in one place. It streamlines workflows, aids better decision-making, and enhances productivity with features for logging communication, scheduling meetings, and reviewing notes — accessible in-office or on the go.
 
 ### User stories
 
