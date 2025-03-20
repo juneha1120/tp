@@ -240,7 +240,9 @@ _{more aspects and alternatives to be added}_
 
 ### \[Proposed\] Data archiving
 
-_{Explain here how the data archiving feature will be implemented}_
+- We propose implementing data archiving by allowing the user to archive inactive contacts. Archived contacts
+will not appear in the active contact list but will be stored separately for retrieval. The archived
+data will be saved in a designated JSON file, archive.json, and displayed upon user request via an archive command.
 
 
 --------------------------------------------------------------------------------------------------------------------
