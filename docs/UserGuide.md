@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB3 can get your contact management tasks done faster than traditional GUI apps.
+**TrackUp** is a **desktop app for managing contacts and events** that is optimized for a CLI-first experience while still offering the benefits of a GUI. Designed for business owners and startup founders, TrackUp streamlines relationship management, follow-ups, and event organization—helping you work efficiently without unnecessary distractions.
 
 * Table of Contents
 {:toc}
@@ -15,20 +15,21 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/AY2425S2-CS2103T-F14-4/tp/releases).
+2. Download the latest `.jar` file from [here](https://github.com/se-edu/AY2425S2-CS2103T-F14-4/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your TrackUp.
+3. Copy the file to the folder you want to use as the _home folder_ for your TrackUp.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar trackup.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar trackup.jar` command to run the application.<br>
+
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -36,7 +37,7 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
    * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -46,207 +47,209 @@ AddressBook Level 3 (AB3) is a **desktop app for managing contacts, optimized fo
 
 **:information_source: Notes about the command format:**<br>
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-
-* Items with `…`​ after them can be used multiple times including zero times.<br>
-  e.g. `[t/TAG]…​` can be used as ` ` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
-
-* If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+- Words in `UPPER_CASE` indicate the parameters to be supplied by the user.
+  e.g., in `add -n <NAME>`, `<NAME>` is a parameter which can be used as `add -n "John Doe"`.
+- Items in square brackets are optional.
+  e.g., `-c <CATEGORY>` is optional.
+- The order of parameters is flexible.
+  e.g., `add -n "John Doe" -p 98765432` is equivalent to `add -p 98765432 -n "John Doe"`.
+- Extraneous parameters for commands that do not require any (such as `help`, `list`, `exit`, and `clear`) will be ignored.
+- When copying commands from this PDF version, ensure that line breaks do not remove necessary spaces.
 </div>
 
 ### Viewing help : `help`
 
-Shows a message explaning how to access the help page.
+Shows a message explaining how to access the help page.
 
 ![help message](images/helpMessage.png)
 
 Format: `help` `help COMMAND_WORD`
 
-Examples:
-* `help`
-* `help add`
-* `help delete`
+**Examples:**
+- `help`
+- `help add`
+- `help delete`
 
 ### Adding a person: `add`
 
-Adds a person to the address book.
+Adds a contact to TrackUp.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​`
+Format: `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A person can have any number of tags (including 0)
-</div>
+**Notes:**
+- **NAME**, **PHONE**, **EMAIL**, and **ADDRESS** are compulsory.
+- **CATEGORY** and **TAG** are optional.
+- **CATEGORY** should be one of: Client, Investor, Partner, Other.
 
-Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+
+**Examples:**
+- `add -n "John Doe" -p 98765432 -e johnd@example.com -a "John street, block 123, #01-01" -c Client -t friend`
+- `add -n "Betsy Crowe" -p 1234567 -e betsycrowe@example.com -a "Newgate Prison`
 
 ### Listing all persons : `list`
 
-Shows a list of contacts in TrackUp, optionally filtering them by a specified category.
-
+Displays all contacts in TrackUp, optionally filtering by category.
 Format: `list [<CATEGORY>]`
 
 * Displays all contacts if no category is specified.
 * If a category is provided, only contacts from that category are shown.
 * Categories are case-insensitive.
 
-Examples:
-* `list` Displays all contacts.
-* `list Client` Displays only contacts categorized as Client.
-* `list Partner` Displays only contacts categorized as Partner.
+**Examples:**
+- `list` — displays all contacts.
+- `list Client` — displays only contacts categorized as Client.
+- `list Investor` — displays only contacts categorized as Investor.
 
 ### Editing a person : `edit`
 
-Edits an existing person in the address book.
+Edits an existing person in TrackUp.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`
+Format: `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`
 
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person’s tags by typing `t/` without
-    specifying any tags after it.
+**Notes:**
+- `<INDEX>` refers to the contact's index in the current list (must be a positive integer).
+- At least one of the optional fields must be provided.
+- **CATEGORY** and **TAG** are optional.
 
-Examples:
-*  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-*  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+**Examples:**
+- `edit 1 -p 91234567 -e johnd@example.com` — updates the phone number and email of the first contact.
+- `edit 2 -n "Betsy Crower" -c Investor` — updates the name and sets the category to Investor for the second contact.
+
+---
 
 ### Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords.
+Finds and lists all contacts in TrackUp whose names contain any of the specified keywords. Keyword matching is performed in a case-insensitive manner, and the search is based solely on the names of contacts.
 
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+**Details:**
+- The search is **case-insensitive**. For example, `hans` will match `Hans`.
+- The order of keywords does not matter. For example, `Hans Bo` will match contacts with names like `Bo Hans`.
+- Only the **name** attribute is searched.
+- Only **full word** matches are considered. For instance, searching for `Han` will not match a name containing `Hans`.
+- The command returns contacts that match **at least one** of the keywords (i.e., an OR search).
 
-Examples:
-* `find John` returns `john` and `John Doe`
-* `find alex david` returns `Alex Yeoh`, `David Li`<br>
+**Examples:**
+- `find John` may return contacts such as `John Doe`.
+- `find alex david` may return contacts like `Alex Yeoh` and `David Li`.
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ### Deleting a person : `delete`
 
-Deletes the specified person from the address book.
+Deletes the specified contact from TrackUp.
 
-Format: `delete INDEX`
+Format: `delete <INDEX>`
 
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the displayed person list.
-* The index **must be a positive integer** 1, 2, 3, …​
+**Notes:**
+- Deletes the person at the specified `INDEX`.
+- `<INDEX>` refers to the contact's index in the current list (must be a positive integer).
 
-Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
-* `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
+**Examples:**
+- `delete 3` — deletes the third contact in the current list.
+- `list` followed by `delete 2` deletes the 2nd person in the address book.
+- `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
 ### Deleting a person by attributes: `deleteby`
 
-Deletes a person from the address book using one or more attributes.
+Deletes a contact from TrackUp using one or more attributes.
 
-Format: `deleteby [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]`
+Format: `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`
 
-* At least **one** attribute must be specified.
-* Deletes the person that matches the provided attributes.
-* If multiple people match the criteria, a message will be shown instead of deletion.
-* Attribute comparisons are **case-sensitive** and must be an exact match.
+**Notes:**
+- Deletes the person that matches the provided attributes.
+- At least one attribute must be specified.
+- Attribute matching is exact and case-sensitive.
+- If multiple contacts match the criteria, the system will display a message instead of deleting any contact.
 
-Examples:
-* `deleteby n/John Doe` deletes the person named **John Doe** from the address book.
-* `deleteby p/98765432` deletes the person with phone number **98765432**.
-* `deleteby e/johnd@example.com` deletes the person with email **johnd@example.com**.
-* `deleteby a/311, Clementi Ave 2, #02-25` deletes the person living at **311, Clementi Ave 2, #02-25**.
-* `deleteby t/friends` deletes the person with the tag **friends**.
-* `deleteby n/John Doe p/98765432` deletes the person named **John Doe** with phone number **98765432**.
+**Examples:**
+- `deleteby -n John Doe` deletes the person named **John Doe** from the address book.
+- `deleteby -p 98765432` deletes the person with phone number **98765432**.
+- `deleteby -e johnd@example.com` deletes the person with email **johnd@example.com**.
+- `deleteby -a 311, Clementi Ave 2, #02-25` deletes the person living at **311, Clementi Ave 2, #02-25**.
+- `deleteby -c Client` deletes the person with the category **Client**.
+- `deleteby -n John Doe -p 98765432` deletes the person named **John Doe** with phone number **98765432**.
 
 ### Searching for a person: `search`
 
 Finds persons whose **name, phone, email, address, tags, or category** contain the specified keyword.
 
-Format: `search KEYWORD`
+Format: `search <KEYWORD>`
 
+**Notes:**
 * The search is **case-insensitive**. e.g., `john` will match `John`.
 * Partial matches are supported. e.g., `son` will match `Johnson`.
 * The search applies to **all attributes** (name, phone, email, address, tags, and category).
 * Persons matching the keyword will be returned.
 
-Examples:
-* `search John` returns persons with names like **John Doe** and **Johnny Smith**.
-* `search 98765432` returns persons with the phone number **98765432**.
-* `search johnd@example.com` returns persons with the email **johnd@example.com**.
-* `search Clementi` returns persons whose address contains **Clementi**.
-* `search friends` returns persons who have the tag **friends**.
-* `search client` returns persons categorized as **Client**.
-* `search doe` returns persons whose attributes contain **"doe"**, such as **John Doe** and **johnd@example.com**.
+**Examples:**
+- `search John` returns persons with names like **John Doe** and **Johnny Smith**.
+- `search 98765432` returns persons with the phone number **98765432**.
+- `search johnd@example.com` returns persons with the email **johnd@example.com**.
+- `search Clementi` returns persons whose address contains **Clementi**.
+- `search friends` returns persons who have the tag **friends**.
+- `search client` returns persons categorized as **Client**.
+- `search doe` returns persons whose attributes contain **"doe"**, such as **John Doe** and **johnd@example.com**.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all contacts from TrackUp.
 
 Format: `clear`
 
 ### Exiting the program : `exit`
 
-Exits the program.
+Exits TrackUp
 
 Format: `exit`
 
-### Saving the data
+## Saving and Editing Data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+- **Saving the Data:**
+  TrackUp automatically saves data as a JSON file in your home folder after any command that changes the data.
 
-### Editing the data file
+- **Editing the Data File:**
+  The data is stored as a JSON file (e.g., `[JAR file location]/data/trackup.json`). Advanced users can edit this file directly, but be sure to back up the file first.
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+Editing the data file incorrectly may cause TrackUp to discard all data or behave unexpectedly.
 </div>
 
 ### Archiving data files `[coming in v2.0]`
 
-_Details coming soon ..._
+
 
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install TrackUp on the other computer and replace the empty data file it creates with your backup from your previous TrackUp home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Known issues
+## Known Issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+1. **Multi-screen Usage:**
+   When using multiple screens, if you move the application between screens, the GUI might open off-screen on some setups. Delete the `preferences.json` file in your TrackUp folder to reset the display settings.
+
+2. **Help Window Behavior:**
+   If you minimize the Help Window and then issue the `help` command again, the original Help Window may remain minimized. Manually restore the window to view the help message.
 
 --------------------------------------------------------------------------------------------------------------------
 
-## Command summary
+## Command Summary
 
-Action | Format, Examples
---------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-**Clear** | `clear`
-**Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
-**Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**List** | `list`
-**Help** | `help`
+| **Action**                | **Format, Examples**                                                                                                                                                                              |
+|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**                   | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>]  [-t <TAG>]`<br>e.g., `add -n "James Ho" -p 22224444 -e jamesho@example.com -a "123, Clementi Rd, 1234665" -c Client -t friend` |
+| **Clear**                 | `clear`                                                                                                                                                                                           |
+| **Delete**                | `delete <INDEX>`<br>e.g., `delete 3`                                                                                                                                                              |
+| **Delete by Attributes**  | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`<br>e.g., `deleteby -n "John Doe"`                                                                      |
+| **Edit**                  | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`<br>e.g., `edit 2 -n "James Lee" -e jameslee@example.com`                                                     |
+| **Find**                  | `find <KEYWORD>`<br>e.g., `find John`                                                                                                                                                             |
+| **List**                  | `list [<CATEGORY>]`<br>e.g., `list`, `list Client`                                                                                                                                                |
+| **Search**                | `search <KEYWORD>`<br>e.g., `search John`, `search Client`                                                                                                                                        |
+| **Help**                  | `help`                                                                                                                                                                                            |
+| **Exit**                  | `exit`                                                                                                                                                                                            |
