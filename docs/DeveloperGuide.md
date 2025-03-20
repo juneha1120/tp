@@ -115,10 +115,10 @@ How the parsing works:
 
 The `Model` component,
 
-* stores the address book data i.e., all `Person` objects (which are contained in a `UniquePersonList` object).
-* stores the currently 'selected' `Person` objects (e.g., results of a search query) as a separate _filtered_ list which is exposed to outsiders as an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* stores a `UserPref` object that represents the user’s preferences. This is exposed to the outside as a `ReadOnlyUserPref` objects.
-* does not depend on any of the other three components (as the `Model` represents data entities of the domain, they should make sense on their own without depending on other components)
+- Stores all TrackUp data — specifically, Person objects contained within a UniquePersonList.
+- Maintains a filtered list of currently displayed Person objects (for example, the result of a search query). This list is exposed as an unmodifiable ObservableList<Person>, which allows the UI to automatically update whenever the underlying data changes.
+- Holds a UserPref object that represents the user's preferences. This is exposed externally as a ReadOnlyUserPref object.
+- Operates independently of the other three components. As the Model represents domain entities, it is designed to make sense on its own without depending on other components.
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:** An alternative (arguably, a more OOP) model is given below. It has a `Tag` list in the `AddressBook`, which `Person` references. This allows `AddressBook` to only require one `Tag` object per unique tag, instead of each `Person` needing their own `Tag` objects.<br>
 
@@ -134,9 +134,9 @@ The `Model` component,
 <img src="images/StorageClassDiagram.png" width="550" />
 
 The `Storage` component,
-* can save both address book data and user preference data in JSON format, and read them back into corresponding objects.
-* inherits from both `AddressBookStorage` and `UserPrefStorage`, which means it can be treated as either one (if only the functionality of only one is needed).
-* depends on some classes in the `Model` component (because the `Storage` component's job is to save/retrieve objects that belong to the `Model`)
+- Handles saving and loading both TrackUp data and user preferences in JSON format.
+- Inherits from both AddressBookStorage and UserPrefStorage, allowing it to act as either depending on the functionality required.
+- Depends on some classes from the Model component, as its role is to store and retrieve objects that belong to the Model.
 
 ### Common classes
 
