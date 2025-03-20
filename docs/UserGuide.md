@@ -73,7 +73,7 @@ Format: `help` `help COMMAND_WORD`
 
 Adds a contact to TrackUp.
 
-Format: 'add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]'
+Format: `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]`
 
 **Notes:**
 - **NAME**, **PHONE**, **EMAIL**, and **ADDRESS** are compulsory.
