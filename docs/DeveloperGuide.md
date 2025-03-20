@@ -225,16 +225,16 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 #### Design considerations:
 
-**Aspect: How undo & redo executes:**
+**Aspect: How undo & redo operations are handled:**
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
+* **Alternative 1 (current implementation):** Store snapshots of the entire address book state.
+    * Pros: Straightforward and simple to implement.
+    * Cons: Potential memory inefficiency due to storing large states repeatedly.
 
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
+* **Alternative 2:** Each individual command maintains its own undo/redo logic.
+    * Pros: More memory-efficient (for example, `delete` only stores the deleted contact).
+    * Cons: Increases complexity — every command must correctly implement and manage undo/redo behavior.
+
 
 _{more aspects and alternatives to be added}_
 
