@@ -60,7 +60,19 @@ public class PersonCard extends UiPart<Region> {
         if (person.getCategory().isPresent()) {
             String categoryName = person.getCategory().get().categoryName;
             category.setText(categoryName);
+            getCategoryColor(categoryName);
+        } else {
+            category.setVisible(false);
+            category.setManaged(false);
+            getCategoryColor(null);
+        }
+    }
 
+    public void getCategoryColor(String categoryName) {
+        if (categoryName == null) {
+            cardPane.setStyle("-fx-border-color: rgba(240, 240, 240);" + "-fx-border-width: 2px;"
+                    + "-fx-background-color: rgba(240, 240, 240, 0.1);"); // 10% opacity
+        } else {
             // Apply different border colors based on categoryName
             String categoryColor = switch (categoryName) {
             case "Client" -> "rgba(255, 221, 193"; // Light Orange
@@ -70,12 +82,7 @@ public class PersonCard extends UiPart<Region> {
             default -> "rgba(240, 240, 240"; // Default Gray
             };
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
-                            + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
-        } else {
-            category.setVisible(false);
-            category.setManaged(false);
-            cardPane.setStyle("-fx-border-color: rgba(240, 240, 240);" + "-fx-border-width: 2px;"
-                            + "-fx-background-color: rgba(240, 240, 240, 0.1);"); // 10% opacity
+                    + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
         }
     }
 }
