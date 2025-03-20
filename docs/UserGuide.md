@@ -47,19 +47,19 @@ title: User Guide
 **:information_source: Notes about the command format:**<br>
 
 - Words in `UPPER_CASE` indicate the parameters to be supplied by the user. 
-- 
+
   e.g., in `add -n <NAME>`, `<NAME>` is a parameter which can be used as `add -n "John Doe"`.
-- 
+
 - Items in square brackets are optional.  
-- 
+
   e.g., `-c <CATEGORY>` is optional.
-- 
+
 - The order of parameters is flexible.  
-- 
+
   e.g., `add -n "John Doe" -p 98765432` is equivalent to `add -p 98765432 -n "John Doe"`.
-- 
+
 - Extraneous parameters for commands that do not require any (such as `help`, `list`, `exit`, and `clear`) will be ignored.
-- 
+
 - When copying commands from this PDF version, ensure that line breaks do not remove necessary spaces.
 </div>
 
@@ -80,16 +80,16 @@ Format: `help` `help COMMAND_WORD`
 
 Adds a contact to TrackUp.
 
-Format: add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>]
+Format: 'add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]'
 
 **Notes:**
 - **NAME**, **PHONE**, **EMAIL**, and **ADDRESS** are compulsory.
-- **CATEGORY** is optional.
+- **CATEGORY** and **TAG** are optional.
 - **CATEGORY** should be one of: Client, Investor, Partner, Other.
 
 
 **Examples:**
-- `add -n "John Doe" -p 98765432 -e johnd@example.com -a "John street, block 123, #01-01" -c Client`
+- `add -n "John Doe" -p 98765432 -e johnd@example.com -a "John street, block 123, #01-01" -c Client -t friend`
 - `add -n "Betsy Crowe" -p 1234567 -e betsycrowe@example.com -a "Newgate Prison`
 
 ### Listing all persons : `list`
@@ -110,12 +110,12 @@ Format: `list [<CATEGORY>]`
 
 Edits an existing person in TrackUp.
 
-Format: 'edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>]'
+Format: 'edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]'
 
 **Notes:**
 - `<INDEX>` refers to the contact's index in the current list (must be a positive integer).
 - At least one of the optional fields must be provided.
-- **CATEGORY** is optional.
+- **CATEGORY** and **TAG** are optional.
 
 **Examples:**
 - `edit 1 -p 91234567 -e johnd@example.com` — updates the phone number and email of the first contact.
@@ -160,7 +160,7 @@ Format: `delete <INDEX>`
 
 Deletes a contact from TrackUp using one or more attributes.
 
-Format: 'deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>]'
+Format: 'deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]'
 
 **Notes:**
 - Deletes the person that matches the provided attributes.
@@ -247,15 +247,15 @@ _Details coming soon ..._
 
 ## Command Summary
 
-| **Action**                | **Format, Examples**                                                                                                                                                                                               |
-|---------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**                   | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>]`<br>e.g., `add -n "James Ho" -p 22224444 -e jamesho@example.com -a "123, Clementi Rd, 1234665" -c Client`                                  |
-| **Clear**                 | `clear`                                                                                                                                                                                                              |
-| **Delete**                | `delete <INDEX>`<br>e.g., `delete 3`                                                                                                                                                                                  |
-| **Delete by Attributes**  | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>]`<br>e.g., `deleteby -n "John Doe"`                                                                                                    |
-| **Edit**                  | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>]`<br>e.g., `edit 2 -n "James Lee" -e jameslee@example.com`                                                                    |
-| **Find**                  | `find <KEYWORD>`<br>e.g., `find John`                                                                                                                                                                                  |
-| **List**                  | `list [<CATEGORY>]`<br>e.g., `list`, `list Client`                                                                                                                                                                   |
-| **Search**                | `search <KEYWORD>`<br>e.g., `search John`, `search Client`                                                                                                                                                           |
-| **Help**                  | `help`                                                                                                                                                                                                               |
-| **Exit**                  | `exit`                                                                                                                                                                                                               |
+| **Action**                | **Format, Examples**                                                                                                                                                                              |
+|---------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Add**                   | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>]  [-t <TAG>]`<br>e.g., `add -n "James Ho" -p 22224444 -e jamesho@example.com -a "123, Clementi Rd, 1234665" -c Client -t friend` |
+| **Clear**                 | `clear`                                                                                                                                                                                           |
+| **Delete**                | `delete <INDEX>`<br>e.g., `delete 3`                                                                                                                                                              |
+| **Delete by Attributes**  | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`<br>e.g., `deleteby -n "John Doe"`                                                                      |
+| **Edit**                  | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`<br>e.g., `edit 2 -n "James Lee" -e jameslee@example.com`                                                     |
+| **Find**                  | `find <KEYWORD>`<br>e.g., `find John`                                                                                                                                                             |
+| **List**                  | `list [<CATEGORY>]`<br>e.g., `list`, `list Client`                                                                                                                                                |
+| **Search**                | `search <KEYWORD>`<br>e.g., `search John`, `search Client`                                                                                                                                        |
+| **Help**                  | `help`                                                                                                                                                                                            |
+| **Exit**                  | `exit`                                                                                                                                                                                            |
