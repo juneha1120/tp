@@ -230,7 +230,7 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 
 ## Known Issues
 
-1. **Multi-screen Usage:** 
+1. **Multi-screen Usage:**
    When using multiple screens, if you move the application between screens, the GUI might open off-screen on some setups. Delete the `preferences.json` file in your TrackUp folder to reset the display settings.
 
 2. **Help Window Behavior:**
