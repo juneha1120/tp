@@ -274,43 +274,44 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 
 ### User stories
 
-| Priority | As a            | I can...                                                 | So that I can                                                   |
-|----------|-----------------|----------------------------------------------------------|-----------------------------------------------------------------|
-| * * *    | Potential user  | see the system populated with placeholder data           | see how it works before fully committing                        |
-| * * *    | Potential user  | receive guided prompts                                   | understand the main features of the tool                        |
-| * * *    | Potential user  | interact with a chatbot for my queries                   | clarify doubts before committing                                |
-| * * *    | Potential user  | browse through a feature overview                        | understand the main features of the tool                        |
-| * * *    | Potential user  | read a clear and concise value proposition               | understand how this tool benefits my business                   |
-| * * *    | New user        | follow a "Getting Started" checklist                     | complete key setup steps efficiently                            |
-| * * *    | New user        | import my existing contacts                              | avoid having to manually enter each one                         |
-| * * *    | New user        | go through a tutorial mode                               | understand the basics quickly                                   |
-| * * *    | New user        | access a help center or FAQs within the app              | find answers without leaving the tool                           |
-| * * *    | New user        | reset my data if I make mistakes during my initial setup | start fresh if needed                                           |
-| * * *    | New user        | explore example use cases                                | learn how others use the tool                                   |
-| * * *    | 2nd time user   | categorize contacts into clients, investors and partners | manage them separately                                          |
-| * * *    | 2nd time user   | filter the contacts based on tags                        | see the contacts that im interested in                          |
-| * * *    | 2nd time user   | add and edit client details                              | keep my contact list up to date                                 |
-| * *      | 2nd time user   | attachs notes to contacts                                | keep my contact list up to date                                 |
-| * *      | 2nd time user   | customize fields for contact information                 | store only data relevant to business needs                      |
-| * *      | 10th time user  | mark contact priority                                    | quickly identify my most important clients                      |
-| * *      | 10th time user  | merge duplicated contacts                                | keep my contacts clean and organized                            |
-| * *      | 10th time user  | archive inactive contacts                                | active contacts remains relevant                                |
-| * * *    | 10th time user  | log interactions (calls, emails, meetings) with contacts | track communication history                                     |
-| * * *    | 10th time user  | set follow up remainders after interactions              | avoid forgetting to check in                                    |
-| * * *    | 10th time user  | search interactions by keyword                           | find details in past conversations                              |
-| * *      | 10th time user  | tag interactions with custom labels                      | organize them effectively                                       |
-| * * *    | 10th time user  | set reminders for events                                 | never miss important meetings                                   |
-| * * *    | 10th time user  | receive reminders for pending tasks related to contacts  | stay on top of to-dos                                           |
-| *        | 10th time user  | categorize contacts by industry or company size          | tailer my communication approach based on business type         |
-| *        | 100th time user | generate reports on client interactions                  | analyze engagement trends                                       |
-| *        | 100th time user | track conversion rates from leads to clients             | measure business growth                                         |
-| *        | 100th time user | receive automated insights on neglected contacts         | re-engage them                                                  |
-| * *      | 100th time user | create customizable dashboards                           | focus on the metrics that matter                                |
-| *        | 100th time user | shortcuts for frequently performed tasks                 | work more efficiently                                           |
-| *        | 100th time user | batch process multiple contacts                          | save time on repetitive tasks                                   |
-| *        | 100th time user | automate follow-ups                                      | streamline client engagement                                    |
-| * *      | 100th time user | export my contacts, events and interaction history       | share or back up my data                                        |
-| * *      | 100th time user | receive notifications for important client anniversaries | strengthen client relationships through personalized engagement |
+| Priority | As a                | I can...                                                   | So that I can                                                     |
+|----------|---------------------|------------------------------------------------------------|-------------------------------------------------------------------|
+| * * *    | Potential user      | view the system with pre-populated placeholder data        | understand how it works before committing fully                   |
+| * * *    | Potential user      | receive guided prompts                                     | easily grasp the tool’s key features                              |
+| * * *    | Potential user      | interact with a chatbot for any queries                    | clarify doubts before deciding to use the tool                    |
+| * * *    | Potential user      | browse through a feature overview                          | understand the tool’s core functionalities                        |
+| * * *    | Potential user      | read a clear and concise value proposition                | learn how the tool benefits my business                           |
+| * * *    | New user            | follow a "Getting Started" checklist                       | complete the setup quickly and efficiently                        |
+| * * *    | New user            | import existing contacts                                   | avoid manually entering all contacts                              |
+| * * *    | New user            | go through a tutorial mode                                 | understand the basics in no time                                  |
+| * * *    | New user            | access an in-app help center or FAQs                       | find answers without leaving the tool                             |
+| * * *    | New user            | reset my data if I make mistakes during setup              | start fresh when needed                                           |
+| * * *    | New user            | explore example use cases                                  | learn how others are using the tool                               |
+| * * *    | 2nd time user       | categorize contacts into clients, investors, and partners  | manage them separately and more effectively                       |
+| * * *    | 2nd time user       | filter contacts by tags                                    | quickly find the contacts I need                                  |
+| * * *    | 2nd time user       | add and edit client details                                | keep my contact information up to date                            |
+| * *      | 2nd time user       | attach notes to contacts                                   | keep additional important details recorded                        |
+| * *      | 2nd time user       | customize fields for contact information                   | store only business-relevant data                                 |
+| * *      | 10th time user      | mark high-priority contacts                                | easily identify my most important clients                         |
+| * *      | 10th time user      | merge duplicated contacts                                  | keep my contact list clean and organized                          |
+| * *      | 10th time user      | archive inactive contacts                                  | ensure my contacts remain relevant                                |
+| * * *    | 10th time user      | log interactions (calls, emails, meetings) with contacts   | track communication history effectively                           |
+| * * *    | 10th time user      | set follow-up reminders after interactions                 | ensure I never miss important follow-ups                          |
+| * * *    | 10th time user      | search interaction records by keyword                      | easily locate past conversations                                  |
+| * *      | 10th time user      | tag interactions with custom labels                        | organize and filter them as needed                                |
+| * * *    | 10th time user      | set reminders for events                                   | never miss key meetings                                           |
+| * * *    | 10th time user      | receive reminders for pending tasks related to contacts    | stay on top of my to-do list                                      |
+| *        | 10th time user      | categorize contacts by industry or company size            | tailor communication styles based on business type                |
+| *        | 100th time user     | generate reports on client interactions                    | analyze engagement trends                                         |
+| *        | 100th time user     | track conversion rates from leads to clients               | measure my business’s growth                                      |
+| *        | 100th time user     | receive automated insights on neglected contacts           | re-engage those contacts                                         |
+| * *      | 100th time user     | create customizable dashboards                             | focus on the metrics that matter to me                            |
+| *        | 100th time user     | use shortcuts for frequently performed tasks               | work more efficiently                                             |
+| *        | 100th time user     | batch process multiple contacts                            | save time on repetitive actions                                   |
+| *        | 100th time user     | automate follow-ups                                        | keep client engagement streamlined                                |
+| * *      | 100th time user     | export my contacts, events, and interaction history        | share or back up important data                                   |
+| * *      | 100th time user     | receive reminders for important client anniversaries       | strengthen client relationships with personalized attention       |
+
 
 
 ## **Use Cases**
