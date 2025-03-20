@@ -7,7 +7,6 @@ import trackup.commons.core.GuiSettings;
 import trackup.logic.commands.CommandResult;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.logic.parser.exceptions.ParseException;
-import trackup.model.Model;
 import trackup.model.ReadOnlyAddressBook;
 import trackup.model.person.Person;
 
@@ -27,7 +26,7 @@ public interface Logic {
     /**
      * Returns the AddressBook.
      *
-     * @see Model#getAddressBook()
+     * @see trackup.model.Model#getAddressBook()
      */
     ReadOnlyAddressBook getAddressBook();
 

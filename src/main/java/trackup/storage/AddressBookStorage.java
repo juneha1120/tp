@@ -5,11 +5,10 @@ import java.nio.file.Path;
 import java.util.Optional;
 
 import trackup.commons.exceptions.DataLoadingException;
-import trackup.model.AddressBook;
 import trackup.model.ReadOnlyAddressBook;
 
 /**
- * Represents a storage for {@link AddressBook}.
+ * Represents a storage for {@link trackup.model.AddressBook}.
  */
 public interface AddressBookStorage {
 
