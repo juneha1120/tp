@@ -3,7 +3,7 @@ layout: page
 title: TrackUp
 ---
 
-[![CI Status](https://github.com/se-edu/addressbook-level3/workflows/Java%20CI/badge.svg)](https://github.com/AY2425S2-CS2103T-F14-4/tp/actions)
+[![CI Status](https://github.com/AY2425S2-CS2103T-F14-4/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2425S2-CS2103T-F14-4/tp/actions)
 [![codecov](https://codecov.io/gh/AY2425S2-CS2103T-F14-4/tp/graph/badge.svg?token=H4Z1Q1GOF6)](https://codecov.io/gh/AY2425S2-CS2103T-F14-4/tp)
 
 ![Ui](images/Ui.png)
