@@ -153,7 +153,7 @@ Format: `delete <INDEX>`
 
 Deletes a contact from TrackUp using one or more attributes.
 
-Format: 'deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]'
+Format: `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`
 
 **Notes:**
 - Deletes the person that matches the provided attributes.
