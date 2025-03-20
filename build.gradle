@@ -67,7 +67,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveFileName = 'trackupddressbook.jar'
+    archiveFileName = 'trackup.jar'
 }
 
 defaultTasks 'clean', 'test'
