@@ -43,6 +43,15 @@ public class ListCommandTest {
     }
 
     @Test
+    public void execute_withCategory_filtersList() {
+        Category clientCategory = new Category("Client");
+        model.updateFilteredPersonList(person -> person.hasCategory(clientCategory));
+        expectedModel.updateFilteredPersonList(person -> person.hasCategory(clientCategory));
+        assertCommandSuccess(new ListCommand(Optional.of(clientCategory)), model,
+                String.format(ListCommand.MESSAGE_SUCCESS_FILTERED, clientCategory), expectedModel);
+    }
+
+    @Test
     public void equals() {
         Category clientCategory = new Category("Client");
         Category investorCategory = new Category("Investor");
