@@ -3,7 +3,6 @@ package trackup.logic.parser;
 import static trackup.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static trackup.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static trackup.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static trackup.logic.commands.CommandTestUtil.CATEGORY_DESC_CLIENT;
 import static trackup.logic.commands.CommandTestUtil.CATEGORY_DESC_INVESTOR;
 import static trackup.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static trackup.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
@@ -138,11 +137,13 @@ public class AddCommandParserTest {
     public void parse_optionalFieldsMissing_success() {
         // zero tags
         Person expectedPersonNoTag = new PersonBuilder(AMY).withTags().withCategory("Other").build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPersonNoTag));
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY, new AddCommand(expectedPersonNoTag));
 
         // zero category
         Person expectedPersonNoCategory = new PersonBuilder(AMY).withCategory("Other").build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonNoCategory));
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonNoCategory));
     }
 
     @Test
