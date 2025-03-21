@@ -142,7 +142,7 @@ public class AddCommandParserTest {
                 + CATEGORY_DESC_CLIENT, new AddCommand(expectedPersonNoTag));
 
         // zero category
-        Person expectedPersonNoCategory = new PersonBuilder(AMY).withNoCategory().build();
+        Person expectedPersonNoCategory = new PersonBuilder().withCategory("Other").build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
                 + TAG_DESC_FRIEND, new AddCommand(expectedPersonNoCategory));
     }
