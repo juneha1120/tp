@@ -15,11 +15,12 @@ title: User Guide
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-2. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/se-edu/AY2425S2-CS2103T-F14-4/tp/releases).
 
-3. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+3. Copy the file to the folder you want to use as the _home folder_ for your TrackUp.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar Trackup.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar trackup.jar` command to run the application.<br>
+
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
@@ -73,7 +74,7 @@ Format: `help` `help COMMAND_WORD`
 
 Adds a contact to TrackUp.
 
-Format: 'add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]'
+Format: `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]`
 
 **Notes:**
 - **NAME**, **PHONE**, **EMAIL**, and **ADDRESS** are compulsory.
@@ -103,7 +104,7 @@ Format: `list [<CATEGORY>]`
 
 Edits an existing person in TrackUp.
 
-Format: 'edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]'
+Format: `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`
 
 **Notes:**
 - `<INDEX>` refers to the contact's index in the current list (must be a positive integer).
@@ -153,7 +154,7 @@ Format: `delete <INDEX>`
 
 Deletes a contact from TrackUp using one or more attributes.
 
-Format: 'deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]'
+Format: `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`
 
 **Notes:**
 - Deletes the person that matches the provided attributes.
@@ -230,7 +231,7 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 
 ## Known Issues
 
-1. **Multi-screen Usage:** 
+1. **Multi-screen Usage:**
    When using multiple screens, if you move the application between screens, the GUI might open off-screen on some setups. Delete the `preferences.json` file in your TrackUp folder to reset the display settings.
 
 2. **Help Window Behavior:**

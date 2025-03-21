@@ -43,7 +43,7 @@ Given below is a quick overview of main components and how they interact.
     - [**`Storage`**](#storage-component): Reads and writes data to disk.
 - [**`Commons`**](#common-classes) contains utility classes shared across components.
 
-### **How Components Interact**
+## **How Components Interact**
 Below is a *Sequence Diagram* showing how TrackUp processes the command `delete 1`:
 
 <img src="images/ArchitectureSequenceDiagram.png" width="574" />
@@ -397,6 +397,7 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
     - **3c1.** TrackUp shows an error message specifying the issue.
     - **Use case resumes at step 2.**
 
+---
 
 ### **Use Case: Delete a Contact**
 
