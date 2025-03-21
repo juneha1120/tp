@@ -22,6 +22,7 @@ import trackup.model.AddressBook;
 import trackup.model.Model;
 import trackup.model.ReadOnlyAddressBook;
 import trackup.model.ReadOnlyUserPrefs;
+import trackup.model.category.Category;
 import trackup.model.person.Person;
 import trackup.testutil.PersonBuilder;
 
@@ -52,6 +53,18 @@ public class AddCommandTest {
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
     }
+
+    @Test
+    public void execute_personWithoutCategory_defaultCategoryAssigned() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person personWithoutCategory = new PersonBuilder().withCategory(null).build();
+
+        CommandResult commandResult = new AddCommand(personWithoutCategory).execute(modelStub);
+
+        assertEquals(Category.DEFAULT_CATEGORY,
+                modelStub.personsAdded.get(0).getCategory().get().categoryName);
+    }
+
 
     @Test
     public void equals() {

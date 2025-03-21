@@ -12,6 +12,7 @@ public class Category {
     public static final String MESSAGE_CONSTRAINTS = "Category should be one of: Client, Investor, Partner, Other";
     private static final String[] VALID_CATEGORIES = {"Client", "Investor", "Partner", "Other"};
 
+    public static final String DEFAULT_CATEGORY = "Other";
     public final String categoryName;
 
     /**
