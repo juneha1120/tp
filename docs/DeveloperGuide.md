@@ -347,7 +347,7 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 
 #### **Main Success Scenario (MSS)**
 1. User requests to view all contacts.
-2. TrackUp displays all contacts.  
+2. TrackUp displays all contacts.
    Use case ends.
 
 #### **Extensions**
@@ -439,32 +439,32 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 1. Typing-Optimised: The application must prioritise CLI-based input to cater to users who type fast, allowing all actions to be performed through text commands.
 2. Minimal GUI Elements: If a GUI is implemented, it should primarily provide visual feedback rather than serve as the primary input method.
 3. Learnability: The application should provide a quick-start tutorial that allows new users to become proficient within 10 minutes.
-   
+
 **Performance Requirements**
 1. Response Time: Commands should execute within 500ms under normal operation (10,000 contacts, 50,000 event entries).
 2. Memory Usage: The application should not exceed 200MB of RAM usage during peak operations.
 3. Startup Time: The application should launch and be ready for use within 2 seconds on a modern system (Intel i5 8th Gen, 8GB RAM, SSD).
-   
+
 **Security & Privacy**
 1. Data Confidentiality: User data must remain local and should not be transmitted over the internet.
 2. No External Storage: The application should not rely on remote servers for storage or functionality.
 3. User Control: Users should have complete control over their data, with the ability to edit, back up, and delete it manually.
-   
+
 **Maintainability & Extensibility**
 1. Modular Codebase: The system should follow Object-Oriented Programming principles to facilitate maintainability.
 2. Incremental Development: Features should be added in small, working increments to ensure continuous functionality.
 3. Extensibility: New features should be implementable without breaking existing functionality, following Open/Closed Principle (OCP).
-   
+
 **Reliability & Fault Tolerance**
 1. Error Handling: The application should provide meaningful error messages for invalid user input.
 2. Fault Recovery: The application should automatically recover from crashes by restoring the last saved state.
 3. Data Integrity: Data should not be corrupted even in the event of an unexpected shutdown.
-   
+
 **Testability**
 1. Automated Testing: The application should support unit and integration testing to ensure correctness.
 2. Manual Testing Feasibility: The application should be testable by peer testers without requiring complex setups.
 3. Regression Prevention: Existing functionalities should remain functional after new feature additions.
-   
+
 **Scalability & Stability**
 1. Scalability: The application should handle an increasing number of contacts and events without performance degradation.
 2. Stability: The application should function without crashes or major bugs under normal operating conditions.
@@ -499,18 +499,18 @@ testers are expected to do more *exploratory* testing.
 
 </div>
 
-### Launch and shutdown 
+### Launch and shutdown
 
 ### Launching and shutting down
 
 1. **Initial launch**
     1. Download the JAR file and place it in an empty folder.
-    1. Double-click the JAR file.  
+    1. Double-click the JAR file.
        **Expected:** The GUI launches with a set of sample contacts displayed. The initial window size may not be optimal.
 
 2. **Saving window preferences**
     1. Resize the window to an optimal size and move it to a preferred location. Close the window.
-    1. Re-launch the app by double-clicking the JAR file.  
+    1. Re-launch the app by double-clicking the JAR file.
        **Expected:** The most recent window size and position are retained.
 
 3. _{ Add additional test scenarios here }_
@@ -520,11 +520,11 @@ testers are expected to do more *exploratory* testing.
 
 1. **Deleting a contact while all contacts are shown**
     1. **Prerequisites:** List all contacts using the `list` command. Ensure multiple contacts are visible.
-    1. Test case: `delete 1`  
+    1. Test case: `delete 1`
        **Expected:** The first contact is deleted from the list. The status message displays the details of the deleted contact. The timestamp in the status bar updates.
-    1. Test case: `delete 0`  
+    1. Test case: `delete 0`
        **Expected:** No contact is deleted. The status message displays an error message. The status bar remains unchanged.
-    1. Other invalid delete commands to test: `delete`, `delete x`, `...` (where `x` exceeds the list size)  
+    1. Other invalid delete commands to test: `delete`, `delete x`, `...` (where `x` exceeds the list size)
        **Expected:** Similar error messages appear, and no contact is deleted.
 
 2. _{ Add more delete-related test cases here }_
