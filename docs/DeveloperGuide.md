@@ -5,19 +5,19 @@ title: Developer Guide
 * Table of Contents
 {:toc}
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Acknowledgements**
 
 - {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Setting up, getting started**
 
 Refer to the guide [_Setting up and getting started_](SettingUp.md).
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Design**
 
@@ -142,7 +142,7 @@ The `Storage` component,
 
 Classes used by multiple components are in the `seedu.address.commons` package.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Implementation**
 
@@ -244,8 +244,7 @@ _{more aspects and alternatives to be added}_
 will not appear in the active contact list but will be stored separately for retrieval. The archived
 data will be saved in a designated JSON file, archive.json, and displayed upon user request via an archive command.
 
-
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -255,7 +254,7 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 * [Configuration guide](Configuration.md)
 * [DevOps guide](DevOps.md)
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Appendix: Requirements**
 
@@ -488,7 +487,7 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 * **Pagination** A method of displaying large lists in smaller, more manageable sections.
 * **Sorting** Arranging displayed contacts in a specified order, such as alphabetically.
 
---------------------------------------------------------------------------------------------------------------------
+---
 
 ## **Appendix: Instructions for manual testing**
 
@@ -499,7 +498,7 @@ testers are expected to do more *exploratory* testing.
 
 </div>
 
-### Launch and shutdown
+### Launch and shutdown 
 
 ### Launching and shutting down
 
