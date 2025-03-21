@@ -38,7 +38,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.category = category;
+        this.category = category.isPresent() ? category : Optional.of(new Category("Other"));
     }
 
     public Name getName() {
