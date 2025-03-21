@@ -1,0 +1,89 @@
+From 56f2d68e8db893f9e1098e9d99ac1d084afbc672 Mon Sep 17 00:00:00 2001
+From: Arshin Sikka <e1186295@u.nus.edu>
+Date: Fri, 21 Mar 2025 17:37:58 +0800
+Subject: [PATCH] feat: assign default category 'Other' when no category is
+ provided in add command
+
+- Updated AddCommandParser to automatically assign the default category 'Other' if no category is specified by the user.
+- Added DEFAULT_CATEGORY constant in Category.java for consistency and reuse.
+- Included test case in AddCommandTest to verify default category assignment.
+---
+ .../trackup/logic/parser/AddCommandParser.java    |  2 +-
+ .../java/trackup/model/category/Category.java     |  3 +++
+ .../trackup/logic/commands/AddCommandTest.java    | 15 +++++++++++++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/src/main/java/trackup/logic/parser/AddCommandParser.java b/src/main/java/trackup/logic/parser/AddCommandParser.java
+index 52d47974..25583217 100644
+--- a/src/main/java/trackup/logic/parser/AddCommandParser.java
++++ b/src/main/java/trackup/logic/parser/AddCommandParser.java
+@@ -52,7 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
+         if (argMultimap.getValue(PREFIX_CATEGORY).isPresent()) {
+             category = Optional.ofNullable(ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get()));
+         } else {
+-            category = Optional.empty();
++            category = Optional.of(new Category(Category.DEFAULT_CATEGORY));
+         }
+ 
+         Person person = new Person(name, phone, email, address, tagList, category);
+diff --git a/src/main/java/trackup/model/category/Category.java b/src/main/java/trackup/model/category/Category.java
+index d85966d8..3d17c02d 100644
+--- a/src/main/java/trackup/model/category/Category.java
++++ b/src/main/java/trackup/model/category/Category.java
+@@ -12,6 +12,9 @@ public class Category {
+     public static final String MESSAGE_CONSTRAINTS = "Category should be one of: Client, Investor, Partner, Other";
+     private static final String[] VALID_CATEGORIES = {"Client", "Investor", "Partner", "Other"};
+ 
++    public static final String DEFAULT_CATEGORY = "Other";
++
++
+     public final String categoryName;
+ 
+     /**
+diff --git a/src/test/java/trackup/logic/commands/AddCommandTest.java b/src/test/java/trackup/logic/commands/AddCommandTest.java
+index 145f7c4b..d386093d 100644
+--- a/src/test/java/trackup/logic/commands/AddCommandTest.java
++++ b/src/test/java/trackup/logic/commands/AddCommandTest.java
+@@ -22,6 +22,7 @@ import trackup.model.AddressBook;
+ import trackup.model.Model;
+ import trackup.model.ReadOnlyAddressBook;
+ import trackup.model.ReadOnlyUserPrefs;
++import trackup.model.category.Category;
+ import trackup.model.person.Person;
+ import trackup.testutil.PersonBuilder;
+ 
+@@ -53,6 +54,18 @@ public class AddCommandTest {
+         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
+     }
+ 
++    @Test
++    public void execute_personWithoutCategory_defaultCategoryAssigned() throws Exception {
++        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
++        Person personWithoutCategory = new PersonBuilder().withCategory(null).build();
++
++        CommandResult commandResult = new AddCommand(personWithoutCategory).execute(modelStub);
++
++        assertEquals(Category.DEFAULT_CATEGORY,
++                modelStub.personsAdded.get(0).getCategory().get().categoryName);
++    }
++
++
+     @Test
+     public void equals() {
+         Person alice = new PersonBuilder().withName("Alice").build();
+@@ -195,10 +208,12 @@ public class AddCommandTest {
+             personsAdded.add(person);
+         }
+ 
++
+         @Override
+         public ReadOnlyAddressBook getAddressBook() {
+             return new AddressBook();
+         }
+     }
+ 
++
+ }
+-- 
+2.39.2 (Apple Git-143)
+

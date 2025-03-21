@@ -56,7 +56,7 @@ public class AddCommandTest {
     @Test
     public void execute_personWithoutCategory_defaultCategoryAssigned() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person personWithoutCategory = new PersonBuilder().withNoCategory().build(); // You might need to add this helper method
+        Person personWithoutCategory = new PersonBuilder().withNoCategory().build();
         AddCommand addCommand = new AddCommand(personWithoutCategory);
 
         CommandResult commandResult = addCommand.execute(modelStub);
