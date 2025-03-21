@@ -137,14 +137,12 @@ public class AddCommandParserTest {
     @Test
     public void parse_optionalFieldsMissing_success() {
         // zero tags
-        Person expectedPersonNoTag = new PersonBuilder(AMY).withTags().build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + CATEGORY_DESC_CLIENT, new AddCommand(expectedPersonNoTag));
+        Person expectedPersonNoTag = new PersonBuilder(AMY).withTags().withCategory("Other").build();
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY, new AddCommand(expectedPersonNoTag));
 
         // zero category
-        Person expectedPersonNoCategory = new PersonBuilder().withCategory("Other").build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                + TAG_DESC_FRIEND, new AddCommand(expectedPersonNoCategory));
+        Person expectedPersonNoCategory = new PersonBuilder(AMY).withCategory("Other").build();
+        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonNoCategory));
     }
 
     @Test
