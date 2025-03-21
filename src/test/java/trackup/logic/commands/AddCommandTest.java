@@ -22,7 +22,6 @@ import trackup.model.AddressBook;
 import trackup.model.Model;
 import trackup.model.ReadOnlyAddressBook;
 import trackup.model.ReadOnlyUserPrefs;
-import trackup.model.category.Category;
 import trackup.model.person.Person;
 import trackup.testutil.PersonBuilder;
 

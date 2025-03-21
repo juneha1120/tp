@@ -54,7 +54,6 @@ public class AddCommandParser implements Parser<AddCommand> {
         } else {
             category = Optional.of(new Category("Other"));
         }
-
         Person person = new Person(name, phone, email, address, tagList, category);
 
         return new AddCommand(person);
