@@ -96,4 +96,13 @@ public interface Model {
      * {@code event} must not already exist in the calendar.
      */
     void addEvent(Event event);
+
+    /**
+     * Deletes the given event.
+     * The event must exist in the address book.
+     */
+    void deleteEvent(Event event);
+
+    /** Returns an unmodifiable view of the event list */
+    ObservableList<Event> getEventList();
 }
