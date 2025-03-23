@@ -174,9 +174,15 @@ public class AddCommandTest {
             events.add(event);
         }
 
-        // Simulating the event list for testing purposes
-        public List<Event> getEvents() {
-            return new ArrayList<>(events);
+        @Override
+        public void deleteEvent(Event event) {
+            requireNonNull(event);
+            events.remove(event);
+        }
+
+        @Override
+        public ObservableList<Event> getEventList() {
+            return (ObservableList<Event>) events;
         }
     }
 

@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import trackup.commons.core.GuiSettings;
@@ -37,7 +36,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
-        this.eventList = FXCollections.observableArrayList();
+        this.eventList = this.addressBook.getEventList();
     }
 
     public ModelManager() {
@@ -137,18 +136,24 @@ public class ModelManager implements Model {
     @Override
     public boolean hasEvent(Event event) {
         requireNonNull(event);
-        return eventList.stream().anyMatch(existingEvent -> existingEvent.isSameEvent(event));
+        return addressBook.hasEvent(event);
     }
 
     @Override
     public void addEvent(Event event) {
         requireNonNull(event);
-        eventList.add(event);
+        addressBook.addEvent(event);
     }
 
-    /** Returns an unmodifiable view of the event list */
+    @Override
+    public void deleteEvent(Event event) {
+        requireNonNull(event);
+        addressBook.deleteEvent(event);
+    }
+
+    @Override
     public ObservableList<Event> getEventList() {
-        return FXCollections.unmodifiableObservableList(eventList);
+        return eventList;
     }
 
     @Override
