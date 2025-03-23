@@ -56,7 +56,6 @@ public class AddEventCommand extends Command {
         requireNonNull(eventName);
         requireNonNull(startDateTime);
         requireNonNull(endDateTime);
-
         this.eventName = eventName;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
