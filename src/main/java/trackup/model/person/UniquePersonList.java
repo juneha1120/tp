@@ -3,6 +3,7 @@ package trackup.model.person;
 import static java.util.Objects.requireNonNull;
 import static trackup.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -95,6 +96,10 @@ public class UniquePersonList implements Iterable<Person> {
         }
 
         internalList.setAll(persons);
+    }
+
+    public void sortPersons(Comparator<Person> comparator) {
+        internalList.sort(comparator);
     }
 
     /**
