@@ -25,7 +25,7 @@ import trackup.model.person.Person;
  */
 public class DeleteEventCommand extends Command {
 
-    public static final String COMMAND_WORD = "deleteEvent";
+    public static final String COMMAND_WORD = "delevent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes events that match the given filters.\n"
             + "Parameters: "

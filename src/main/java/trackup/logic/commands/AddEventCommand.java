@@ -24,7 +24,7 @@ import trackup.model.person.Person;
  */
 public class AddEventCommand extends Command {
 
-    public static final String COMMAND_WORD = "addEvent";
+    public static final String COMMAND_WORD = "addevent";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the calendar. "
             + "Parameters: "
