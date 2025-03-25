@@ -6,13 +6,15 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
-         title="TrackUp" minWidth="450" minHeight="600" onCloseRequest="#handleExit">
+         title="TrackUp" minWidth="1110" minHeight="600" onCloseRequest="#handleExit">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -24,35 +26,66 @@
       </stylesheets>
 
       <VBox>
-        <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-          <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-          </Menu>
-        </MenuBar>
+        <HBox HBox.hgrow="ALWAYS">
+          <VBox>
+            <!-- Menu Bar at the top -->
+            <MenuBar fx:id="menuBarAddressBook" VBox.vgrow="NEVER">
+              <Menu mnemonicParsing="false" text="File">
+                <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+              </Menu>
+              <Menu mnemonicParsing="false" text="Help">
+                <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+              </Menu>
+            </MenuBar>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+            <!-- Command Box -->
+            <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+              <padding>
+                <Insets top="5" right="10" bottom="5" left="10" />
+              </padding>
+            </StackPane>
 
-        <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
-          <padding>
-            <Insets top="5" right="10" bottom="5" left="10" />
-          </padding>
-        </StackPane>
+            <!-- Result Display -->
+            <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
+                       minHeight="100" prefHeight="100" maxHeight="100">
+              <padding>
+                <Insets top="5" right="10" bottom="5" left="10" />
+              </padding>
+            </StackPane>
 
-        <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
-          <padding>
-            <Insets top="10" right="10" bottom="10" left="10" />
-          </padding>
-          <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
-        </VBox>
+            <!-- Person List Panel -->
+            <VBox fx:id="personList" styleClass="pane-with-border" minWidth="340" prefWidth="340" VBox.vgrow="ALWAYS">
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+              <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            </VBox>
+          </VBox>
 
+          <VBox VBox.vgrow="ALWAYS">
+            <!-- Menu Bar at the top -->
+            <MenuBar fx:id="menuBarCalendar" VBox.vgrow="NEVER">
+              <Menu mnemonicParsing="false" text="Calendar">
+                <MenuItem mnemonicParsing="false" onAction="#handlePreviousWeek" text="Prev"/>
+                <MenuItem mnemonicParsing="false" onAction="#handleNextWeek" text="Next"/>
+              </Menu>
+            </MenuBar>
+
+            <!-- Month-Year Label -->
+            <HBox alignment="CENTER_LEFT">
+              <Label fx:id="monthYearLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+            </HBox>
+
+            <!-- Calendar Container with GridPane -->
+            <ScrollPane fx:id="calendarScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS"
+                        style="-fx-background-color: transparent;">
+              <VBox fx:id="calendarContainer" styleClass="pane-with-border" prefWidth="1110">
+              </VBox>
+            </ScrollPane>
+          </VBox>
+         </HBox>
+
+          <!-- Status Bar -->
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
       </VBox>
     </Scene>
