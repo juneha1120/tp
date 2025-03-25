@@ -8,6 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import trackup.commons.util.ToStringBuilder;
 import trackup.model.event.Event;
+import trackup.model.event.UniqueEventList;
 import trackup.model.person.Person;
 import trackup.model.person.UniquePersonList;
 
@@ -18,7 +19,7 @@ import trackup.model.person.UniquePersonList;
 public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
-    private final ObservableList<Event> events = FXCollections.observableArrayList();
+    private final UniqueEventList events;
 
     /*
      * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
@@ -29,6 +30,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     {
         persons = new UniquePersonList();
+        events = new UniqueEventList();
     }
 
     public AddressBook() {}
@@ -56,8 +58,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code events} must not contain duplicate events.
      */
     public void setEvents(List<Event> events) {
-        requireNonNull(events);
-        this.events.setAll(events);
+        this.events.setEvents(events);
     }
 
     /**
@@ -67,6 +68,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         requireNonNull(newData);
 
         setPersons(newData.getPersonList());
+        setEvents(newData.getEventList());
     }
 
     //// person-level operations
@@ -114,7 +116,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public boolean hasEvent(Event event) {
         requireNonNull(event);
-        return events.stream().anyMatch(existingEvent -> existingEvent.isSameEvent(event));
+        return events.contains(event);
     }
 
     /**
@@ -152,7 +154,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public ObservableList<Event> getEventList() {
-        return FXCollections.unmodifiableObservableList(events);
+        return events.asUnmodifiableObservableList();
     }
 
     @Override
