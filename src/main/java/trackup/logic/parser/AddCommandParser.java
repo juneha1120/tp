@@ -52,7 +52,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (argMultimap.getValue(PREFIX_CATEGORY).isPresent()) {
             category = Optional.ofNullable(ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get()));
         } else {
-            category = Optional.of(new Category("Other"));
+            category = Optional.empty();
         }
         Person person = new Person(name, phone, email, address, tagList, category);
 
