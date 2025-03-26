@@ -70,8 +70,10 @@ public class AddCommandTest {
     @Test
     public void execute_differentEmailOrPhone_success() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person person1 = new PersonBuilder().withName("Alice").withPhone("12345678").withEmail("alice@example.com").build();
-        Person person2 = new PersonBuilder().withName("Alice").withPhone("87654321").withEmail("alice@example.com").build();
+        Person person1 = new PersonBuilder().withName("Alice").withPhone("12345678")
+                .withEmail("alice@example.com").build();
+        Person person2 = new PersonBuilder().withName("Alice").withPhone("87654321")
+                .withEmail("alice@example.com").build();
 
         new AddCommand(person1).execute(modelStub);
         // Should not throw exception, as person2 differs in phone.
