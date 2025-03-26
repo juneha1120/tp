@@ -1,0 +1,23 @@
+@startuml
+Bob -> Alice : hello
+
+actor User
+participant LogicManager
+participant AddCommand
+participant Model
+participant UniquePersonList
+
+User -> LogicManager: add <contact>
+LogicManager -> AddCommand: execute(model)
+AddCommand -> Model: hasPerson(person)
+Model -> UniquePersonList: contains(person)
+UniquePersonList -> Person: isDuplicateOf()
+alt Duplicate Found
+    UniquePersonList -> Model: return true
+    Model -> AddCommand: duplicate found
+    AddCommand -> LogicManager: throws CommandException
+else No duplicate
+    UniquePersonList -> Model: return false
+    AddCommand -> Model: addPerson(person)
+end
+@enduml
