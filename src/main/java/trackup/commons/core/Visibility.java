@@ -30,12 +30,21 @@ public class Visibility {
     private transient BooleanProperty showTagProperty;
     private transient BooleanProperty showCategoryProperty;
 
+    /**
+     * Constructs a {@code Visibility} object with all UI elements set to be visible by default.
+     */
     public Visibility() {}
 
+    /**
+     * Returns whether the ID should be visible.
+     */
     public boolean isShowId() {
         return showId;
     }
 
+    /**
+     * Sets whether the ID should be visible.
+     */
     public void setShowId(boolean value) {
         this.showId = value;
         if (showIdProperty != null) {
@@ -43,6 +52,9 @@ public class Visibility {
         }
     }
 
+    /**
+     * Returns the {@link BooleanProperty} for ID visibility, allowing UI binding.
+     */
     public BooleanProperty showIdProperty() {
         if (showIdProperty == null) {
             showIdProperty = new SimpleBooleanProperty(showId);
@@ -50,10 +62,16 @@ public class Visibility {
         return showIdProperty;
     }
 
+    /**
+     * Returns whether the name should be visible.
+     */
     public boolean isShowName() {
         return showName;
     }
 
+    /**
+     * Sets whether the name should be visible.
+     */
     public void setShowName(boolean value) {
         this.showName = value;
         if (showNameProperty != null) {
@@ -61,6 +79,9 @@ public class Visibility {
         }
     }
 
+    /**
+     * Returns the {@link BooleanProperty} for name visibility, allowing UI binding.
+     */
     public BooleanProperty showNameProperty() {
         if (showNameProperty == null) {
             showNameProperty = new SimpleBooleanProperty(showName);
@@ -68,10 +89,16 @@ public class Visibility {
         return showNameProperty;
     }
 
+    /**
+     * Returns whether the phone should be visible.
+     */
     public boolean isShowPhone() {
         return showPhone;
     }
 
+    /**
+     * Sets whether the phone should be visible.
+     */
     public void setShowPhone(boolean value) {
         this.showPhone = value;
         if (showPhoneProperty != null) {
@@ -79,6 +106,9 @@ public class Visibility {
         }
     }
 
+    /**
+     * Returns the {@link BooleanProperty} for phone visibility, allowing UI binding.
+     */
     public BooleanProperty showPhoneProperty() {
         if (showPhoneProperty == null) {
             showPhoneProperty = new SimpleBooleanProperty(showPhone);
@@ -86,10 +116,16 @@ public class Visibility {
         return showPhoneProperty;
     }
 
+    /**
+     * Returns whether the email should be visible.
+     */
     public boolean isShowEmail() {
         return showEmail;
     }
 
+    /**
+     * Sets whether the email should be visible.
+     */
     public void setShowEmail(boolean value) {
         this.showEmail = value;
         if (showEmailProperty != null) {
@@ -97,6 +133,9 @@ public class Visibility {
         }
     }
 
+    /**
+     * Returns the {@link BooleanProperty} for email visibility, allowing UI binding.
+     */
     public BooleanProperty showEmailProperty() {
         if (showEmailProperty == null) {
             showEmailProperty = new SimpleBooleanProperty(showEmail);
@@ -104,10 +143,16 @@ public class Visibility {
         return showEmailProperty;
     }
 
+    /**
+     * Returns whether the address should be visible.
+     */
     public boolean isShowAddress() {
         return showAddress;
     }
 
+    /**
+     * Sets whether the address should be visible.
+     */
     public void setShowAddress(boolean value) {
         this.showAddress = value;
         if (showAddressProperty != null) {
@@ -115,6 +160,9 @@ public class Visibility {
         }
     }
 
+    /**
+     * Returns the {@link BooleanProperty} for address visibility, allowing UI binding.
+     */
     public BooleanProperty showAddressProperty() {
         if (showAddressProperty == null) {
             showAddressProperty = new SimpleBooleanProperty(showAddress);
@@ -122,10 +170,16 @@ public class Visibility {
         return showAddressProperty;
     }
 
+    /**
+     * Returns whether the tags should be visible.
+     */
     public boolean isShowTag() {
         return showTag;
     }
 
+    /**
+     * Sets whether the tags should be visible.
+     */
     public void setShowTag(boolean value) {
         this.showTag = value;
         if (showTagProperty != null) {
@@ -133,6 +187,9 @@ public class Visibility {
         }
     }
 
+    /**
+     * Returns the {@link BooleanProperty} for tag visibility, allowing UI binding.
+     */
     public BooleanProperty showTagProperty() {
         if (showTagProperty == null) {
             showTagProperty = new SimpleBooleanProperty(showTag);
@@ -140,10 +197,16 @@ public class Visibility {
         return showTagProperty;
     }
 
+    /**
+     * Returns whether the category should be visible.
+     */
     public boolean isShowCategory() {
         return showCategory;
     }
 
+    /**
+     * Sets whether the category should be visible.
+     */
     public void setShowCategory(boolean value) {
         this.showCategory = value;
         if (showCategoryProperty != null) {
@@ -151,6 +214,9 @@ public class Visibility {
         }
     }
 
+    /**
+     * Returns the {@link BooleanProperty} for category visibility, allowing UI binding.
+     */
     public BooleanProperty showCategoryProperty() {
         if (showCategoryProperty == null) {
             showCategoryProperty = new SimpleBooleanProperty(showCategory);
@@ -158,6 +224,10 @@ public class Visibility {
         return showCategoryProperty;
     }
 
+    /**
+     * Returns true if this {@code Visibility} is equal to another.
+     * Compares all boolean visibility values.
+     */
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -177,6 +247,9 @@ public class Visibility {
                 && isShowCategory() == otherVisibility.isShowCategory();
     }
 
+    /**
+     * Returns the hash code based on all boolean visibility values.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(
@@ -190,6 +263,9 @@ public class Visibility {
         );
     }
 
+    /**
+     * Returns a string representation of this {@code Visibility} for debugging.
+     */
     @Override
     public String toString() {
         return new ToStringBuilder(this)
