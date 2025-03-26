@@ -8,8 +8,8 @@ public class PhoneComparator implements Comparator<Person> {
 
     @Override
     public int compare(Person person1, Person person2) {
-        int PhoneCompare = person2.getPhone().compareTo(
-                person1.getPhone());
+        int PhoneCompare = person1.getPhone().compareTo(
+                person2.getPhone());
         return PhoneCompare;
     }
 

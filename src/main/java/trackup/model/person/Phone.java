@@ -55,7 +55,7 @@ public class Phone implements Comparable<Phone> {
 
     @Override
     public int compareTo(Phone phone) {
-        return phone.value.compareTo(this.value);
+        return this.value.compareTo(phone.value);
     }
 
     @Override
