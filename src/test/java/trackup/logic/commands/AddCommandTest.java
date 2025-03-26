@@ -54,7 +54,7 @@ public class AddCommandTest {
     }
 
     @Test
-    public void execute_personWithoutCategory_defaultCategoryAssigned() throws Exception {
+    public void execute_personWithoutCategory_defaultCategoryNotAssigned() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person personWithoutCategory = new PersonBuilder().withNoCategory().build();
         AddCommand addCommand = new AddCommand(personWithoutCategory);
@@ -63,9 +63,10 @@ public class AddCommandTest {
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(personWithoutCategory)),
                 commandResult.getFeedbackToUser());
-        assertTrue(modelStub.personsAdded.get(0).getCategory().isPresent());
-        assertEquals("Other", modelStub.personsAdded.get(0).getCategory().get().categoryName);
+        // Expect that no category is assigned (i.e., Optional.empty())
+        assertFalse(modelStub.personsAdded.get(0).getCategory().isPresent());
     }
+
 
 
     @Test

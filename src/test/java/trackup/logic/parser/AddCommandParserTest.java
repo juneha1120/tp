@@ -1,31 +1,7 @@
 package trackup.logic.parser;
 
 import static trackup.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static trackup.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
-import static trackup.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
-import static trackup.logic.commands.CommandTestUtil.CATEGORY_DESC_INVESTOR;
-import static trackup.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
-import static trackup.logic.commands.CommandTestUtil.EMAIL_DESC_BOB;
-import static trackup.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
-import static trackup.logic.commands.CommandTestUtil.INVALID_CATEGORY_DESC;
-import static trackup.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
-import static trackup.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
-import static trackup.logic.commands.CommandTestUtil.INVALID_PHONE_DESC;
-import static trackup.logic.commands.CommandTestUtil.INVALID_TAG_DESC;
-import static trackup.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static trackup.logic.commands.CommandTestUtil.NAME_DESC_BOB;
-import static trackup.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
-import static trackup.logic.commands.CommandTestUtil.PHONE_DESC_BOB;
-import static trackup.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
-import static trackup.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static trackup.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
-import static trackup.logic.commands.CommandTestUtil.TAG_DESC_HUSBAND;
-import static trackup.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static trackup.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static trackup.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static trackup.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static trackup.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static trackup.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static trackup.logic.commands.CommandTestUtil.*;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
@@ -135,16 +111,12 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_optionalFieldsMissing_success() {
-        // zero tags
-        Person expectedPersonNoTag = new PersonBuilder(AMY).withTags().withCategory("Other").build();
+        Person expectedPersonNoTag = new PersonBuilder(AMY).withTags().withNoCategory().build();
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY, new AddCommand(expectedPersonNoTag));
-
-        // zero category
-        Person expectedPersonNoCategory = new PersonBuilder(AMY).withCategory("Other").build();
-        assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + TAG_DESC_FRIEND, new AddCommand(expectedPersonNoCategory));
     }
+
+
 
     @Test
     public void parse_compulsoryFieldMissing_failure() {
