@@ -12,6 +12,7 @@ import trackup.logic.commands.SortCommand;
 import trackup.logic.parser.exceptions.ParseException;
 import trackup.model.person.comparators.*;
 
+import java.util.Optional;
 
 
 /**
@@ -24,31 +25,24 @@ public class SortCommandParser implements Parser<SortCommand> {
      * and returns a SortCommand object for execution.
      */
     public SortCommand parse(String args) throws ParseException {
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                        PREFIX_TAG, PREFIX_CATEGORY);
-        if (isPrefixPresent(argMultimap, PREFIX_NAME)) {
+        if (getPrefixValue(args, PREFIX_NAME).isPresent()) {
             return new SortCommand(new NameComparator());
-        } else if (isPrefixPresent(argMultimap, PREFIX_PHONE)) {
+        } else if (getPrefixValue(args, PREFIX_PHONE).isPresent()) {
             return new SortCommand(new PhoneComparator());
-        } else if (isPrefixPresent(argMultimap, PREFIX_EMAIL)) {
+        } else if (getPrefixValue(args, PREFIX_EMAIL).isPresent()) {
             return new SortCommand(new EmailComparator());
-        } else if (isPrefixPresent(argMultimap, PREFIX_ADDRESS)) {
+        } else if (getPrefixValue(args, PREFIX_ADDRESS).isPresent()) {
             return new SortCommand(new AddressComparator());
-        } else if (isPrefixPresent(argMultimap, PREFIX_TAG)) {
+        } else if (getPrefixValue(args, PREFIX_TAG).isPresent()) {
             return new SortCommand(new TagComparator());
-        } else if (isPrefixPresent(argMultimap, PREFIX_CATEGORY)) {
+        } else if (getPrefixValue(args, PREFIX_CATEGORY).isPresent()) {
             return new SortCommand(new CategoryComparator());
         }
         throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
     }
 
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean isPrefixPresent(ArgumentMultimap argumentMultimap, Prefix prefix) {
-        return argumentMultimap.getValue(prefix).isPresent();
+    private static Optional<String> getPrefixValue(String args, Prefix prefix) {
+        return ArgumentTokenizer.tokenize(args, prefix).getValue(prefix);
     }
 
 
