@@ -38,7 +38,7 @@ public class Person {
         this.email = email;
         this.address = address;
         this.tags.addAll(tags);
-        this.category = category;    // can be Optional.empty()
+        this.category = category; // can be Optional.empty()
     }
 
     public Name getName() {
