@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import trackup.commons.core.Visibility;
 import trackup.model.person.Person;
 
 /**
@@ -46,20 +47,30 @@ public class PersonCard extends UiPart<Region> {
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public PersonCard(Person person, int displayedIndex) {
+    public PersonCard(Person person, int displayedIndex, Visibility visibility) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        id.setVisible(visibility.isShowId());
         name.setText(person.getName().fullName);
+        name.setVisible(visibility.isShowName());
         phone.setText(person.getPhone().value);
+        phone.setVisible(visibility.isShowPhone());
         address.setText(person.getAddress().value);
+        address.setVisible(visibility.isShowAddress());
         email.setText(person.getEmail().value);
+        email.setVisible(visibility.isShowEmail());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> {
+                    Label label = new Label(tag.tagName);
+                    label.setVisible(visibility.isShowTag());
+                    tags.getChildren().add(label);
+                });
         if (person.getCategory().isPresent()) {
             String categoryName = person.getCategory().get().categoryName;
             category.setText(categoryName);
+            category.setVisible(visibility.isShowCategory());
             String categoryColor = getCategoryColor(categoryName);
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
                     + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
