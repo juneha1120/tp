@@ -7,6 +7,28 @@ import trackup.logic.Messages;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.model.Model;
 
+/**
+ * Toggles the visibility of a specific field in the person list UI.
+ * <p>
+ * The supported fields are:
+ * <ul>
+ *     <li>{@code name}</li>
+ *     <li>{@code phone}</li>
+ *     <li>{@code email}</li>
+ *     <li>{@code address}</li>
+ *     <li>{@code tag}</li>
+ *     <li>{@code category}</li>
+ * </ul>
+ * <p>
+ * Executing this command will invert the current visibility of the specified field
+ * and trigger a UI re-render via property bindings.
+ * <p>
+ * Usage example:
+ * <pre>{@code
+ * toggle name
+ * }</pre>
+ * This will hide the {@code name} field if it's currently shown, or show it if it's currently hidden.
+ */
 public class ToggleCommand extends Command {
 
     public static final String COMMAND_WORD = "toggle";
@@ -29,6 +51,11 @@ public class ToggleCommand extends Command {
 
     private final String fieldName;
 
+    /**
+     * Constructs a {@code ToggleCommand} to toggle the visibility of the specified field.
+     *
+     * @param fieldName The name of the field to toggle.
+     */
     public ToggleCommand(String fieldName) {
         requireNonNull(fieldName);
 
