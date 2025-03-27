@@ -214,6 +214,7 @@ public class AddCommandTest {
         @Override
         public ObservableList<Event> getEventList() {
             return (ObservableList<Event>) events;
+        }
           
         // Simulating the event list for testing purposes
         public List<Event> getEvents() {
