@@ -79,12 +79,11 @@ public class DeleteEventCommand extends Command {
         // Find matching events based on given criteria
         List<Event> eventsToDelete = eventList.stream()
                 .filter(event -> (partialTitle == null || event.getTitle().toLowerCase()
-                        .contains(partialTitle.toLowerCase())))
-                        .filter(event -> (startDateTime == null || event.getStartDateTime().equals(startDateTime)))
-                        .filter(event -> (endDateTime == null || event.getEndDateTime().equals(endDateTime)))
-                        .filter(event -> (contacts.isEmpty() || event.getContacts().stream()
-                                .anyMatch(contacts::contains)))
-                        .toList();
+                        .contains(partialTitle.toLowerCase()))
+                        && (startDateTime == null || event.getStartDateTime().equals(startDateTime))
+                        && (endDateTime == null || event.getEndDateTime().equals(endDateTime))
+                        && (contacts.isEmpty() || event.getContacts().stream().anyMatch(contacts::contains)))
+                .toList();
 
         if (eventsToDelete.isEmpty()) {
             throw new CommandException(MESSAGE_EVENT_NOT_FOUND);
