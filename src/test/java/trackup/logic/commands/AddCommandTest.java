@@ -10,6 +10,7 @@ import static trackup.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -22,6 +23,7 @@ import trackup.model.AddressBook;
 import trackup.model.Model;
 import trackup.model.ReadOnlyAddressBook;
 import trackup.model.ReadOnlyUserPrefs;
+import trackup.model.event.Event;
 import trackup.model.person.Person;
 import trackup.testutil.PersonBuilder;
 
@@ -119,6 +121,8 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+        private final List<Event> events = new ArrayList<>();
+
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -187,6 +191,23 @@ public class AddCommandTest {
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasEvent(Event event) {
+            requireNonNull(event);
+            return events.stream().anyMatch(existingEvent -> existingEvent.isSameEvent(event));
+        }
+
+        @Override
+        public void addEvent(Event event) {
+            requireNonNull(event);
+            events.add(event);
+        }
+
+        // Simulating the event list for testing purposes
+        public List<Event> getEvents() {
+            return new ArrayList<>(events);
         }
     }
 

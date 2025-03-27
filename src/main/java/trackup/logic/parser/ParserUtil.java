@@ -2,6 +2,9 @@ package trackup.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +25,9 @@ import trackup.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_DATE_TIME = "Invalid date-time format! Use yyyy-MM-dd HH:mm.";
+
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -144,5 +150,48 @@ public class ParserUtil {
         }
 
         return new Category(formattedCategory);
+    }
+
+    /**
+     * Parses a {@code String eventName} into a valid event title.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code eventName} is empty.
+     */
+    public static String parseEventTitle(String eventTitle) throws ParseException {
+        requireNonNull(eventTitle);
+        String trimmedTitle = eventTitle.trim();
+        if (trimmedTitle.isEmpty()) {
+            throw new ParseException("Event title cannot be empty.");
+        }
+        return trimmedTitle;
+    }
+
+    /**
+     * Parses a {@code String dateTime} into a {@code LocalDateTime}.
+     * Expected format: "yyyy-MM-dd HH:mm".
+     *
+     * @throws ParseException if the given {@code dateTime} is invalid.
+     */
+    public static LocalDateTime parseEventTime(String dateTime) throws ParseException {
+        requireNonNull(dateTime);
+        try {
+            return LocalDateTime.parse(dateTime.trim(), DATE_TIME_FORMATTER);
+        } catch (DateTimeParseException e) {
+            throw new ParseException(MESSAGE_INVALID_DATE_TIME);
+        }
+    }
+
+    /**
+     * Parses a {@code Collection<String> indexes} into a {@code Set<Index>}.
+     * @throws ParseException if any index is invalid.
+     */
+    public static Set<Index> parseContacts(Collection<String> indexes) throws ParseException {
+        requireNonNull(indexes);
+        final Set<Index> indexSet = new HashSet<>();
+        for (String indexStr : indexes) {
+            indexSet.add(parseIndex(indexStr));
+        }
+        return indexSet;
     }
 }

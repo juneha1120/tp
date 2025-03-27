@@ -7,10 +7,12 @@ import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import trackup.commons.core.GuiSettings;
 import trackup.commons.core.LogsCenter;
+import trackup.model.event.Event;
 import trackup.model.person.Person;
 
 /**
@@ -22,6 +24,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final ObservableList<Event> eventList;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -33,7 +36,8 @@ public class ModelManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.eventList = FXCollections.observableArrayList();
     }
 
     public ModelManager() {
@@ -126,6 +130,25 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    //=========== Event ======================================================================================
+
+    @Override
+    public boolean hasEvent(Event event) {
+        requireNonNull(event);
+        return eventList.stream().anyMatch(existingEvent -> existingEvent.isSameEvent(event));
+    }
+
+    @Override
+    public void addEvent(Event event) {
+        requireNonNull(event);
+        eventList.add(event);
+    }
+
+    /** Returns an unmodifiable view of the event list */
+    public ObservableList<Event> getEventList() {
+        return FXCollections.unmodifiableObservableList(eventList);
     }
 
     @Override
