@@ -26,6 +26,12 @@ Refer to the guide [_Setting up and getting started_](SettingUp.md).
 :bulb: **Tip:** The `.puml` files used to create diagrams in this document `docs/diagrams` folder. Refer to the [_PlantUML Tutorial_ at se-edu/guides](https://se-education.org/guides/tutorials/plantUml.html) to learn how to create and edit diagrams.
 </div>
 
+### AddCommand Sequence Diagram
+
+The following sequence diagram illustrates the process of adding a contact and how duplicate checking is performed:
+
+![AddCommand Sequence Diagram](images/AddCommandSequenceDiagram.png)
+
 ### Architecture
 
 <img src="images/ArchitectureDiagram.png" width="280" />
