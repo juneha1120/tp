@@ -152,6 +152,13 @@ public class ModelManager implements Model {
     }
 
     @Override
+    public void setEvent(Event target, Event editedEvent) {
+        requireAllNonNull(target, editedEvent);
+
+        addressBook.setEvent(target, editedEvent);
+    }
+
+    @Override
     public ObservableList<Event> getEventList() {
         return eventList;
     }

@@ -136,6 +136,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         events.remove(event);
     }
 
+    /**
+     * Replaces the given event {@code target} in the list with {@code editedEvent}.
+     * {@code target} must exist in the address book.
+     * The event identity of {@code editedEvent} must not be the same as another existing event in the address book.
+     */
+    public void setEvent(Event target, Event editedEvent) {
+        requireNonNull(editedEvent);
+
+        events.setEvent(target, editedEvent);
+    }
+
     //// util methods
 
     @Override
