@@ -70,4 +70,8 @@ shadowJar {
     archiveFileName = 'trackup.jar'
 }
 
+run {
+    enableAssertions = true
+}
+
 defaultTasks 'clean', 'test'
