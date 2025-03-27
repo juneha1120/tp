@@ -56,6 +56,37 @@ public class AddCommandTest {
     }
 
     @Test
+    public void execute_personWithoutCategory_defaultCategoryNotAssigned() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person personWithoutCategory = new PersonBuilder().withNoCategory().build();
+        AddCommand addCommand = new AddCommand(personWithoutCategory);
+
+        CommandResult commandResult = addCommand.execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(personWithoutCategory)),
+                commandResult.getFeedbackToUser());
+        // Expect that no category is assigned (i.e., Optional.empty())
+        assertFalse(modelStub.personsAdded.get(0).getCategory().isPresent());
+    }
+
+    @Test
+    public void execute_differentEmailOrPhone_success() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person person1 = new PersonBuilder().withName("Alice").withPhone("12345678")
+                .withEmail("alice@example.com").build();
+        Person person2 = new PersonBuilder().withName("Alice").withPhone("87654321")
+                .withEmail("alice@example.com").build();
+
+        new AddCommand(person1).execute(modelStub);
+        // Should not throw exception, as person2 differs in phone.
+        CommandResult result = new AddCommand(person2).execute(modelStub);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person2)),
+                result.getFeedbackToUser());
+    }
+
+
+
+    @Test
     public void equals() {
         Person alice = new PersonBuilder().withName("Alice").build();
         Person bob = new PersonBuilder().withName("Bob").build();
@@ -183,6 +214,10 @@ public class AddCommandTest {
         @Override
         public ObservableList<Event> getEventList() {
             return (ObservableList<Event>) events;
+        }
+        // Simulating the event list for testing purposes
+        public List<Event> getEvents() {
+            return new ArrayList<>(events);
         }
     }
 
