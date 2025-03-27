@@ -215,7 +215,6 @@ public class AddCommandTest {
         public ObservableList<Event> getEventList() {
             return (ObservableList<Event>) events;
         }
-        
         // Simulating the event list for testing purposes
         public List<Event> getEvents() {
             return new ArrayList<>(events);
