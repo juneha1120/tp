@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import trackup.commons.core.GuiSettings;
+import trackup.model.event.Event;
 import trackup.model.person.Person;
 
 /**
@@ -84,4 +85,15 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Returns true if an event with the same identity as {@code event} exists in the calendar.
+     */
+    boolean hasEvent(Event event);
+
+    /**
+     * Adds the given event.
+     * {@code event} must not already exist in the calendar.
+     */
+    void addEvent(Event event);
 }

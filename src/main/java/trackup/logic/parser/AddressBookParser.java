@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import trackup.commons.core.LogsCenter;
 import trackup.logic.commands.AddCommand;
+import trackup.logic.commands.AddEventCommand;
 import trackup.logic.commands.ClearCommand;
 import trackup.logic.commands.Command;
 import trackup.logic.commands.DeleteByCommand;
@@ -85,6 +86,9 @@ public class AddressBookParser {
 
         case SearchCommand.COMMAND_WORD:
             return new SearchCommandParser().parse(arguments);
+
+        case AddEventCommand.COMMAND_WORD:
+            return new AddEventCommandParser().parse(arguments);
 
         case ToggleCommand.COMMAND_WORD:
             return new ToggleCommandParser().parse(arguments);
