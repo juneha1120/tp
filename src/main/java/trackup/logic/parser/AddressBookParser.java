@@ -14,6 +14,7 @@ import trackup.logic.commands.ClearCommand;
 import trackup.logic.commands.Command;
 import trackup.logic.commands.DeleteByCommand;
 import trackup.logic.commands.DeleteCommand;
+import trackup.logic.commands.DeleteEventCommand;
 import trackup.logic.commands.EditCommand;
 import trackup.logic.commands.ExitCommand;
 import trackup.logic.commands.FindCommand;
@@ -89,6 +90,9 @@ public class AddressBookParser {
 
         case AddEventCommand.COMMAND_WORD:
             return new AddEventCommandParser().parse(arguments);
+
+        case DeleteEventCommand.COMMAND_WORD:
+            return new DeleteEventCommandParser().parse(arguments);
 
         case ToggleCommand.COMMAND_WORD:
             return new ToggleCommandParser().parse(arguments);
