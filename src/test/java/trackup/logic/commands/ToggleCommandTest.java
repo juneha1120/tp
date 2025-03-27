@@ -46,6 +46,14 @@ public class ToggleCommandTest {
         assertToggleField(ToggleCommand.ADDRESS_FIELD_STRING);
         assertToggleField(ToggleCommand.TAG_FIELD_STRING);
         assertToggleField(ToggleCommand.CATEGORY_FIELD_STRING);
+
+        // Twice for false -> true
+        assertToggleField(ToggleCommand.NAME_FIELD_STRING);
+        assertToggleField(ToggleCommand.PHONE_FIELD_STRING);
+        assertToggleField(ToggleCommand.EMAIL_FIELD_STRING);
+        assertToggleField(ToggleCommand.ADDRESS_FIELD_STRING);
+        assertToggleField(ToggleCommand.TAG_FIELD_STRING);
+        assertToggleField(ToggleCommand.CATEGORY_FIELD_STRING);
     }
 
     private void assertToggleField(String field) {
