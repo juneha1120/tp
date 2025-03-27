@@ -10,7 +10,6 @@ import static trackup.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -90,8 +89,6 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
-        private final List<Event> events = new ArrayList<>();
-
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -164,25 +161,27 @@ public class AddCommandTest {
 
         @Override
         public boolean hasEvent(Event event) {
-            requireNonNull(event);
-            return events.stream().anyMatch(existingEvent -> existingEvent.isSameEvent(event));
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void addEvent(Event event) {
-            requireNonNull(event);
-            events.add(event);
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void deleteEvent(Event event) {
-            requireNonNull(event);
-            events.remove(event);
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setEvent(Event target, Event editedEvent) {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public ObservableList<Event> getEventList() {
-            return (ObservableList<Event>) events;
+            throw new AssertionError("This method should not be called.");
         }
     }
 
