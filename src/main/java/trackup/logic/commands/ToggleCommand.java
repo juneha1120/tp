@@ -105,5 +105,27 @@ public class ToggleCommand extends Command {
         return result;
     }
 
+    /**
+     * Checks whether another object is equal to this {@code ToggleCommand}.
+     * Two {@code ToggleCommand} objects are considered equal if they toggle the same field.
+     *
+     * @param other the other object to compare to
+     * @return true if the other object is a {@code ToggleCommand} with the same field name; false otherwise
+     */
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (this == other) {
+            return true;
+        }
 
+        // instanceof handles nulls
+        if (!(other instanceof ToggleCommand)) {
+            return false;
+        }
+
+        // state check
+        ToggleCommand otherCommand = (ToggleCommand) other;
+        return this.fieldName.equals(otherCommand.fieldName);
+    }
 }
