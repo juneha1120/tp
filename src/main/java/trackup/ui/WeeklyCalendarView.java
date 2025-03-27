@@ -91,8 +91,8 @@ public class WeeklyCalendarView {
             Label timeLabel = new Label(timeText);
             timeLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold");
             timeLabel.setAlignment(Pos.CENTER);
-            for (int j = 0; j <= 7; j++) {
-                timeLabel.setMinHeight(getEventStack(j, i).getHeight());
+            for (int j = 0; j < 8; j++) {
+                timeLabel.setMinHeight(getEventStack(j, i + 1).getHeight());
                 timeLabel.setMinWidth(40);
                 timeLabel.setMaxWidth(40);
             }
