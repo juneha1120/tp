@@ -21,6 +21,7 @@ import trackup.logic.commands.FindCommand;
 import trackup.logic.commands.HelpCommand;
 import trackup.logic.commands.ListCommand;
 import trackup.logic.commands.SearchCommand;
+import trackup.logic.commands.ToggleCommand;
 import trackup.logic.parser.exceptions.ParseException;
 
 /**
@@ -92,6 +93,10 @@ public class AddressBookParser {
 
         case DeleteEventCommand.COMMAND_WORD:
             return new DeleteEventCommandParser().parse(arguments);
+
+        case ToggleCommand.COMMAND_WORD:
+            return new ToggleCommandParser().parse(arguments);
+
         default:
             logger.finer("This user input caused a ParseException: " + userInput);
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

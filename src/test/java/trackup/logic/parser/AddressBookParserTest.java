@@ -26,6 +26,7 @@ import trackup.logic.commands.FindCommand;
 import trackup.logic.commands.HelpCommand;
 import trackup.logic.commands.ListCommand;
 import trackup.logic.commands.SearchCommand;
+import trackup.logic.commands.ToggleCommand;
 import trackup.logic.parser.exceptions.ParseException;
 import trackup.model.person.Name;
 import trackup.model.person.NameContainsKeywordsPredicate;
@@ -106,6 +107,14 @@ public class AddressBookParserTest {
         assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
             SearchCommand.MESSAGE_USAGE), () -> parser.parseCommand(SearchCommand.COMMAND_WORD));
         assertTrue(parser.parseCommand(SearchCommand.COMMAND_WORD + " alice") instanceof SearchCommand);
+    }
+
+    @Test
+    public void parseCommand_toggle() throws Exception {
+        assertThrows(ParseException.class, String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                ToggleCommand.MESSAGE_USAGE), () -> parser.parseCommand(ToggleCommand.COMMAND_WORD));
+        assertTrue(parser.parseCommand(ToggleCommand.COMMAND_WORD + " " + ToggleCommand.NAME_FIELD_STRING)
+                instanceof ToggleCommand);
     }
 
     @Test
