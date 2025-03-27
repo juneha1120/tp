@@ -195,29 +195,27 @@ public class AddCommandTest {
 
         @Override
         public boolean hasEvent(Event event) {
-            requireNonNull(event);
-            return events.stream().anyMatch(existingEvent -> existingEvent.isSameEvent(event));
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void addEvent(Event event) {
-            requireNonNull(event);
-            events.add(event);
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public void deleteEvent(Event event) {
-            requireNonNull(event);
-            events.remove(event);
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setEvent(Event target, Event editedEvent) {
+            throw new AssertionError("This method should not be called.");
         }
 
         @Override
         public ObservableList<Event> getEventList() {
-            return (ObservableList<Event>) events;
-        }
-        // Simulating the event list for testing purposes
-        public List<Event> getEvents() {
-            return new ArrayList<>(events);
+            throw new AssertionError("This method should not be called.");
         }
     }
 

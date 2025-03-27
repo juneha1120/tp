@@ -23,6 +23,7 @@ import trackup.logic.Messages;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.model.Model;
 import trackup.model.category.Category;
+import trackup.model.event.Event;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -90,6 +91,21 @@ public class EditCommand extends Command {
         }
 
         model.setPerson(personToEdit, editedPerson);
+
+        // Update all events linked to this contact
+        List<Event> allEvents = model.getEventList();
+        for (Event event : allEvents) {
+            if (event.getContacts().contains(personToEdit)) {
+                Set<Person> updatedContacts = new HashSet<>(event.getContacts());
+                updatedContacts.remove(personToEdit);
+                updatedContacts.add(editedPerson);
+
+                Event updatedEvent = new Event(event.getTitle(), event.getStartDateTime(),
+                        event.getEndDateTime(), updatedContacts);
+                model.setEvent(event, updatedEvent);
+            }
+        }
+
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }

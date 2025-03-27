@@ -67,6 +67,7 @@ class JsonSerializableAddressBook {
             if (addressBook.hasEvent(event)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_EVENT);
             }
+            addressBook.addEvent(event);
         }
 
         return addressBook;
