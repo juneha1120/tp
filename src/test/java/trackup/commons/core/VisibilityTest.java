@@ -41,6 +41,7 @@ public class VisibilityTest {
         prop.set(true);
         assertFalse(visibility.isShowId());
         assertTrue(prop.get());
+        assertEquals(prop, visibility.showIdProperty());
     }
 
     @Test
@@ -54,6 +55,7 @@ public class VisibilityTest {
         prop.set(true);
         assertFalse(visibility.isShowName());
         assertTrue(prop.get());
+        assertEquals(prop, visibility.showNameProperty());
     }
 
     @Test
@@ -67,6 +69,7 @@ public class VisibilityTest {
         prop.set(true);
         assertFalse(visibility.isShowPhone());
         assertTrue(prop.get());
+        assertEquals(prop, visibility.showPhoneProperty());
     }
 
     @Test
@@ -80,6 +83,7 @@ public class VisibilityTest {
         prop.set(true);
         assertFalse(visibility.isShowEmail());
         assertTrue(prop.get());
+        assertEquals(prop, visibility.showEmailProperty());
     }
 
     @Test
@@ -93,6 +97,7 @@ public class VisibilityTest {
         prop.set(true);
         assertFalse(visibility.isShowAddress());
         assertTrue(prop.get());
+        assertEquals(prop, visibility.showAddressProperty());
     }
 
     @Test
@@ -106,6 +111,7 @@ public class VisibilityTest {
         prop.set(true);
         assertFalse(visibility.isShowTag());
         assertTrue(prop.get());
+        assertEquals(prop, visibility.showTagProperty());
     }
 
     @Test
@@ -119,6 +125,7 @@ public class VisibilityTest {
         prop.set(true);
         assertFalse(visibility.isShowCategory());
         assertTrue(prop.get());
+        assertEquals(prop, visibility.showCategoryProperty());
     }
 
     @Test
