@@ -1,17 +1,17 @@
 package trackup.logic.commands;
 
-import trackup.model.Model;
-import trackup.model.person.Person;
+import static java.util.Objects.requireNonNull;
+import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
+import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
+import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
+import static trackup.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.Comparator;
 
-import static java.util.Objects.requireNonNull;
-import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
-import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
-import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static trackup.logic.parser.CliSyntax.PREFIX_TAG;
-import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
+import trackup.model.Model;
+import trackup.model.person.Person;
 
 /**
  * Sorts all persons in current filtered list displayed by the prefixes.
