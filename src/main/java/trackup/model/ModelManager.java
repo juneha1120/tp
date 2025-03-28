@@ -4,9 +4,11 @@ import static java.util.Objects.requireNonNull;
 import static trackup.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import trackup.commons.core.GuiSettings;
@@ -162,6 +164,18 @@ public class ModelManager implements Model {
     public ObservableList<Event> getEventList() {
         return eventList;
     }
+
+    @Override
+    public void sortFilteredPersonList(Comparator<Person> comparator) {
+        requireNonNull(comparator);
+        Predicate<? super Person> currentPredicate = filteredPersons.getPredicate();
+        filteredPersons.setPredicate(null);
+        ObservableList<Person> currentFiltered = FXCollections.observableArrayList(filteredPersons);
+        currentFiltered.sort(comparator);
+        addressBook.setPersons(currentFiltered);
+        filteredPersons.setPredicate(currentPredicate);
+    }
+
 
     @Override
     public boolean equals(Object other) {

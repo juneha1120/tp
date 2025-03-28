@@ -1,6 +1,7 @@
 package trackup.model;
 
 import java.nio.file.Path;
+import java.util.Comparator;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
@@ -87,6 +88,12 @@ public interface Model {
     void updateFilteredPersonList(Predicate<Person> predicate);
 
     /**
+     * Sort the filtered person list under current filter by the given {@code comparator}.
+     * @throws NullPointerException if {@code comparator} is null.
+     */
+    void sortFilteredPersonList(Comparator<Person> comparator);
+
+    /**
      * Returns true if an event with the same identity as {@code event} exists in the calendar.
      */
     boolean hasEvent(Event event);
@@ -112,4 +119,5 @@ public interface Model {
 
     /** Returns an unmodifiable view of the event list */
     ObservableList<Event> getEventList();
+
 }

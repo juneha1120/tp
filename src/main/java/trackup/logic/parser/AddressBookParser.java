@@ -21,6 +21,7 @@ import trackup.logic.commands.FindCommand;
 import trackup.logic.commands.HelpCommand;
 import trackup.logic.commands.ListCommand;
 import trackup.logic.commands.SearchCommand;
+import trackup.logic.commands.SortCommand;
 import trackup.logic.commands.ToggleCommand;
 import trackup.logic.parser.exceptions.ParseException;
 
@@ -87,6 +88,9 @@ public class AddressBookParser {
 
         case SearchCommand.COMMAND_WORD:
             return new SearchCommandParser().parse(arguments);
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommandParser().parse(arguments);
 
         case AddEventCommand.COMMAND_WORD:
             return new AddEventCommandParser().parse(arguments);
