@@ -92,7 +92,7 @@ public interface Model {
      * @throws NullPointerException if {@code comparator} is null.
      */
     void sortFilteredPersonList(Comparator<Person> comparator);
-    
+
     /**
      * Returns true if an event with the same identity as {@code event} exists in the calendar.
      */
