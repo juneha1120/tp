@@ -68,9 +68,9 @@ For example, `Logic` defines its API in `Logic.java` and implements it in `Logic
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2425S2-CS2103T-F14-4/tp/blob/master/src/main/java/trackup/ui/Ui.java)
 
-![Structure of the UI Component](images/UiClassDiagram.png)
+![Structure of the UI Component](images/UiClassDiagram1.png)
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class which captures the commonalities between classes that represent parts of the visible GUI.
 
@@ -135,9 +135,9 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2425S2-CS2103T-F14-4/tp/blob/master/src/main/java/trackup/storage/Storage.java)
 
-<img src="images/StorageClassDiagram.png" width="550" />
+<img src="images/StorageClassDiagram1.png" width="550" />
 
 The `Storage` component,
 - Handles saving and loading both TrackUp data and user preferences in JSON format.
@@ -324,109 +324,140 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 
 ---
 
-### **Use Case: Add a Tag to a Contact**
+### Use Case: Add a Tag to a Contact
 
-#### **Main Success Scenario (MSS)**
-1. **User requests to list contacts.**
-2. **TrackUp displays a list of contacts.**
-3. **User requests to add a tag to a specific contact in the list.**
-4. **TrackUp adds the tag to the contact and displays a confirmation message.**
+#### Main Success Scenario (MSS)
+1. User requests to list contacts.
+2. TrackUp displays a list of contacts.
+3. User requests to add a tag to a specific contact in the list.
+4. TrackUp adds the tag to the contact and displays a confirmation message.
 
-   **Use case ends.**
+   Use case ends.
 
-#### **Extensions**
-- **2a.** The contact list is empty.
-    - **2a1.** TrackUp shows: `"No contacts found."`
-    - **Use case ends.**
+#### Extensions
+- 2a. The contact list is empty.
+    - 2a1. TrackUp shows: `"No contacts found."`
+    - Use case ends.
 
-- **3a.** The specified contact index is invalid.
-    - **3a1.** TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
-    - **Use case resumes at step 2.**
+- 3a. The specified contact index is invalid.
+    - 3a1. TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
+    - Use case resumes at step 2.
 
-- **3b.** The tag already exists.
-    - **3b1.** TrackUp shows a message: `"This tag is already assigned to the contact."`
-    - **Use case resumes at step 2.**
+- 3b. The tag already exists.
+    - 3b1. TrackUp shows a message: `"This tag is already assigned to the contact."`
+    - Use case resumes at step 2.
 
 ---
 
-### **Use Case: View All Contacts**
+### Use Case: View All Contacts
 
-#### **Main Success Scenario (MSS)**
+#### Main Success Scenario (MSS)
 1. User requests to view all contacts.
 2. TrackUp displays all contacts.
    Use case ends.
 
-#### **Extensions**
-- **2a.** The contact list is empty.
+#### Extensions
+- 2a. The contact list is empty.
     - Use case ends.
 
 ---
 
-### **Use Case: View Contacts with Client Category**
+### Use Case: View Contacts with Client Category
 
-#### **Main Success Scenario (MSS)**
+#### Main Success Scenario (MSS)
 1. User requests to view contacts with the category `Client`.
 2. TrackUp displays only the contacts categorised as `Client`.
    Use case ends.
 
-#### **Extensions**
-- **2a.** The contact list under the `Client` category is empty.
+#### Extensions
+- 2a. The contact list under the `Client` category is empty.
     - Use case ends.
 
 ---
 
-### **Use Case: Edit a Contact**
+### Use Case: Edit a Contact
 
-#### **Main Success Scenario (MSS)**
-1. **User requests to list all contacts.**
-2. **TrackUp displays the list of contacts.**
-3. **User requests to edit a specific contact in the list, specifying the new details.**
-4. **TrackUp updates the contact's details.**
-5. **TrackUp displays a confirmation message.**
+#### Main Success Scenario (MSS)
+1. User requests to list all contacts.
+2. TrackUp displays the list of contacts.
+3. User requests to edit a specific contact in the list, specifying the new details.
+4. TrackUp updates the contact's details.
+5. TrackUp displays a confirmation message.  
+   Use case ends.
 
-   **Use case ends.**
+#### Extensions
+- 2a. The contact list is empty.
+    - 2a1. TrackUp shows a message: `"No contacts found."`
+    - Use case ends.
 
-#### **Extensions**
-- **2a.** The contact list is empty.
-    - **2a1.** TrackUp shows a message: `"No contacts found."`
-    - **Use case ends.**
+- 3a. The specified contact index is invalid.
+    - 3a1. TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
+    - Use case resumes at step 2.
 
-- **3a.** The specified contact index is invalid.
-    - **3a1.** TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
-    - **Use case resumes at step 2.**
+- 3b. The new details are the same as the existing details.
+    - 3b1. TrackUp shows a message: `"No changes detected. Contact remains unchanged."`
+    - Use case ends.
 
-- **3b.** The new details are the same as the existing details.
-    - **3b1.** TrackUp shows a message: `"No changes detected. Contact remains unchanged."`
-    - **Use case ends.**
-
-- **3c.** The new details contain invalid inputs (e.g., incorrect phone format, missing required fields).
-    - **3c1.** TrackUp shows an error message specifying the issue.
-    - **Use case resumes at step 2.**
-
----
-
-### **Use Case: Delete a Contact**
-
-#### **Main Success Scenario (MSS)**
-1. **User requests to list contacts.**
-2. **TrackUp displays a list of contacts.**
-3. **User requests to delete a specific contact in the list.**
-4. **TrackUp deletes the contact and displays a confirmation message.**
-
-   **Use case ends.**
-
-#### **Extensions**
-- **2a.** The contact list is empty.
-    - **2a1.** TrackUp shows: `"No contacts found."`
-    - **Use case ends.**
-
-- **3a.** The given index is invalid.
-    - **3a1.** TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
-    - **Use case resumes at step 2.**
+- 3c. The new details contain invalid inputs (e.g., incorrect phone format, missing required fields).
+    - 3c1. TrackUp shows an error message specifying the issue.
+    - Use case resumes at step 2.
 
 ---
 
-*{More to be added}*
+### Use Case: Delete a Contact
+
+#### Main Success Scenario (MSS)
+1. User requests to list contacts.
+2. TrackUp displays a list of contacts.
+3. User requests to delete a specific contact in the list.
+4. TrackUp deletes the contact and displays a confirmation message.  
+   Use case ends.
+
+#### Extensions
+- 2a. The contact list is empty.
+    - 2a1. TrackUp shows: `"No contacts found."`
+    - Use case ends.
+
+- 3a. The given index is invalid.
+    - 3a1. TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
+    - Use case resumes at step 2.
+
+---
+
+### Use Case: Add an Event
+
+#### Main Success Scenario (MSS)
+1. User requests to add an event. 
+2. TrackUp creates the event and links the specified contacts.
+3. TrackUp updates the weekly calendar view to display the new event. 
+4. TrackUp displays a confirmation message.  
+Use case ends.
+
+#### Extensions
+- 1a. The start datetime is after the end datetime. 
+  - 1a1. TrackUp shows an error message: `"End datetime provided is before start datetime"`
+  - Use case resumes at step 1.
+
+- 1b. One or more specified contact indices are invalid. 
+  - 1b1. TrackUp shows an error message: `"The person index provided is invalid"`
+  - Use case resumes at step 1.
+
+---
+
+### Use Case: Delete an Event
+
+#### Main Success Scenario (MSS)
+1. User requests to delete an event.
+2. TrackUp finds all matching events.
+3. TrackUp deletes all occurrences of the matching events.
+4. TrackUp updates the weekly calendar view to remove the deleted events.
+5. TrackUp displays a confirmation message.   
+Use case ends.
+
+#### Extensions
+- 2a. No matching events are found. 
+  - 2a1. TrackUp shows a message: `"No matching events found."`
+  - Use case ends.
 
 ### Non-Functional Requirements
 
