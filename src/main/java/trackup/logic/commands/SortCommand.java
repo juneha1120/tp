@@ -6,7 +6,12 @@ import trackup.model.person.Person;
 import java.util.Comparator;
 
 import static java.util.Objects.requireNonNull;
-import static trackup.logic.parser.CliSyntax.*;
+import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
+import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
+import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static trackup.logic.parser.CliSyntax.PREFIX_TAG;
+import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
 
 /**
  * Sorts all persons in current filtered list displayed by the prefixes.
@@ -56,10 +61,9 @@ public class SortCommand extends Command {
         if (other == this) {
             return true;
         }
-        if (!(other instanceof SearchCommand)) {
+        if (!(other instanceof SortCommand otherCommand)) {
             return false;
         }
-        SortCommand otherCommand = (SortCommand) other;
         return comparator.equals(otherCommand.comparator);
     }
 }

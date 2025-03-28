@@ -8,20 +8,20 @@ import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
 import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
 import static trackup.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+
 import javafx.util.Pair;
+
 import trackup.logic.commands.SortCommand;
 import trackup.logic.parser.exceptions.ParseException;
 import trackup.model.person.Person;
 import trackup.model.person.comparators.AscendingComparators;
 import trackup.model.person.comparators.DescendingComparators;
-
-import java.util.Comparator;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.List;
-import java.util.ArrayList;
-
 
 /**
  * Parses input arguments and creates a new SortCommand object

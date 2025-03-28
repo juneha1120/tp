@@ -1,10 +1,9 @@
 package trackup.model.person.comparators;
 
-import trackup.model.person.Person;
-
 import java.util.Comparator;
-
 import java.util.function.Function;
+
+import trackup.model.person.Person;
 
 /**
  * A utility class that provides {@link Comparator} implementations for {@link Person} objects

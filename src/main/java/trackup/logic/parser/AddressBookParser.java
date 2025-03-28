@@ -20,7 +20,6 @@ import trackup.logic.commands.HelpCommand;
 import trackup.logic.commands.ListCommand;
 import trackup.logic.commands.SearchCommand;
 import trackup.logic.commands.SortCommand;
-
 import trackup.logic.parser.exceptions.ParseException;
 
 /**
