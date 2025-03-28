@@ -197,6 +197,42 @@ Clears all contacts from TrackUp.
 
 Format: `clear`
 
+### Adding an event : `addevent`
+
+Adds an event to TrackUp's calendar.
+
+Format: `addevent -t <EVENT_TITLE> -s <START_DATETIME> -e <END_DATETIME> [-c <CONTACT_INDEX>...]`
+
+**Notes:**
+* EVENT_TITLE, START_DATETIME, and END_DATETIME are **required**.
+* CONTACT_INDEX is optional. You can link **multiple** contacts by specifying multiple indexes.
+* START_DATETIME and END_DATETIME must be in **YYYY-MM-DD HH:MM** format.
+* If the event already exists, it will not be added again.
+
+**Examples:**
+- `addevent -t "Team Meeting" -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` adds a "Team Meeting" from 14:00 to 15:00 on March 30, 2025, linking it to contacts at index 1 and 3.
+- `addevent -t "Project Deadline" -s 2025-04-01 23:59 -e 2025-04-02 00:00` adds a "Project Deadline" event without linking any contacts.
+
+### Deleting an event : `delevent`
+
+Deletes events from TrackUp's calendar based on specified filters.
+
+Format: `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>] [-c <CONTACT_INDEX>...]`
+
+**Notes:**
+* At least **one** filter must be provided.
+* **TITLE_KEYWORD** performs a case-insensitive partial match on event titles.
+* **START_DATETIME** and **END_DATETIME** require an exact match (YYYY-MM-DD HH:MM format).
+* **CONTACT_INDEX** matches events linked to the specified contacts.
+* **All** matching events will be deleted.
+* If no matching events are found, an error message is displayed.
+
+**Examples:**
+* `delevent -t Meeting` deletes all events with "Meeting" in the title.
+* `delevent -s 2025-03-30 14:00 -e 2025-03-30 15:00` deletes all events exactly matching this start and end time.
+* `delevent -c 2` deletes all events linked to the contact at index 2.
+* `delevent -t "Workshop" -c 1 -c 4` deletes all events with "Workshop" in the title that are linked to contacts at index 1 or 4.
+
 ### Exiting the program : `exit`
 
 Exits TrackUp
