@@ -16,7 +16,6 @@ import java.util.Optional;
 import java.util.function.Function;
 
 import javafx.util.Pair;
-
 import trackup.logic.commands.SortCommand;
 import trackup.logic.parser.exceptions.ParseException;
 import trackup.model.person.Person;
