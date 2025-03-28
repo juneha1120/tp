@@ -49,6 +49,9 @@ public class SortCommand extends Command {
         this.comparator = comparator;
     }
 
+    public Comparator<Person> getComparator() {
+        return this.comparator;
+    }
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
