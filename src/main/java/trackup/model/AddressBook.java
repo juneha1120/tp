@@ -95,10 +95,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.remove(key);
     }
 
-    public void sortPersons(Comparator<Person> comparator) {
-        persons.sortPersons(comparator);
-    }
-
     //// util methods
 
     @Override

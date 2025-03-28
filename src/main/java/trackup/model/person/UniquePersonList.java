@@ -98,10 +98,6 @@ public class UniquePersonList implements Iterable<Person> {
         internalList.setAll(persons);
     }
 
-    public void sortPersons(Comparator<Person> comparator) {
-        internalList.sort(comparator);
-    }
-
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

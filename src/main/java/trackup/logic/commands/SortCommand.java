@@ -42,7 +42,7 @@ public class SortCommand extends Command {
     @Override
     public CommandResult execute(Model model) {
         requireNonNull(model);
-        model.sortPerson(comparator);
+        model.sortFilteredPersonList(comparator);
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

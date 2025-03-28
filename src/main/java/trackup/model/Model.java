@@ -77,12 +77,6 @@ public interface Model {
      */
     void setPerson(Person target, Person editedPerson);
 
-    /**
-     * Sorts the address book.
-     * by the given {@code comparator}
-     */
-    void sortPerson(Comparator<Person> comparator);
-
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -91,4 +85,10 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    /**
+     * Sort the filtered person list under current filter by the given {@code comparator}.
+     * @throws NullPointerException if {@code comparator} is null.
+     */
+    void sortFilteredPersonList(Comparator<Person> comparator);
 }
