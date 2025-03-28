@@ -133,7 +133,7 @@ public class ModelManager implements Model {
     @Override
     public void sortFilteredPersonList(Comparator<Person> comparator) {
         requireNonNull(comparator);
-        Predicate<Person> currentPredicate = (Predicate<Person>) filteredPersons.getPredicate();
+        Predicate<? super Person> currentPredicate = filteredPersons.getPredicate();
         filteredPersons.setPredicate(null);
         ObservableList<Person> currentFiltered = FXCollections.observableArrayList(filteredPersons);
         currentFiltered.sort(comparator);

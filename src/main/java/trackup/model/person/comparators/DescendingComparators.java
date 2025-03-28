@@ -7,6 +7,10 @@ import java.util.Comparator;
 import java.util.Comparator;
 import java.util.function.Function;
 
+/**
+ * A utility class that provides {@link Comparator} implementations for {@link Person} objects
+ * in descending order. Each comparator compares persons based on different attributes.
+ */
 public class DescendingComparators {
 
     private static <T extends Comparable<T>> Comparator<Person> comparing(Function<Person, T> keyExtractor) {

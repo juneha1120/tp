@@ -8,13 +8,18 @@ import java.util.Comparator;
 import static java.util.Objects.requireNonNull;
 import static trackup.logic.parser.CliSyntax.*;
 
+/**
+ * Sorts all persons in current filtered list displayed by the prefixes.
+ * Keyword matching is case-insensitive.
+ */
 public class SortCommand extends Command {
 
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Sorts the address book according to given attribute in the input order."
-            + " [true]: optional, to indicate a descending sort.\n"
+            + " [true]: optional, to indicate a descending order,\n"
+            + " if [true] is not indicated then ascending order by default.\n"
             + "Parameters: "
             + PREFIX_NAME + "[true] "
             + PREFIX_PHONE + "[true] "

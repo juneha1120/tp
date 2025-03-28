@@ -31,6 +31,7 @@ public class SortCommandParser implements Parser<SortCommand> {
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
      * and returns a SortCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
      */
     public SortCommand parse(String args) throws ParseException {
 
@@ -67,7 +68,6 @@ public class SortCommandParser implements Parser<SortCommand> {
         }
 
         comparators.sort(Comparator.comparingInt(p -> args.indexOf(p.getKey().getPrefix())));
-
         Comparator<Person> finalComparator = comparators.get(0).getValue();
         for (int i = 1; i < comparators.size(); i++) {
             finalComparator = finalComparator.thenComparing(comparators.get(i).getValue());
@@ -76,6 +76,9 @@ public class SortCommandParser implements Parser<SortCommand> {
         return new SortCommand(finalComparator);
     }
 
+    /**
+     * Returns A Pair of Prefix and value by extracting the {@param args}
+     */
     private static Pair<Prefix, String> getPrefixValue(Prefix prefix, String args) {
         Optional<String> value = ArgumentTokenizer.tokenize(args, prefix).getValue(prefix);
         return new Pair<>(prefix, value.orElse(null));
