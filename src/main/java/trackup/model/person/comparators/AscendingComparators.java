@@ -4,65 +4,19 @@ import trackup.model.person.Person;
 
 import java.util.Comparator;
 
+import java.util.function.Function;
+
 public class AscendingComparators {
 
-    public static class NameComparator implements Comparator<Person> {
-
-        @Override
-        public int compare(Person person1, Person person2) {
-            return person1.getName().compareTo(
-                    person2.getName());
-        }
-
+    private static <T extends Comparable<T>> Comparator<Person> comparing(Function<Person, T> keyExtractor) {
+        return Comparator.comparing(keyExtractor);
     }
 
-    public static class PhoneComparator implements Comparator<Person> {
-
-        @Override
-        public int compare(Person person1, Person person2) {
-            return person1.getPhone().compareTo(
-                    person2.getPhone());
-        }
-
-    }
-
-    public static class AddressComparator implements Comparator<Person> {
-
-        @Override
-        public int compare(Person person1, Person person2) {
-            return person1.getAddress().compareTo(
-                    person2.getAddress());
-        }
-
-    }
-    public static class EmailComparator implements Comparator<Person> {
-
-        @Override
-        public int compare(Person person1, Person person2) {
-            return person1.getEmail().compareTo(
-                    person2.getEmail());
-        }
-
-    }
-
-    public static class TagComparator implements Comparator<Person> {
-
-        @Override
-        public int compare(Person person1, Person person2) {
-            return person1.getTags().toString().compareTo(
-                    person2.getTags().toString());
-        }
-
-    }
-
-    public static class CategoryComparator implements Comparator<Person> {
-
-        @Override
-        public int compare(Person person1, Person person2) {
-            return person1.getCategory().toString().compareTo(
-                    person2.getCategory().toString());
-        }
-
-    }
+    public static final Comparator<Person> NAME_COMPARATOR = comparing(Person::getName);
+    public static final Comparator<Person> PHONE_COMPARATOR = comparing(Person::getPhone);
+    public static final Comparator<Person> ADDRESS_COMPARATOR = comparing(Person::getAddress);
+    public static final Comparator<Person> EMAIL_COMPARATOR = comparing(Person::getEmail);
+    public static final Comparator<Person> TAG_COMPARATOR = comparing(p -> p.getTags().toString());
+    public static final Comparator<Person> CATEGORY_COMPARATOR = comparing(p -> p.getCategory().toString());
 
 }

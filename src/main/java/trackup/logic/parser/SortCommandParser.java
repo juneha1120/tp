@@ -11,12 +11,16 @@ import static trackup.logic.parser.CliSyntax.PREFIX_TAG;
 import javafx.util.Pair;
 import trackup.logic.commands.SortCommand;
 import trackup.logic.parser.exceptions.ParseException;
+import trackup.model.person.Person;
 import trackup.model.person.comparators.AscendingComparators;
 import trackup.model.person.comparators.DescendingComparators;
 
-import java.util.Objects;
+import java.util.Comparator;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Stream;
+import java.util.function.Function;
+import java.util.List;
+import java.util.ArrayList;
 
 
 /**
@@ -30,56 +34,46 @@ public class SortCommandParser implements Parser<SortCommand> {
      */
     public SortCommand parse(String args) throws ParseException {
 
-        Pair<Prefix, String> nameVal = getPrefixValue(PREFIX_NAME, args);
-        Pair<Prefix, String> phoneVal = getPrefixValue(PREFIX_PHONE, args);
-        Pair<Prefix, String> emailVal = getPrefixValue(PREFIX_EMAIL, args);
-        Pair<Prefix, String> addressVal = getPrefixValue(PREFIX_ADDRESS, args);
-        Pair<Prefix, String> tagVal = getPrefixValue(PREFIX_TAG, args);
-        Pair<Prefix, String> categoryVal = getPrefixValue(PREFIX_CATEGORY, args);
+        Map<Prefix, Function<Boolean, Comparator<Person>>> comparatorMap = Map.of(
+                PREFIX_NAME, isDesc -> isDesc ? DescendingComparators.NAME_COMPARATOR
+                        : AscendingComparators.NAME_COMPARATOR,
+                PREFIX_PHONE, isDesc -> isDesc ? DescendingComparators.PHONE_COMPARATOR
+                        : AscendingComparators.PHONE_COMPARATOR,
+                PREFIX_EMAIL, isDesc -> isDesc ? DescendingComparators.EMAIL_COMPARATOR
+                        : AscendingComparators.EMAIL_COMPARATOR,
+                PREFIX_ADDRESS, isDesc -> isDesc ? DescendingComparators.ADDRESS_COMPARATOR
+                        : AscendingComparators.ADDRESS_COMPARATOR,
+                PREFIX_TAG, isDesc -> isDesc ? DescendingComparators.TAG_COMPARATOR
+                        : AscendingComparators.TAG_COMPARATOR,
+                PREFIX_CATEGORY, isDesc -> isDesc ? DescendingComparators.CATEGORY_COMPARATOR
+                        : AscendingComparators.CATEGORY_COMPARATOR
+        );
 
-        Stream<Pair<Prefix, String>> filteredValues = Stream
-                .of(nameVal, phoneVal, emailVal, addressVal, tagVal, categoryVal)
-                .filter(x -> x.getValue() != null);
-        if (filteredValues.count() != 1) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
-        }
-        filteredValues = Stream
-                .of(nameVal, phoneVal, emailVal, addressVal, tagVal, categoryVal)
-                .filter(x -> x.getValue() != null);
-        Pair<Prefix, String> firstVal = filteredValues.findFirst().get();
+        List<Pair<Prefix, Comparator<Person>>> comparators = new ArrayList<>();
 
-        boolean isDescending = Boolean.parseBoolean(firstVal.getValue());
-        Prefix key = firstVal.getKey();
-        if (isDescending) {
-            if (key.equals(PREFIX_NAME)) {
-                return new SortCommand(new DescendingComparators.NameComparator());
-            } else if (key.equals(PREFIX_PHONE)) {
-                return new SortCommand(new DescendingComparators.PhoneComparator());
-            } else if (key.equals(PREFIX_EMAIL)) {
-                return new SortCommand(new DescendingComparators.EmailComparator());
-            } else if (key.equals(PREFIX_ADDRESS)) {
-                return new SortCommand(new DescendingComparators.AddressComparator());
-            } else if (key.equals(PREFIX_TAG)) {
-                return new SortCommand(new DescendingComparators.TagComparator());
-            } else if (key.equals(PREFIX_CATEGORY)) {
-                return new SortCommand(new DescendingComparators.CategoryComparator());
+        for (Prefix prefix : comparatorMap.keySet()) {
+            Pair<Prefix, String> prefixValue = getPrefixValue(prefix, args);
+            if (prefixValue.getValue() != null) {
+                int index = args.indexOf(prefix.getPrefix());
+                if (index != -1) {
+                    boolean isDescending = Boolean.parseBoolean(prefixValue.getValue());
+                    comparators.add(new Pair<>(prefix, comparatorMap.get(prefix).apply(isDescending)));
+                }
             }
         }
-        if (key.equals(PREFIX_NAME)) {
-            return new SortCommand(new AscendingComparators.NameComparator());
-        } else if (key.equals(PREFIX_PHONE)) {
-            return new SortCommand(new AscendingComparators.PhoneComparator());
-        } else if (key.equals(PREFIX_EMAIL)) {
-            return new SortCommand(new AscendingComparators.EmailComparator());
-        } else if (key.equals(PREFIX_ADDRESS)) {
-            return new SortCommand(new AscendingComparators.AddressComparator());
-        } else if (key.equals(PREFIX_TAG)) {
-            return new SortCommand(new AscendingComparators.TagComparator());
-        } else if (key.equals(PREFIX_CATEGORY)) {
-            return new SortCommand(new AscendingComparators.CategoryComparator());
-        } else {
+
+        if (comparators.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
+
+        comparators.sort(Comparator.comparingInt(p -> args.indexOf(p.getKey().getPrefix())));
+
+        Comparator<Person> finalComparator = comparators.get(0).getValue();
+        for (int i = 1; i < comparators.size(); i++) {
+            finalComparator = finalComparator.thenComparing(comparators.get(i).getValue());
+        }
+
+        return new SortCommand(finalComparator);
     }
 
     private static Pair<Prefix, String> getPrefixValue(Prefix prefix, String args) {
