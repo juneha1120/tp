@@ -18,8 +18,8 @@ import org.junit.jupiter.api.Test;
 
 import trackup.logic.commands.SortCommand;
 import trackup.logic.parser.exceptions.ParseException;
-import trackup.model.person.Person;
 import trackup.model.person.Comparators;
+import trackup.model.person.Person;
 import trackup.testutil.TypicalPersons;
 public class SortCommandParserTest {
 

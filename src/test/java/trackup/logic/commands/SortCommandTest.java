@@ -13,8 +13,9 @@ import org.junit.jupiter.api.Test;
 import trackup.model.Model;
 import trackup.model.ModelManager;
 import trackup.model.UserPrefs;
-import trackup.model.person.Person;
 import trackup.model.person.Comparators;
+import trackup.model.person.Person;
+
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
