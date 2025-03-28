@@ -18,8 +18,9 @@ import java.util.function.Function;
 import javafx.util.Pair;
 import trackup.logic.commands.SortCommand;
 import trackup.logic.parser.exceptions.ParseException;
-import trackup.model.person.Person;
 import trackup.model.person.Comparators;
+import trackup.model.person.Person;
+
 
 /**
  * Parses input arguments and creates a new SortCommand object
