@@ -2,13 +2,16 @@ package trackup.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import trackup.commons.core.index.Index;
 import trackup.commons.util.ToStringBuilder;
 import trackup.logic.Messages;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.model.Model;
+import trackup.model.event.Event;
 import trackup.model.person.Person;
 
 /**
@@ -41,6 +44,20 @@ public class DeleteCommand extends Command {
         }
 
         Person personToDelete = lastShownList.get(targetIndex.getZeroBased());
+
+        // Update all events linked to this contact
+        List<Event> allEvents = model.getEventList();
+        for (Event event : allEvents) {
+            if (event.getContacts().contains(personToDelete)) {
+                Set<Person> updatedContacts = new HashSet<>(event.getContacts());
+                updatedContacts.remove(personToDelete);
+
+                Event updatedEvent = new Event(event.getTitle(), event.getStartDateTime(),
+                        event.getEndDateTime(), updatedContacts);
+                model.setEvent(event, updatedEvent);
+            }
+        }
+
         model.deletePerson(personToDelete);
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
     }

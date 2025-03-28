@@ -1,21 +1,29 @@
 package trackup.ui;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import trackup.commons.core.GuiSettings;
 import trackup.commons.core.LogsCenter;
+import trackup.commons.core.Visibility;
 import trackup.logic.Logic;
 import trackup.logic.commands.CommandResult;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.logic.parser.exceptions.ParseException;
+import trackup.model.event.Event;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -34,6 +42,7 @@ public class MainWindow extends UiPart<Stage> {
     private PersonListPanel personListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
+    private WeeklyCalendarView calendarView;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -49,6 +58,15 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private VBox calendarContainer;
+
+    @FXML
+    private ScrollPane calendarScrollPane;
+
+    @FXML
+    private Label monthYearLabel;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -110,7 +128,7 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.getGuiSettings().getVisibility());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
@@ -121,6 +139,23 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(this::executeCommand);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        ObservableList<Event> eventList = logic.getEventList();
+        calendarView = new WeeklyCalendarView(eventList);
+        calendarContainer.getChildren().add(calendarView.getRoot());
+
+        // Enable natural scrolling
+        calendarScrollPane.setFitToWidth(true);
+        calendarScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        calendarScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+
+        calendarView.populateCalendar();
+        updateMonthYearLabel(calendarView.getCurrentDate());
+    }
+
+    private void updateMonthYearLabel(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
+        monthYearLabel.setText(date.format(formatter));
     }
 
     /**
@@ -157,7 +192,7 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleExit() {
         GuiSettings guiSettings = new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), new Visibility());
         logic.setGuiSettings(guiSettings);
         helpWindow.hide();
         primaryStage.hide();
@@ -191,6 +226,27 @@ public class MainWindow extends UiPart<Stage> {
             logger.info("An error occurred while executing command: " + commandText);
             resultDisplay.setFeedbackToUser(e.getMessage());
             throw e;
+        } finally {
+            calendarView.populateCalendar();
+            updateMonthYearLabel(calendarView.getCurrentDate());
         }
+    }
+
+    /**
+     * Handles switching to the previous week.
+     */
+    @FXML
+    private void handlePreviousWeek() {
+        calendarView.showPreviousWeek();
+        updateMonthYearLabel(calendarView.getCurrentWeekStart());
+    }
+
+    /**
+     * Handles switching to the next week.
+     */
+    @FXML
+    private void handleNextWeek() {
+        calendarView.showNextWeek();
+        updateMonthYearLabel(calendarView.getCurrentWeekStart());
     }
 }

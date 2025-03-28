@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import trackup.commons.core.GuiSettings;
+import trackup.model.event.Event;
 import trackup.model.person.Person;
 
 /**
@@ -91,4 +92,32 @@ public interface Model {
      * @throws NullPointerException if {@code comparator} is null.
      */
     void sortFilteredPersonList(Comparator<Person> comparator);
+  
+    /**
+     * Returns true if an event with the same identity as {@code event} exists in the calendar.
+     */
+    boolean hasEvent(Event event);
+
+    /**
+     * Adds the given event.
+     * {@code event} must not already exist in the calendar.
+     */
+    void addEvent(Event event);
+
+    /**
+     * Deletes the given event.
+     * The event must exist in the address book.
+     */
+    void deleteEvent(Event event);
+
+    /**
+     * Replaces the given event {@code target} with {@code editedEvent}.
+     * {@code target} must exist in the address book.
+     * The event identity of {@code editedEvent} must not be the same as another existing event in the address book.
+     */
+    void setEvent(Event target, Event editedEvent);
+
+    /** Returns an unmodifiable view of the event list */
+    ObservableList<Event> getEventList();
+
 }

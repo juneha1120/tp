@@ -1,0 +1,27 @@
+@startuml
+actor User
+participant LogicManager
+participant AddCommand
+participant Model
+participant UniquePersonList
+participant Person
+
+== User initiates Add Command ==
+User -> LogicManager: add <contact>
+LogicManager -> AddCommand: execute(model)
+
+== Check for duplicates ==
+AddCommand -> Model: hasPerson(person)
+Model -> UniquePersonList: contains(person)
+UniquePersonList -> Person: isDuplicateOf(person)
+
+alt Duplicate Found
+    UniquePersonList -> Model: return true
+    Model -> AddCommand: duplicate found
+    AddCommand -> LogicManager: throws CommandException
+else No Duplicate
+    UniquePersonList -> Model: return false
+    AddCommand -> Model: addPerson(person)
+end
+@enduml
+

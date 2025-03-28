@@ -15,6 +15,7 @@ import trackup.logic.parser.AddressBookParser;
 import trackup.logic.parser.exceptions.ParseException;
 import trackup.model.Model;
 import trackup.model.ReadOnlyAddressBook;
+import trackup.model.event.Event;
 import trackup.model.person.Person;
 import trackup.storage.Storage;
 
@@ -69,6 +70,11 @@ public class LogicManager implements Logic {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<Event> getEventList() {
+        return model.getEventList();
     }
 
     @Override
