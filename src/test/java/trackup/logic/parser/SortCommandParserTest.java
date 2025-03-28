@@ -1,12 +1,18 @@
 package trackup.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
 import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
 import static trackup.logic.parser.CliSyntax.PREFIX_TAG;
+import static trackup.testutil.Assert.assertThrows;
+
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,12 +22,6 @@ import trackup.model.person.Person;
 import trackup.model.person.comparators.AscendingComparators;
 import trackup.model.person.comparators.DescendingComparators;
 import trackup.testutil.TypicalPersons;
-
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Stream;
-
 public class SortCommandParserTest {
 
     private final SortCommandParser parser = new SortCommandParser();
@@ -105,9 +105,11 @@ public class SortCommandParserTest {
     }
 
     static void assertStreamEquals(Stream<?> s1, Stream<?> s2) {
-        Iterator<?> iter1 = s1.iterator(), iter2 = s2.iterator();
-        while(iter1.hasNext() && iter2.hasNext())
+        Iterator<?> iter1 = s1.iterator();
+        Iterator<?> iter2 = s2.iterator();
+        while (iter1.hasNext() && iter2.hasNext()) {
             assertEquals(iter1.next(), iter2.next());
+        }
         assert !iter1.hasNext() && !iter2.hasNext();
     }
 }
