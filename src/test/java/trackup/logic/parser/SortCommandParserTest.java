@@ -19,8 +19,7 @@ import org.junit.jupiter.api.Test;
 import trackup.logic.commands.SortCommand;
 import trackup.logic.parser.exceptions.ParseException;
 import trackup.model.person.Person;
-import trackup.model.person.comparators.AscendingComparators;
-import trackup.model.person.comparators.DescendingComparators;
+import trackup.model.person.Comparators;
 import trackup.testutil.TypicalPersons;
 public class SortCommandParserTest {
 
@@ -30,22 +29,22 @@ public class SortCommandParserTest {
     public void parse_validSingleFieldAscending_success() throws ParseException {
         // Test single field ascending sort
         SortCommand command = parser.parse(" " + PREFIX_NAME + "false");
-        assertEquals(new SortCommand(AscendingComparators.NAME_COMPARATOR), command);
+        assertEquals(new SortCommand(Comparators.NAME_COMPARATOR), command);
     }
 
     @Test
     public void parse_validSingleFieldDescending_success() throws ParseException {
         // Test single field descending sort
         SortCommand command = parser.parse(" " + PREFIX_EMAIL + "true");
-        assertEquals(new SortCommand(DescendingComparators.EMAIL_COMPARATOR), command);
+        assertEquals(new SortCommand(Comparators.EMAIL_COMPARATOR.reversed()), command);
     }
 
     @Test
     public void parse_validMultipleFields_success() throws ParseException {
         // Test multiple fields sort with correct order
         SortCommand command = parser.parse(" " + PREFIX_NAME + "false " + PREFIX_EMAIL + "true");
-        Comparator<Person> expected = AscendingComparators.NAME_COMPARATOR
-                .thenComparing(DescendingComparators.EMAIL_COMPARATOR);
+        Comparator<Person> expected = Comparators.NAME_COMPARATOR
+                .thenComparing(Comparators.EMAIL_COMPARATOR.reversed());
         assertComparatorEquals(expected, command.getComparator());;
     }
 
@@ -58,7 +57,7 @@ public class SortCommandParserTest {
     @Test
     public void parse_missingBooleanValue_throwsParseException() throws ParseException {
         // Test missing boolean value
-        Comparator<?> expected = AscendingComparators.NAME_COMPARATOR;
+        Comparator<?> expected = Comparators.NAME_COMPARATOR;
         SortCommand command = parser.parse(" " + PREFIX_NAME);
         assertEquals(expected, command.getComparator());
     }
@@ -81,12 +80,12 @@ public class SortCommandParserTest {
                 PREFIX_CATEGORY + "true");
 
         SortCommand command = parser.parse(" " + args);
-        Comparator<Person> expected = AscendingComparators.NAME_COMPARATOR
-                .thenComparing(DescendingComparators.PHONE_COMPARATOR)
-                .thenComparing(AscendingComparators.EMAIL_COMPARATOR)
-                .thenComparing(DescendingComparators.ADDRESS_COMPARATOR)
-                .thenComparing(AscendingComparators.TAG_COMPARATOR)
-                .thenComparing(DescendingComparators.CATEGORY_COMPARATOR);
+        Comparator<Person> expected = Comparators.NAME_COMPARATOR
+                .thenComparing(Comparators.PHONE_COMPARATOR.reversed())
+                .thenComparing(Comparators.EMAIL_COMPARATOR)
+                .thenComparing(Comparators.ADDRESS_COMPARATOR.reversed())
+                .thenComparing(Comparators.TAG_COMPARATOR)
+                .thenComparing(Comparators.CATEGORY_COMPARATOR.reversed());
         assertComparatorEquals(expected, command.getComparator());
     }
 
@@ -94,8 +93,8 @@ public class SortCommandParserTest {
     public void parse_fieldsInDifferentOrder_success() throws ParseException {
         // Test fields in different order than declaration
         SortCommand command = parser.parse(" " + PREFIX_EMAIL + "false " + PREFIX_NAME + "true");
-        Comparator<Person> expected = AscendingComparators.EMAIL_COMPARATOR
-                .thenComparing(DescendingComparators.NAME_COMPARATOR);
+        Comparator<Person> expected = Comparators.EMAIL_COMPARATOR
+                .thenComparing(Comparators.NAME_COMPARATOR.reversed());
         assertComparatorEquals(expected, command.getComparator());
     }
 

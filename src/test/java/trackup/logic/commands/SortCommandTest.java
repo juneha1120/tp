@@ -14,8 +14,7 @@ import trackup.model.Model;
 import trackup.model.ModelManager;
 import trackup.model.UserPrefs;
 import trackup.model.person.Person;
-import trackup.model.person.comparators.AscendingComparators;
-import trackup.model.person.comparators.DescendingComparators;
+import trackup.model.person.Comparators;
 
 /**
  * Contains integration tests (interaction with the Model) for {@code FindCommand}.
@@ -37,30 +36,30 @@ public class SortCommandTest {
 
     @Test
     public void execute_byName_sortsList() {
-        Comparator<Person> comparator = AscendingComparators.NAME_COMPARATOR;
+        Comparator<Person> comparator = Comparators.NAME_COMPARATOR;
         expectedModel.sortFilteredPersonList(comparator);
         assertCommandSuccess(new SortCommand(comparator), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
 
-        comparator = DescendingComparators.NAME_COMPARATOR;
+        comparator = Comparators.NAME_COMPARATOR.reversed();
         expectedModel.sortFilteredPersonList(comparator);
         assertCommandSuccess(new SortCommand(comparator), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void execute_byPhone_sortsList() {
-        Comparator<Person> comparator = AscendingComparators.PHONE_COMPARATOR;
+        Comparator<Person> comparator = Comparators.PHONE_COMPARATOR;
         expectedModel.sortFilteredPersonList(comparator);
         assertCommandSuccess(new SortCommand(comparator), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
 
-        comparator = DescendingComparators.PHONE_COMPARATOR;
+        comparator = Comparators.PHONE_COMPARATOR.reversed();
         expectedModel.sortFilteredPersonList(comparator);
         assertCommandSuccess(new SortCommand(comparator), model, SortCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void equals() {
-        Comparator<Person> firstComparator = AscendingComparators.NAME_COMPARATOR;
-        Comparator<Person> secondComparator = AscendingComparators.PHONE_COMPARATOR;
+        Comparator<Person> firstComparator = Comparators.NAME_COMPARATOR;
+        Comparator<Person> secondComparator = Comparators.PHONE_COMPARATOR;
 
 
         SortCommand sortNameCommand = new SortCommand(firstComparator);

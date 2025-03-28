@@ -19,8 +19,7 @@ import javafx.util.Pair;
 import trackup.logic.commands.SortCommand;
 import trackup.logic.parser.exceptions.ParseException;
 import trackup.model.person.Person;
-import trackup.model.person.comparators.AscendingComparators;
-import trackup.model.person.comparators.DescendingComparators;
+import trackup.model.person.Comparators;
 
 /**
  * Parses input arguments and creates a new SortCommand object
@@ -35,18 +34,18 @@ public class SortCommandParser implements Parser<SortCommand> {
     public SortCommand parse(String args) throws ParseException {
 
         Map<Prefix, Function<Boolean, Comparator<Person>>> comparatorMap = Map.of(
-                PREFIX_NAME, isDesc -> isDesc ? DescendingComparators.NAME_COMPARATOR
-                        : AscendingComparators.NAME_COMPARATOR,
-                PREFIX_PHONE, isDesc -> isDesc ? DescendingComparators.PHONE_COMPARATOR
-                        : AscendingComparators.PHONE_COMPARATOR,
-                PREFIX_EMAIL, isDesc -> isDesc ? DescendingComparators.EMAIL_COMPARATOR
-                        : AscendingComparators.EMAIL_COMPARATOR,
-                PREFIX_ADDRESS, isDesc -> isDesc ? DescendingComparators.ADDRESS_COMPARATOR
-                        : AscendingComparators.ADDRESS_COMPARATOR,
-                PREFIX_TAG, isDesc -> isDesc ? DescendingComparators.TAG_COMPARATOR
-                        : AscendingComparators.TAG_COMPARATOR,
-                PREFIX_CATEGORY, isDesc -> isDesc ? DescendingComparators.CATEGORY_COMPARATOR
-                        : AscendingComparators.CATEGORY_COMPARATOR
+                PREFIX_NAME, isDesc -> isDesc ? Comparators.NAME_COMPARATOR.reversed()
+                        : Comparators.NAME_COMPARATOR,
+                PREFIX_PHONE, isDesc -> isDesc ? Comparators.PHONE_COMPARATOR.reversed()
+                        : Comparators.PHONE_COMPARATOR,
+                PREFIX_EMAIL, isDesc -> isDesc ? Comparators.EMAIL_COMPARATOR.reversed()
+                        : Comparators.EMAIL_COMPARATOR,
+                PREFIX_ADDRESS, isDesc -> isDesc ? Comparators.ADDRESS_COMPARATOR.reversed()
+                        : Comparators.ADDRESS_COMPARATOR,
+                PREFIX_TAG, isDesc -> isDesc ? Comparators.TAG_COMPARATOR.reversed()
+                        : Comparators.TAG_COMPARATOR,
+                PREFIX_CATEGORY, isDesc -> isDesc ? Comparators.CATEGORY_COMPARATOR.reversed()
+                        : Comparators.CATEGORY_COMPARATOR
         );
 
         List<Pair<Prefix, Comparator<Person>>> comparators = new ArrayList<>();
