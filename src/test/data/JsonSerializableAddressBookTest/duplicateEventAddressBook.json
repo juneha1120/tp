@@ -1,0 +1,37 @@
+{
+  "_comment": "AddressBook save file with duplicate events to test IllegalValueException.",
+  "persons": [ {
+      "name": "Alice Pauline",
+      "phone": "94351253",
+      "email": "alice@example.com",
+      "address": "123, Jurong West Ave 6, #08-111",
+      "tags": [ "friends" ],
+      "category": "Client"
+    } ],
+  "events": [ {
+      "title": "Project Meeting",
+      "startDateTime": "2025-04-01T14:00",
+      "endDateTime": "2025-04-01T15:00",
+      "contacts": [ {
+          "name": "Alice Pauline",
+          "phone": "94351253",
+          "email": "alice@example.com",
+          "address": "123, Jurong West Ave 6, #08-111",
+          "tags": [ "friends" ],
+          "category": "Client"
+        } ]
+    }, {
+      "title": "Project Meeting",
+      "startDateTime": "2025-04-01T14:00",
+      "endDateTime": "2025-04-01T15:00",
+      "contacts": [ {
+          "name": "Alice Pauline",
+          "phone": "94351253",
+          "email": "alice@example.com",
+          "address": "123, Jurong West Ave 6, #08-111",
+          "tags": [ "friends" ],
+          "category": "Client"
+        } ]
+    }
+  ]
+}
