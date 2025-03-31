@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import org.junit.jupiter.api.Test;
 
 import trackup.commons.core.GuiSettings;
+import trackup.commons.core.Visibility;
 
 public class UserPrefsTest {
 
@@ -40,7 +41,7 @@ public class UserPrefsTest {
     public void equals_differentGuiSettings_returnsFalse() {
         UserPrefs userPrefs1 = new UserPrefs();
         UserPrefs userPrefs2 = new UserPrefs();
-        userPrefs2.setGuiSettings(new GuiSettings(200, 200, 5, 5));
+        userPrefs2.setGuiSettings(new GuiSettings(200, 200, 5, 5, new Visibility()));
         assertNotEquals(userPrefs1, userPrefs2);
     }
 
@@ -63,7 +64,7 @@ public class UserPrefsTest {
     public void hashCode_differentGuiSettings_returnsDifferentHashCode() {
         UserPrefs userPrefs1 = new UserPrefs();
         UserPrefs userPrefs2 = new UserPrefs();
-        userPrefs2.setGuiSettings(new GuiSettings(300, 300, 10, 10));
+        userPrefs2.setGuiSettings(new GuiSettings(300, 300, 10, 10, new Visibility()));
         assertNotEquals(userPrefs1.hashCode(), userPrefs2.hashCode());
     }
 }

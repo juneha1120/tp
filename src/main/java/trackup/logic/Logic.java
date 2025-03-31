@@ -8,6 +8,7 @@ import trackup.logic.commands.CommandResult;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.logic.parser.exceptions.ParseException;
 import trackup.model.ReadOnlyAddressBook;
+import trackup.model.event.Event;
 import trackup.model.person.Person;
 
 /**
@@ -32,6 +33,9 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the list of events */
+    ObservableList<Event> getEventList();
 
     /**
      * Returns the user prefs' address book file path.

@@ -10,6 +10,8 @@ import static trackup.testutil.TypicalPersons.ALICE;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,7 @@ import trackup.model.AddressBook;
 import trackup.model.Model;
 import trackup.model.ReadOnlyAddressBook;
 import trackup.model.ReadOnlyUserPrefs;
+import trackup.model.event.Event;
 import trackup.model.person.Person;
 import trackup.testutil.PersonBuilder;
 
@@ -52,6 +55,37 @@ public class AddCommandTest {
 
         assertThrows(CommandException.class, AddCommand.MESSAGE_DUPLICATE_PERSON, () -> addCommand.execute(modelStub));
     }
+
+    @Test
+    public void execute_personWithoutCategory_defaultCategoryNotAssigned() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person personWithoutCategory = new PersonBuilder().withNoCategory().build();
+        AddCommand addCommand = new AddCommand(personWithoutCategory);
+
+        CommandResult commandResult = addCommand.execute(modelStub);
+
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(personWithoutCategory)),
+                commandResult.getFeedbackToUser());
+        // Expect that no category is assigned (i.e., Optional.empty())
+        assertFalse(modelStub.personsAdded.get(0).getCategory().isPresent());
+    }
+
+    @Test
+    public void execute_differentEmailOrPhone_success() throws Exception {
+        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
+        Person person1 = new PersonBuilder().withName("Alice").withPhone("12345678")
+                .withEmail("alice@example.com").build();
+        Person person2 = new PersonBuilder().withName("Alice").withPhone("87654321")
+                .withEmail("alice@example.com").build();
+
+        new AddCommand(person1).execute(modelStub);
+        // Should not throw exception, as person2 differs in phone.
+        CommandResult result = new AddCommand(person2).execute(modelStub);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, Messages.format(person2)),
+                result.getFeedbackToUser());
+    }
+
+
 
     @Test
     public void equals() {
@@ -88,6 +122,8 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+        private final List<Event> events = new ArrayList<>();
+
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
             throw new AssertionError("This method should not be called.");
@@ -155,6 +191,36 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void sortFilteredPersonList(Comparator<Person> comparator) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public boolean hasEvent(Event event) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void addEvent(Event event) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void deleteEvent(Event event) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public void setEvent(Event target, Event editedEvent) {
+            throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Event> getEventList() {
             throw new AssertionError("This method should not be called.");
         }
     }

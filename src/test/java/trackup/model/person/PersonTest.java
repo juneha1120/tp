@@ -33,10 +33,14 @@ public class PersonTest {
         // null -> returns false
         assertFalse(ALICE.isSamePerson(null));
 
-        // same name, all other attributes different -> returns true
-        Person editedAlice = new PersonBuilder(ALICE).withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB)
-                .withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND).build();
-        assertTrue(ALICE.isSamePerson(editedAlice));
+        // same name but different phone/email -> returns false per new duplicate rules
+        Person editedAlice = new PersonBuilder(ALICE)
+                .withPhone(VALID_PHONE_BOB)
+                .withEmail(VALID_EMAIL_BOB)
+                .withAddress(VALID_ADDRESS_BOB)
+                .withTags(VALID_TAG_HUSBAND)
+                .build();
+        assertFalse(ALICE.isSamePerson(editedAlice));
 
         // different name, all other attributes same -> returns false
         editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).build();
@@ -51,6 +55,48 @@ public class PersonTest {
         editedBob = new PersonBuilder(BOB).withName(nameWithTrailingSpaces).build();
         assertFalse(BOB.isSamePerson(editedBob));
     }
+
+    @Test
+    public void isSamePerson_sameObject_returnsTrue() {
+        // same object -> returns true
+        assertTrue(ALICE.isSamePerson(ALICE));
+    }
+
+    @Test
+    public void isSamePerson_null_returnsFalse() {
+        // null -> returns false
+        assertFalse(ALICE.isSamePerson(null));
+    }
+
+    @Test
+    public void isSamePerson_allFieldsSame_returnsTrue() {
+        // name, phone, email all match
+        Person aliceCopy = new PersonBuilder(ALICE).build(); // same as ALICE
+        assertTrue(ALICE.isSamePerson(aliceCopy));
+    }
+
+    @Test
+    public void isSamePerson_sameNameDifferentPhone_returnsFalse() {
+        // phone differs
+        Person aliceDifferentPhone = new PersonBuilder(ALICE).withPhone("87654321").build();
+        assertFalse(ALICE.isSamePerson(aliceDifferentPhone));
+    }
+
+    @Test
+    public void isSamePerson_sameNameDifferentEmail_returnsFalse() {
+        // email differs
+        Person aliceDifferentEmail = new PersonBuilder(ALICE).withEmail("diff@example.com").build();
+        assertFalse(ALICE.isSamePerson(aliceDifferentEmail));
+    }
+
+    @Test
+    public void isSamePerson_differentNameSamePhoneSameEmail_returnsFalse() {
+        // name differs
+        Person differentName = new PersonBuilder(ALICE).withName("Alice B").build();
+        assertFalse(ALICE.isSamePerson(differentName));
+    }
+
+
 
     @Test
     public void equals() {
