@@ -208,4 +208,29 @@ public class AddCommandParserTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
     }
 
+    @Test
+    public void parse_missingName_throwsParseException() {
+        String input = PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        assertParseFailure(parser, input, "Missing required field: Name (-n)");
+    }
+
+    @Test
+    public void parse_missingPhone_throwsParseException() {
+        String input = NAME_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY;
+        assertParseFailure(parser, input, "Missing required field: Phone (-p)");
+    }
+
+    @Test
+    public void parse_missingEmail_throwsParseException() {
+        String input = NAME_DESC_AMY + PHONE_DESC_AMY + ADDRESS_DESC_AMY;
+        assertParseFailure(parser, input, "Missing required field: Email (-e)");
+    }
+
+    @Test
+    public void parse_missingAddress_throwsParseException() {
+        String input = NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY;
+        assertParseFailure(parser, input, "Missing required field: Address (-a)");
+    }
+
+
 }
