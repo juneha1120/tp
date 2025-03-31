@@ -40,6 +40,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private WeeklyCalendarView calendarView;
@@ -51,7 +52,13 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private StackPane listPanelStack;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -131,6 +138,9 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.getGuiSettings().getVisibility());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        eventListPanel = new EventListPanel(logic.getEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -151,6 +161,8 @@ public class MainWindow extends UiPart<Stage> {
 
         calendarView.populateCalendar();
         updateMonthYearLabel(calendarView.getCurrentDate());
+
+        handleShowPersons();
     }
 
     private void updateMonthYearLabel(LocalDate date) {
@@ -249,4 +261,27 @@ public class MainWindow extends UiPart<Stage> {
         calendarView.showNextWeek();
         updateMonthYearLabel(calendarView.getCurrentWeekStart());
     }
+
+    /**
+     * Handles switching to person list.
+     */
+    @FXML
+    private void handleShowPersons() {
+        personListPanelPlaceholder.setVisible(true);
+        personListPanelPlaceholder.setManaged(true);
+        eventListPanelPlaceholder.setVisible(false);
+        eventListPanelPlaceholder.setManaged(false);
+    }
+
+    /**
+     * Handles switching to event list.
+     */
+    @FXML
+    private void handleShowEvents() {
+        personListPanelPlaceholder.setVisible(false);
+        personListPanelPlaceholder.setManaged(false);
+        eventListPanelPlaceholder.setVisible(true);
+        eventListPanelPlaceholder.setManaged(true);
+    }
+
 }
