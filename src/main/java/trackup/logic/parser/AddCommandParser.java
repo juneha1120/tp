@@ -8,6 +8,8 @@ import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
 import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
 import static trackup.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -42,21 +44,32 @@ public class AddCommandParser implements Parser<AddCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE));
         }
 
-        // Check each required field individually
+        // Check all required fields and collect any that are missing
+        List<String> missingFields = new ArrayList<>();
         if (argMultimap.getValue(PREFIX_NAME).isEmpty()) {
-            throw new ParseException("Missing required field: Name (-n)");
+            missingFields.add("name (-n)");
         }
         if (argMultimap.getValue(PREFIX_PHONE).isEmpty()) {
-            throw new ParseException("Missing required field: Phone (-p)");
+            missingFields.add("phone (-p)");
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isEmpty()) {
-            throw new ParseException("Missing required field: Email (-e)");
+            missingFields.add("email (-e)");
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isEmpty()) {
-            throw new ParseException("Missing required field: Address (-a)");
+            missingFields.add("address (-a)");
         }
 
+        // If any required field is missing, throw a descriptive error
+        if (!missingFields.isEmpty()) {
+            String errorMessage = "Missing required field"
+                    + (missingFields.size() > 1 ? "s" : "")
+                    + ": " + String.join(", ", missingFields);
+            throw new ParseException(errorMessage);
+        }
+
+        // No duplicates allowed for single-value fields
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS);
+
         Name name = ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get());
         Phone phone = ParserUtil.parsePhone(argMultimap.getValue(PREFIX_PHONE).get());
         Email email = ParserUtil.parseEmail(argMultimap.getValue(PREFIX_EMAIL).get());
@@ -77,5 +90,4 @@ public class AddCommandParser implements Parser<AddCommand> {
     private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
         return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
-
 }
