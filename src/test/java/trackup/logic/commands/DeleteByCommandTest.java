@@ -152,8 +152,7 @@ public class DeleteByCommandTest {
 
         CommandResult commandResult = deleteCommand.execute(model);
 
-        assertEquals(String.format(DeleteByCommand.MESSAGE_MULTIPLE_PEOPLE_TO_DELETE,
-                deleteCommand.toString()), commandResult.getFeedbackToUser());
+        assertEquals(DeleteByCommand.MESSAGE_MULTIPLE_PEOPLE_TO_DELETE, commandResult.getFeedbackToUser());
     }
 
     @Test
