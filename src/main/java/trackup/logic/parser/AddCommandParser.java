@@ -47,16 +47,16 @@ public class AddCommandParser implements Parser<AddCommand> {
         // Check all required fields and collect any that are missing
         List<String> missingFields = new ArrayList<>();
         if (argMultimap.getValue(PREFIX_NAME).isEmpty()) {
-            missingFields.add("name (-n)");
+            missingFields.add("Name (-n)");
         }
         if (argMultimap.getValue(PREFIX_PHONE).isEmpty()) {
-            missingFields.add("phone (-p)");
+            missingFields.add("Phone (-p)");
         }
         if (argMultimap.getValue(PREFIX_EMAIL).isEmpty()) {
-            missingFields.add("email (-e)");
+            missingFields.add("Email (-e)");
         }
         if (argMultimap.getValue(PREFIX_ADDRESS).isEmpty()) {
-            missingFields.add("address (-a)");
+            missingFields.add("Address (-a)");
         }
 
         // If any required field is missing, throw a descriptive error
