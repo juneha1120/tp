@@ -50,7 +50,8 @@ public class DeleteByCommand extends Command {
 
     public static final String MESSAGE_MULTIPLE_PEOPLE_TO_DELETE =
             "Multiple contacts match the provided attributes. Please refine your input to uniquely identify a contact.";
-    public static final String MESSAGE_NO_CRITERIA_SPECIFIED = "At least one attribute must be provided to delete a contact.";
+    public static final String MESSAGE_NO_CRITERIA_SPECIFIED =
+            "At least one attribute must be provided to delete a contact.";
 
     private final Optional<Name> deleteByName;
     private final Optional<Phone> deleteByPhone;
