@@ -63,11 +63,12 @@ public class AddCommandParser implements Parser<AddCommand> {
         Address address = ParserUtil.parseAddress(argMultimap.getValue(PREFIX_ADDRESS).get());
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Optional<Category> category = argMultimap.getValue(PREFIX_CATEGORY).isPresent()
-        ? Optional.ofNullable(ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get()))
-        : Optional.empty();
+                ? Optional.ofNullable(ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get()))
+                : Optional.empty();
 
         Person person = new Person(name, phone, email, address, tagList, category);
         return new AddCommand(person);
+    }
 
     /**
      * Returns true if none of the prefixes contains empty {@code Optional} values in the given
