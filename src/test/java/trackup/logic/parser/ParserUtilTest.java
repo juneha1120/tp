@@ -2,10 +2,12 @@ package trackup.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static trackup.logic.parser.ParserUtil.MESSAGE_INVALID_DATE_TIME;
 import static trackup.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static trackup.testutil.Assert.assertThrows;
 import static trackup.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,6 +16,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import trackup.logic.parser.exceptions.ParseException;
+import trackup.model.category.Category;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -26,6 +29,8 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_DATETIME = "not-a-date";
+    private static final String INVALID_CATEGORY = "randomCat";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
@@ -33,6 +38,7 @@ public class ParserUtilTest {
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_DATETIME = "2025-04-01 14:00";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -192,5 +198,60 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseEventTitle_valid_returnsTrimmed() throws Exception {
+        assertEquals("Meeting", ParserUtil.parseEventTitle("  Meeting  "));
+    }
+
+    @Test
+    public void parseEventTitle_empty_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseEventTitle("   "));
+    }
+
+    @Test
+    public void parseEventTime_valid_returnsDateTime() throws Exception {
+        assertEquals(LocalDateTime.of(2025, 4, 1, 14, 0),
+                ParserUtil.parseEventTime(VALID_DATETIME));
+    }
+
+    @Test
+    public void parseEventTime_invalid_throwsParseException() {
+        assertThrows(ParseException.class, MESSAGE_INVALID_DATE_TIME, ()
+                -> ParserUtil.parseEventTime(INVALID_DATETIME));
+    }
+
+    @Test
+    public void parseContacts_valid_returnsIndexSet() throws Exception {
+        Set<Integer> expected = Set.of(0, 2);
+        Set<Integer> actual = new HashSet<>();
+        for (var i : ParserUtil.parseContacts(Arrays.asList("1", "3"))) {
+            actual.add(i.getZeroBased());
+        }
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void parseContacts_invalid_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseContacts(Arrays.asList("1", "a")));
+    }
+
+    @Test
+    public void parseCategory_valid_returnsCategory() throws Exception {
+        Category expected = new Category("Client");
+        assertEquals(expected, ParserUtil.parseCategory("client"));
+        assertEquals(expected, ParserUtil.parseCategory("Client"));
+        assertEquals(expected, ParserUtil.parseCategory("CLIENT"));
+    }
+
+    @Test
+    public void parseCategory_invalid_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseCategory(INVALID_CATEGORY));
+    }
+
+    @Test
+    public void parseCategory_empty_returnsNull() throws Exception {
+        assertEquals(null, ParserUtil.parseCategory(""));
     }
 }
