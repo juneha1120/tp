@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Objects.requireNonNull;
+import static trackup.commons.util.CollectionUtil.requireAllNonNull;
+
 /**
  * Tokenizes arguments string of the form: {@code preamble <prefix>value <prefix>value ...}<br>
  *     e.g. {@code some preamble text t/ 11.00 t/12.00 k/ m/ July}  where prefixes are {@code t/ k/ m/}.<br>
@@ -45,6 +48,10 @@ public class ArgumentTokenizer {
      * {@see findAllPrefixPositions}
      */
     private static List<PrefixPosition> findPrefixPositions(String argsString, Prefix prefix) {
+        requireNonNull(argsString);
+        requireNonNull(prefix);
+        assert prefix.getPrefix().length() > 0 : "Prefix string cannot be empty";
+
         List<PrefixPosition> positions = new ArrayList<>();
 
         int prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), 0);
@@ -99,12 +106,12 @@ public class ArgumentTokenizer {
 
         // Map prefixes to their argument values (if any)
         ArgumentMultimap argMultimap = new ArgumentMultimap();
+        // Ensure positions are sorted
         for (int i = 0; i < prefixPositions.size() - 1; i++) {
-            // Extract and store prefixes and their arguments
-            Prefix argPrefix = prefixPositions.get(i).getPrefix();
-            String argValue = extractArgumentValue(argsString, prefixPositions.get(i), prefixPositions.get(i + 1));
-            argMultimap.put(argPrefix, argValue);
+            assert prefixPositions.get(i).getStartPosition() <= prefixPositions.get(i + 1).getStartPosition()
+                    : "Prefix positions must be sorted in non-decreasing order.";
         }
+
 
         return argMultimap;
     }
@@ -114,13 +121,17 @@ public class ArgumentTokenizer {
      * The end position of the value is determined by {@code nextPrefixPosition}.
      */
     private static String extractArgumentValue(String argsString,
-                                        PrefixPosition currentPrefixPosition,
-                                        PrefixPosition nextPrefixPosition) {
+                                               PrefixPosition currentPrefixPosition,
+                                               PrefixPosition nextPrefixPosition) {
+        requireAllNonNull(argsString, currentPrefixPosition, nextPrefixPosition);
+
         Prefix prefix = currentPrefixPosition.getPrefix();
-
         int valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
-        String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
 
+        assert valueStartPos <= argsString.length() : "Start position exceeds string bounds";
+        assert nextPrefixPosition.getStartPosition() <= argsString.length() : "End position exceeds string bounds";
+
+        String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
         return value.trim();
     }
 
