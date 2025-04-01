@@ -73,11 +73,11 @@ public class EventCard extends UiPart<Region> {
         }
 
         return switch (categoryName) {
-            case "Client" -> "rgba(255, 221, 193"; // Light Orange
-            case "Investor" -> "rgba(193, 255, 215"; // Light Green
-            case "Partner" -> "rgba(193, 212, 255"; // Light Blue
-            case "Other" -> "rgba(224, 193, 255"; // Light Purple
-            default -> "rgba(240, 240, 240"; // Default Gray
+        case "Client" -> "rgba(255, 221, 193"; // Light Orange
+        case "Investor" -> "rgba(193, 255, 215"; // Light Green
+        case "Partner" -> "rgba(193, 212, 255"; // Light Blue
+        case "Other" -> "rgba(224, 193, 255"; // Light Purple
+        default -> "rgba(240, 240, 240"; // Default Gray
         };
     }
 }
