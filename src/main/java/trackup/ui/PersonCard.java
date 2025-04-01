@@ -2,12 +2,16 @@ package trackup.ui;
 
 import java.util.Comparator;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import trackup.commons.core.Visibility;
+import trackup.model.note.Note;
 import trackup.model.person.Person;
 
 /**
@@ -43,6 +47,9 @@ public class PersonCard extends UiPart<Region> {
     private FlowPane tags;
     @FXML
     private Label category;
+
+    @FXML
+    private VBox notesBox;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
@@ -81,6 +88,22 @@ public class PersonCard extends UiPart<Region> {
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
                     + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
         }
+        renderNotes();
+
+        person.getNotes().addListener((ListChangeListener<Note>) change -> renderNotes());
+    }
+
+    private void renderNotes() {
+        notesBox.getChildren().clear();
+
+        person.getNotes().stream().limit(3).forEach(note -> {
+            Label noteLabel = new Label(note.text);
+            noteLabel.setWrapText(true);
+            noteLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
+            noteLabel.setMaxWidth(250);
+            noteLabel.getStyleClass().add("note-label");
+            notesBox.getChildren().add(noteLabel);
+        });
     }
 
     public String getCategoryColor(String categoryName) {
