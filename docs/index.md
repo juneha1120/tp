@@ -8,7 +8,7 @@ title: TrackUp
 
 ![Ui](images/Ui1.png)
 
-**TrackUp is a desktop application designed to help you manage both your contacts and events.** It combines a Graphical User Interface (GUI) with a flexible Command Line Interface (CLI) to give fast input with visual clarity.
+**TrackUp is a desktop application designed to help you manage both your contacts and events.** It combines a Graphical User Interface (GUI) with a flexible Command Line Interface (CLI) and is designed for fast and intuitive command input with clear visual feedback.
 
 Whether you're tracking clients, scheduling meetings, or organizing your weekly calendar, TrackUp provides an intuitive and productive experience.
 
