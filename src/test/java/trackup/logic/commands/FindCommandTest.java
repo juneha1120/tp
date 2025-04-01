@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static trackup.logic.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static trackup.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static trackup.logic.commands.FindCommand.MESSAGE_NO_MATCH;
 import static trackup.testutil.TypicalPersons.CARL;
 import static trackup.testutil.TypicalPersons.ELLE;
 import static trackup.testutil.TypicalPersons.FIONA;
@@ -56,7 +57,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noPersonFound() {
-        String expectedMessage = String.format(MESSAGE_PERSONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(MESSAGE_NO_MATCH, 0);
         NameContainsKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredPersonList(predicate);
