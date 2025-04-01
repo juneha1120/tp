@@ -29,6 +29,11 @@ public class ParserUtil {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    // Add this assertion to ensure formatter is not null (defensive)
+    static {
+        assert DATE_TIME_FORMATTER != null : "DATE_TIME_FORMATTER should have been initialized";
+    }
+
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -36,11 +41,18 @@ public class ParserUtil {
      */
     public static Index parseIndex(String oneBasedIndex) throws ParseException {
         String trimmedIndex = oneBasedIndex.trim();
+
+        assert trimmedIndex != null : "Trimmed index should not be null";
         if (!StringUtil.isNonZeroUnsignedInteger(trimmedIndex)) {
             throw new ParseException(MESSAGE_INVALID_INDEX);
         }
-        return Index.fromOneBased(Integer.parseInt(trimmedIndex));
+
+        int index = Integer.parseInt(trimmedIndex);
+        assert index > 0 : "Parsed index must be greater than 0";
+
+        return Index.fromOneBased(index);
     }
+
 
     /**
      * Parses a {@code String name} into a {@code Name}.
@@ -51,11 +63,14 @@ public class ParserUtil {
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
+        assert !trimmedName.isEmpty() : "Name should not be empty after trimming";
+
         if (!Name.isValidName(trimmedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
         return new Name(trimmedName);
     }
+
 
     /**
      * Parses a {@code String phone} into a {@code Phone}.
@@ -66,11 +81,16 @@ public class ParserUtil {
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
+
+        assert !trimmedPhone.isEmpty() : "Phone should not be empty after trimming";
+
         if (!Phone.isValidPhone(trimmedPhone)) {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
+
         return new Phone(trimmedPhone);
     }
+
 
     /**
      * Parses a {@code String address} into an {@code Address}.
@@ -81,11 +101,16 @@ public class ParserUtil {
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
+
+        assert !trimmedAddress.isEmpty() : "Address should not be empty after trimming";
+
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
+
         return new Address(trimmedAddress);
     }
+
 
     /**
      * Parses a {@code String email} into an {@code Email}.
@@ -96,11 +121,16 @@ public class ParserUtil {
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
+
+        assert !trimmedEmail.isEmpty() : "Email should not be empty after trimming";
+
         if (!Email.isValidEmail(trimmedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
+
         return new Email(trimmedEmail);
     }
+
 
     /**
      * Parses a {@code String tag} into a {@code Tag}.
@@ -111,11 +141,16 @@ public class ParserUtil {
     public static Tag parseTag(String tag) throws ParseException {
         requireNonNull(tag);
         String trimmedTag = tag.trim();
+
+        assert !trimmedTag.isEmpty() : "Tag should not be empty after trimming";
+
         if (!Tag.isValidTagName(trimmedTag)) {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
+
         return new Tag(trimmedTag);
     }
+
 
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
@@ -161,11 +196,16 @@ public class ParserUtil {
     public static String parseEventTitle(String eventTitle) throws ParseException {
         requireNonNull(eventTitle);
         String trimmedTitle = eventTitle.trim();
+
+        assert !trimmedTitle.isEmpty() : "Event title should not be empty after trimming";
+
         if (trimmedTitle.isEmpty()) {
             throw new ParseException("Event title cannot be empty.");
         }
+
         return trimmedTitle;
     }
+
 
     /**
      * Parses a {@code String dateTime} into a {@code LocalDateTime}.
