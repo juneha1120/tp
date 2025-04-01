@@ -2,14 +2,20 @@ package trackup.model.person;
 
 import static trackup.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import trackup.commons.core.index.Index;
 import trackup.commons.util.ToStringBuilder;
 import trackup.model.category.Category;
+import trackup.model.note.Note;
 import trackup.model.tag.Tag;
 
 /**
@@ -17,6 +23,8 @@ import trackup.model.tag.Tag;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
+
+    public static final int MAX_NOTES = 5;
 
     // Identity fields
     private final Name name;
@@ -27,7 +35,7 @@ public class Person {
     private final Address address;
     private final Set<Tag> tags = new HashSet<>();
     private final Optional<Category> category;
-
+    private final ObservableList<Note> notes;
     /**
      * Every field must be present and not null.
      */
@@ -39,6 +47,7 @@ public class Person {
         this.address = address;
         this.tags.addAll(tags);
         this.category = category; // can be Optional.empty()
+        this.notes = FXCollections.observableArrayList();
     }
 
     public Name getName() {
@@ -73,6 +82,34 @@ public class Person {
         return this.category.isPresent() && this.category.get().equals(category);
     }
 
+    public ObservableList<Note> getNotes() {
+        return FXCollections.unmodifiableObservableList(notes);
+    }
+
+    /**
+     * Adds a note to the person's list of notes if the maximum limit has not been reached.
+     *
+     * @param note the note to add.
+     * @return true if the note was successfully added, false if the person already has the maximum number of notes.
+     */
+    public boolean addNote(Note note) {
+        if (notes.size() >= MAX_NOTES) {
+            return false;
+        }
+        notes.add(note);
+        return true;
+    }
+
+    /**
+     * Removes the note at the specified index from the person's list of notes.
+     *
+     * @param index the zero-based index of the note to remove.
+     * @throws IndexOutOfBoundsException if the index is invalid.
+     */
+    public void removeNote(Index index) {
+        notes.remove(index.getZeroBased());
+    }
+
     /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
@@ -98,23 +135,23 @@ public class Person {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Person)) {
+        if (!(other instanceof Person otherPerson)) {
             return false;
         }
 
-        Person otherPerson = (Person) other;
         return name.equals(otherPerson.name)
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
                 && tags.equals(otherPerson.tags)
-                && category.equals(otherPerson.category);
+                && category.equals(otherPerson.category)
+                && notes.equals(otherPerson.notes);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, category);
+        return Objects.hash(name, phone, email, address, tags, category, notes);
     }
 
     @Override
@@ -126,6 +163,7 @@ public class Person {
                 .add("address", address)
                 .add("tags", tags)
                 .add("category", category.orElse(null))
+                .add("notes", notes)
                 .toString();
     }
 
