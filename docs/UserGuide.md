@@ -163,7 +163,8 @@ Format: `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATE
 - Deletes the person that matches the provided attributes.
 - At least one attribute must be specified.
 - Attribute matching is exact and case-sensitive.
-- If multiple contacts match the criteria, the system will display a message instead of deleting any contact.
+- If multiple contacts match the criteria, the system will display an error message
+  stating that multiple matches were found and that no contact will be deleted.
 
 **Examples:**
 - `deleteby -n John Doe` deletes the person named **John Doe** from the address book.
