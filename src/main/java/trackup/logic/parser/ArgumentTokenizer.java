@@ -1,9 +1,13 @@
 package trackup.logic.parser;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+
 
 /**
  * Tokenizes arguments string of the form: {@code preamble <prefix>value <prefix>value ...}<br>
@@ -24,9 +28,12 @@ public class ArgumentTokenizer {
      * @return           ArgumentMultimap object that maps prefixes to their arguments
      */
     public static ArgumentMultimap tokenize(String argsString, Prefix... prefixes) {
+        requireNonNull(argsString);
+        requireNonNull(prefixes);
         List<PrefixPosition> positions = findAllPrefixPositions(argsString, prefixes);
         return extractArguments(argsString, positions);
     }
+
 
     /**
      * Finds all zero-based prefix positions in the given arguments string.
@@ -36,6 +43,8 @@ public class ArgumentTokenizer {
      * @return           List of zero-based prefix positions in the given arguments string
      */
     private static List<PrefixPosition> findAllPrefixPositions(String argsString, Prefix... prefixes) {
+        requireNonNull(argsString);
+        requireNonNull(prefixes);
         return Arrays.stream(prefixes)
                 .flatMap(prefix -> findPrefixPositions(argsString, prefix).stream())
                 .collect(Collectors.toList());
@@ -45,6 +54,8 @@ public class ArgumentTokenizer {
      * {@see findAllPrefixPositions}
      */
     private static List<PrefixPosition> findPrefixPositions(String argsString, Prefix prefix) {
+        requireNonNull(argsString);
+        requireNonNull(prefix);
         List<PrefixPosition> positions = new ArrayList<>();
 
         int prefixPosition = findPrefixPosition(argsString, prefix.getPrefix(), 0);
@@ -70,9 +81,16 @@ public class ArgumentTokenizer {
      * {@code fromIndex} = 0, this method returns 5.
      */
     private static int findPrefixPosition(String argsString, String prefix, int fromIndex) {
+        requireNonNull(argsString);
+        requireNonNull(prefix);
+
+        if (fromIndex >= argsString.length()) {
+            return -1;
+        }
+
+        // Look for a prefix that has a whitespace before it
         int prefixIndex = argsString.indexOf(" " + prefix, fromIndex);
-        return prefixIndex == -1 ? -1
-                : prefixIndex + 1; // +1 as offset for whitespace
+        return prefixIndex == -1 ? -1 : prefixIndex + 1; // +1 to account for leading whitespace
     }
 
     /**
@@ -85,7 +103,8 @@ public class ArgumentTokenizer {
      * @return                ArgumentMultimap object that maps prefixes to their arguments
      */
     private static ArgumentMultimap extractArguments(String argsString, List<PrefixPosition> prefixPositions) {
-
+        requireNonNull(argsString);
+        requireNonNull(prefixPositions);
         // Sort by start position
         prefixPositions.sort((prefix1, prefix2) -> prefix1.getStartPosition() - prefix2.getStartPosition());
 
@@ -116,7 +135,13 @@ public class ArgumentTokenizer {
     private static String extractArgumentValue(String argsString,
                                         PrefixPosition currentPrefixPosition,
                                         PrefixPosition nextPrefixPosition) {
+
+        requireNonNull(argsString);
+        requireNonNull(currentPrefixPosition);
+        requireNonNull(nextPrefixPosition);
         Prefix prefix = currentPrefixPosition.getPrefix();
+        assert currentPrefixPosition.getStartPosition() <= nextPrefixPosition.getStartPosition()
+                : "Prefix positions must be in order.";
 
         int valueStartPos = currentPrefixPosition.getStartPosition() + prefix.getPrefix().length();
         String value = argsString.substring(valueStartPos, nextPrefixPosition.getStartPosition());
