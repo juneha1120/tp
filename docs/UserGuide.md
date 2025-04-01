@@ -29,7 +29,7 @@ title: User Guide
 
    * `list` : Lists all contacts.
 
-   * `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add -n "John Doe" -p 98765432 -e johnd@example.com -a "John street, block 123, #01-01"` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -47,7 +47,7 @@ title: User Guide
 
 **:information_source: Notes about the command format:**<br>
 
-- Words in `UPPER_CASE` indicate the parameters to be supplied by the user.
+- Words in `<UPPER_CASE>` indicate the parameters to be supplied by the user.
   e.g., in `add -n <NAME>`, `<NAME>` is a parameter which can be used as `add -n "John Doe"`.
 - Items in square brackets are optional.
   e.g., `-c <CATEGORY>` is optional.
