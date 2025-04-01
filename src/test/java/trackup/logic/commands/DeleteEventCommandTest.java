@@ -111,6 +111,15 @@ public class DeleteEventCommandTest {
 
         DeleteEventCommand allFields = new DeleteEventCommand("Meeting", start, end, indexSet);
 
+        // same object -> returns true
+        assertEquals(allFields, allFields);
+
+        // not instanceof -> returns false
+        assertNotEquals("not a command", allFields);
+
+        // null -> returns false
+        assertNotEquals(null, allFields);
+
         // Same fields = should be equal
         assertEquals(allFields, new DeleteEventCommand("Meeting", start, end, indexSet));
 
