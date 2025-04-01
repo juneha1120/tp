@@ -15,7 +15,8 @@ import trackup.logic.parser.exceptions.ParseException;
  */
 public class DeleteNoteCommandParser implements Parser<DeleteNoteCommand> {
 
-    private static final Pattern DELETE_NOTE_COMMAND_FORMAT = Pattern.compile("(?<personIndex>\\d+)\\s+(?<noteIndex>\\d+)");
+    private static final Pattern DELETE_NOTE_COMMAND_FORMAT =
+            Pattern.compile("(?<personIndex>\\d+)\\s+(?<noteIndex>\\d+)");
 
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteNoteCommand
