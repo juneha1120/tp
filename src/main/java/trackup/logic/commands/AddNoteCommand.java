@@ -52,8 +52,8 @@ public class AddNoteCommand extends Command {
         boolean added = personToEdit.addNote(newNote);
         if (!added) {
             return new CommandResult(String.format(
-                    "%s already has the maximum number of notes (3). Note not added.",
-                    personToEdit.getName()));
+                    "%s already has the maximum number of notes (%s). Note not added.",
+                    personToEdit.getName(), Person.MAX_NOTES));
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, personToEdit.getName(), noteContent));
