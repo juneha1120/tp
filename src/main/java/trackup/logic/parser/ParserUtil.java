@@ -29,6 +29,11 @@ public class ParserUtil {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    // Add this assertion to ensure formatter is not null (defensive)
+    static {
+        assert DATE_TIME_FORMATTER != null : "DATE_TIME_FORMATTER should have been initialized";
+    }
+
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
