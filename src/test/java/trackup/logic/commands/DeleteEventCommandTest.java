@@ -1,8 +1,7 @@
 package trackup.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static trackup.logic.commands.CommandTestUtil.assertCommandFailure;
 import static trackup.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static trackup.testutil.TypicalEvents.LUNCH_EVENT;
@@ -21,7 +20,6 @@ import org.junit.jupiter.api.Test;
 import trackup.commons.core.index.Index;
 import trackup.commons.util.ToStringBuilder;
 import trackup.logic.Messages;
-import trackup.logic.commands.exceptions.CommandException;
 import trackup.model.Model;
 import trackup.model.ModelManager;
 import trackup.model.UserPrefs;
@@ -40,7 +38,7 @@ public class DeleteEventCommandTest {
     }
 
     @Test
-    public void execute_matchByTitle_success() throws CommandException {
+    public void execute_matchByTitle_success() {
         DeleteEventCommand command = new DeleteEventCommand("Meeting", null, null, Collections.emptySet());
 
         Model expectedModel = new ModelManager(getTypicalAddressBookWithEvents(), new UserPrefs());
@@ -107,26 +105,34 @@ public class DeleteEventCommandTest {
 
     @Test
     public void equals() {
-        DeleteEventCommand commandA = new DeleteEventCommand("Meeting",
-                LocalDateTime.of(2025, 4, 1, 14, 0),
-                LocalDateTime.of(2025, 4, 1, 15, 0),
-                Set.of(INDEX_FIRST_PERSON));
+        Set<Index> indexSet = Set.of(INDEX_FIRST_PERSON);
+        LocalDateTime start = LocalDateTime.of(2025, 4, 1, 14, 0);
+        LocalDateTime end = LocalDateTime.of(2025, 4, 1, 15, 0);
 
-        DeleteEventCommand commandB = new DeleteEventCommand("Meeting",
-                LocalDateTime.of(2025, 4, 1, 14, 0),
-                LocalDateTime.of(2025, 4, 1, 15, 0),
-                Set.of(INDEX_FIRST_PERSON));
+        DeleteEventCommand allFields = new DeleteEventCommand("Meeting", start, end, indexSet);
 
-        DeleteEventCommand commandC = new DeleteEventCommand("Call",
-                LocalDateTime.of(2025, 4, 2, 10, 0),
-                LocalDateTime.of(2025, 4, 2, 11, 0),
-                Set.of(INDEX_SECOND_PERSON));
+        // Same fields = should be equal
+        assertEquals(allFields, new DeleteEventCommand("Meeting", start, end, indexSet));
 
-        assertTrue(commandA.equals(commandB));
-        assertTrue(commandA.equals(commandA));
-        assertFalse(commandA.equals(null));
-        assertFalse(commandA.equals(5));
-        assertFalse(commandA.equals(commandC));
+        // partialTitle null
+        assertNotEquals(allFields, new DeleteEventCommand(null, start, end, indexSet));
+
+        // startDateTime null
+        assertNotEquals(allFields, new DeleteEventCommand("Meeting", null, end, indexSet));
+
+        // endDateTime null
+        assertNotEquals(allFields, new DeleteEventCommand("Meeting", start, null, indexSet));
+
+        // contactIndexes empty
+        assertNotEquals(allFields, new DeleteEventCommand("Meeting", start, end, Set.of()));
+
+        // All but contactIndexes are null
+        assertNotEquals(allFields, new DeleteEventCommand(null, null, null, indexSet));
+
+        // All fields null and empty set
+        DeleteEventCommand emptyCommandA = new DeleteEventCommand(null, null, null, Set.of());
+        DeleteEventCommand emptyCommandB = new DeleteEventCommand(null, null, null, Set.of());
+        assertEquals(emptyCommandA, emptyCommandB);
     }
 
     @Test
