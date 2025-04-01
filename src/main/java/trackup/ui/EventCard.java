@@ -1,5 +1,7 @@
 package trackup.ui;
 
+import static trackup.model.person.Comparators.NAME_COMPARATOR;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 
@@ -47,7 +49,7 @@ public class EventCard extends UiPart<Region> {
         endTime.setText("To: " + event.getEndDateTime().format(formatter));
 
         event.getContacts().stream()
-                .sorted(Comparator.comparing(person -> person.getName().fullName))
+                .sorted(NAME_COMPARATOR)
                 .forEach(person -> {
                     Label contactLabel = new Label(person.getName().fullName);
                     contacts.getChildren().add(contactLabel);
