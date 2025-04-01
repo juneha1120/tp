@@ -67,6 +67,8 @@ public class AddressBook implements ReadOnlyAddressBook {
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
+        assert newData != null : "New data for reset must not be null.";
+
 
         setPersons(newData.getPersonList());
         setEvents(newData.getEventList());
