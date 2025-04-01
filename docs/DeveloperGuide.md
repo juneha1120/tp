@@ -34,7 +34,7 @@ The following sequence diagram illustrates the process of adding a contact and h
 
 ### Architecture
 
-<img src="images/ArchitectureDiagram.png" width="280" />
+<img src="images/ArchitectureDiagram.png" width="500" />
 
 The ***Architecture Diagram*** given above explains the high-level design of TrackUp.
 
@@ -52,7 +52,7 @@ Given below is a quick overview of main components and how they interact.
 ## **How Components Interact**
 Below is a *Sequence Diagram* showing how TrackUp processes the command `delete 1`:
 
-<img src="images/ArchitectureSequenceDiagram.png" width="574" />
+<img src="images/ArchitectureSequenceDiagram.png" width="700" />
 
 Each component:
 - Defines its API through an `interface`.
@@ -60,7 +60,7 @@ Each component:
 
 For example, `Logic` defines its API in `Logic.java` and implements it in `LogicManager.java`.
 
-<img src="images/ComponentManagers.png" width="300" />
+<img src="images/ComponentManagers.png" width="500" />
 
 ---
 
