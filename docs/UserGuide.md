@@ -80,6 +80,9 @@ Format: `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <T
 - **NAME**, **PHONE**, **EMAIL**, and **ADDRESS** are compulsory.
 - **CATEGORY** and **TAG** are optional.
 - **CATEGORY** should be one of: Client, Investor, Partner, Other.
+- If any required field (name, phone, email, or address) is missing, a descriptive error 
+  will appear indicating the exact missing attribute.
+
 
 
 **Examples:**
