@@ -1,6 +1,9 @@
 package trackup.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static trackup.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static trackup.testutil.Assert.assertThrows;
 import static trackup.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
