@@ -118,6 +118,13 @@ How the parsing works:
   and throws descriptive error messages for each missing attribute.
 - This improves user feedback and avoids a generic format error.
 
+### DeleteByCommand Logic
+- The `DeleteByCommand` performs exact matching across multiple attributes.
+- If no attributes are provided, an error is thrown.
+- If multiple contacts match the criteria, a warning message is shown.
+- If one match is found, the contact is deleted.
+
+
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/trackup/model/Model.java)
 
