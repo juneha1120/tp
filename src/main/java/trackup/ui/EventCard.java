@@ -1,9 +1,6 @@
 package trackup.ui;
 
-import static trackup.model.person.Comparators.NAME_COMPARATOR;
-
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -48,15 +45,40 @@ public class EventCard extends UiPart<Region> {
         startTime.setText("From: " + event.getStartDateTime().format(formatter));
         endTime.setText("To: " + event.getEndDateTime().format(formatter));
 
-        event.getContacts().stream()
-                .sorted(NAME_COMPARATOR)
+        event.getContacts()
                 .forEach(person -> {
-                    Label contactLabel = new Label(person.getName().fullName);
+                    String labelText = person.getCategory()
+                            .map(cat -> "[" + cat.categoryName + "] " + person.getName().fullName)
+                            .orElse(person.getName().fullName);
+
+                    String color = person.getCategory()
+                            .map(cat -> getCategoryColor(cat.categoryName))
+                            .orElse(getCategoryColor(null)); // fallback if no category
+
+                    Label contactLabel = new Label(labelText);
+                    contactLabel.setStyle("-fx-background-color: #3B3B3B;"
+                            + "-fx-text-fill: " + color + ");"
+                            + "-fx-border-radius: 5px; -fx-padding: 1px 2px;");
+
                     contacts.getChildren().add(contactLabel);
                 });
 
         cardPane.setStyle("-fx-border-color: rgba(240, 240, 240); -fx-border-width: 2px;"
                 + "-fx-background-color: rgba(240, 240, 240, 0.1);"); // 10% opacity
+    }
+
+    public String getCategoryColor(String categoryName) {
+        if (categoryName == null) {
+            return "rgba(240, 240, 240";
+        }
+
+        return switch (categoryName) {
+            case "Client" -> "rgba(255, 221, 193"; // Light Orange
+            case "Investor" -> "rgba(193, 255, 215"; // Light Green
+            case "Partner" -> "rgba(193, 212, 255"; // Light Blue
+            case "Other" -> "rgba(224, 193, 255"; // Light Purple
+            default -> "rgba(240, 240, 240"; // Default Gray
+        };
     }
 }
 
