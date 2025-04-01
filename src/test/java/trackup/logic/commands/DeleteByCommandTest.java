@@ -16,24 +16,24 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
 
-import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import trackup.commons.util.ToStringBuilder;
 import trackup.logic.Messages;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.model.Model;
+import trackup.model.event.Event;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
 import trackup.model.person.Person;
 import trackup.model.person.Phone;
 import trackup.model.tag.Tag;
-import trackup.model.event.Event;
 import trackup.testutil.PersonBuilder;
 
 public class DeleteByCommandTest {
