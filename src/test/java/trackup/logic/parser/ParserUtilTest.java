@@ -1,11 +1,11 @@
 package trackup.logic.parser;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static trackup.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static trackup.testutil.Assert.assertThrows;
 import static trackup.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -14,6 +14,7 @@ import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 import trackup.logic.parser.exceptions.ParseException;
+import trackup.model.category.Category;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -193,4 +194,35 @@ public class ParserUtilTest {
 
         assertEquals(expectedTagSet, actualTagSet);
     }
+
+    @Test
+    public void parseTags_validTags_assertNotNullHit() throws Exception {
+        // Directly hits the path with valid tags
+        Set<Tag> tags = ParserUtil.parseTags(Arrays.asList("tech", "biz"));
+        assertTrue(tags.contains(new Tag("tech")));
+        assertTrue(tags.contains(new Tag("biz")));
+    }
+
+    @Test
+    public void parseCategory_validCategory_success() throws Exception {
+        assertEquals(new Category("Investor"), ParserUtil.parseCategory("investor"));
+    }
+
+    @Test
+    public void parseCategory_emptyInput_returnsNull() throws Exception {
+        assertNull(ParserUtil.parseCategory(""));
+    }
+
+    @Test
+    public void parseEventTime_validDateTime_success() throws Exception {
+        LocalDateTime expected = LocalDateTime.of(2025, 4, 1, 18, 0);
+        assertEquals(expected, ParserUtil.parseEventTime("2025-04-01 18:00"));
+    }
+
+    @Test
+    public void parseEventTime_emptyString_failure() {
+        assertThrows(AssertionError.class, () -> ParserUtil.parseEventTime("   "));
+    }
+
+
 }
