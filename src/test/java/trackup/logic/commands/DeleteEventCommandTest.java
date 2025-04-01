@@ -1,7 +1,8 @@
 package trackup.logic.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static trackup.logic.commands.CommandTestUtil.assertCommandFailure;
 import static trackup.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static trackup.testutil.TypicalEvents.LUNCH_EVENT;
@@ -112,36 +113,36 @@ public class DeleteEventCommandTest {
         DeleteEventCommand allFields = new DeleteEventCommand("Meeting", start, end, indexSet);
 
         // same object -> returns true
-        assertEquals(allFields, allFields);
+        assertTrue(allFields.equals(allFields));
 
         // not instanceof -> returns false
-        assertNotEquals("not a command", allFields);
+        assertFalse(allFields.equals("not a command"));
 
         // null -> returns false
-        assertNotEquals(null, allFields);
+        assertFalse(allFields.equals(null));
 
         // Same fields = should be equal
-        assertEquals(allFields, new DeleteEventCommand("Meeting", start, end, indexSet));
+        assertTrue(allFields.equals(new DeleteEventCommand("Meeting", start, end, indexSet)));
 
         // partialTitle null
-        assertNotEquals(allFields, new DeleteEventCommand(null, start, end, indexSet));
+        assertFalse(allFields.equals(new DeleteEventCommand(null, start, end, indexSet)));
 
         // startDateTime null
-        assertNotEquals(allFields, new DeleteEventCommand("Meeting", null, end, indexSet));
+        assertFalse(allFields.equals(new DeleteEventCommand("Meeting", null, end, indexSet)));
 
         // endDateTime null
-        assertNotEquals(allFields, new DeleteEventCommand("Meeting", start, null, indexSet));
+        assertFalse(allFields.equals(new DeleteEventCommand("Meeting", start, null, indexSet)));
 
         // contactIndexes empty
-        assertNotEquals(allFields, new DeleteEventCommand("Meeting", start, end, Set.of()));
+        assertFalse(allFields.equals(new DeleteEventCommand("Meeting", start, end, Set.of())));
 
         // All but contactIndexes are null
-        assertNotEquals(allFields, new DeleteEventCommand(null, null, null, indexSet));
+        assertFalse(allFields.equals(new DeleteEventCommand(null, null, null, indexSet)));
 
         // All fields null and empty set
         DeleteEventCommand emptyCommandA = new DeleteEventCommand(null, null, null, Set.of());
         DeleteEventCommand emptyCommandB = new DeleteEventCommand(null, null, null, Set.of());
-        assertEquals(emptyCommandA, emptyCommandB);
+        assertTrue(emptyCommandA.equals(emptyCommandB));
     }
 
     @Test
