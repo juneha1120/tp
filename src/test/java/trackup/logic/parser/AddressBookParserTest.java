@@ -15,10 +15,13 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import trackup.commons.core.index.Index;
 import trackup.logic.commands.AddCommand;
+import trackup.logic.commands.AddNoteCommand;
 import trackup.logic.commands.ClearCommand;
 import trackup.logic.commands.DeleteByCommand;
 import trackup.logic.commands.DeleteCommand;
+import trackup.logic.commands.DeleteNoteCommand;
 import trackup.logic.commands.EditCommand;
 import trackup.logic.commands.EditCommand.EditPersonDescriptor;
 import trackup.logic.commands.ExitCommand;
@@ -115,6 +118,23 @@ public class AddressBookParserTest {
                 ToggleCommand.MESSAGE_USAGE), () -> parser.parseCommand(ToggleCommand.COMMAND_WORD));
         assertTrue(parser.parseCommand(ToggleCommand.COMMAND_WORD + " " + ToggleCommand.NAME_FIELD_STRING)
                 instanceof ToggleCommand);
+    }
+
+    @Test
+    public void parseCommand_addnote() throws Exception {
+        AddNoteCommand command = (AddNoteCommand) parser.parseCommand(
+                AddNoteCommand.COMMAND_WORD + " 1 Met at conference, follow up next week");
+
+        assertEquals(new AddNoteCommand(Index.fromOneBased(1),
+                "Met at conference, follow up next week"), command);
+    }
+
+    @Test
+    public void parseCommand_delnote() throws Exception {
+        DeleteNoteCommand command = (DeleteNoteCommand) parser.parseCommand(
+                DeleteNoteCommand.COMMAND_WORD + " 1 2");
+
+        assertEquals(new DeleteNoteCommand(Index.fromOneBased(1), Index.fromOneBased(2)), command);
     }
 
     @Test
