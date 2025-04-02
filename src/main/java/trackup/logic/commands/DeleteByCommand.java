@@ -1,6 +1,7 @@
 package trackup.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static trackup.logic.Messages.MESSAGE_NO_PERSON_TO_DELETE;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
@@ -46,7 +47,6 @@ public class DeleteByCommand extends Command {
             + PREFIX_TAG + "friends";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
-    public static final String MESSAGE_NO_PERSON_TO_DELETE = "No contact matches the given criteria.";
 
     public static final String MESSAGE_MULTIPLE_PEOPLE_TO_DELETE =
             "Multiple contacts match the provided attributes. Please refine your input to uniquely identify a contact.";
@@ -126,7 +126,7 @@ public class DeleteByCommand extends Command {
         List<Person> filteredList = model.getFilteredPersonList().stream().filter(getPredicate()).toList();
 
         if (filteredList.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_PERSON_TO_DELETE);
+            throw new CommandException(String.format(MESSAGE_NO_PERSON_TO_DELETE, this.toString()));
         } else if (filteredList.size() == 1) {
             Person personToDelete = filteredList.get(0);
             model.deletePerson(personToDelete);

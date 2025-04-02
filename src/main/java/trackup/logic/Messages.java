@@ -19,6 +19,9 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
 
+    public static final String MESSAGE_NO_PERSON_TO_DELETE =
+            "No Person Matches Criteria: %1$s";
+
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
