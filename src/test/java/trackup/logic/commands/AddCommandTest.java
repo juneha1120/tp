@@ -121,7 +121,8 @@ public class AddCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
-    private class ModelStub implements Model {
+    static class ModelStub implements Model {
+        final List<Person> contacts = new ArrayList<>();
         private final List<Event> events = new ArrayList<>();
 
         @Override
@@ -228,7 +229,7 @@ public class AddCommandTest {
     /**
      * A Model stub that contains a single person.
      */
-    private class ModelStubWithPerson extends ModelStub {
+    private static class ModelStubWithPerson extends ModelStub {
         private final Person person;
 
         ModelStubWithPerson(Person person) {
@@ -246,7 +247,7 @@ public class AddCommandTest {
     /**
      * A Model stub that always accept the person being added.
      */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
+    private static class ModelStubAcceptingPersonAdded extends ModelStub {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
         @Override
