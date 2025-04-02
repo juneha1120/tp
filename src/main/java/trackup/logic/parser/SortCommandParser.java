@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Function;
 
@@ -33,6 +34,10 @@ public class SortCommandParser implements Parser<SortCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public SortCommand parse(String args) throws ParseException {
+
+        if ((Objects.equals(args, " "))) {
+            return new SortCommand(null);
+        }
 
         Map<Prefix, Function<Boolean, Comparator<Person>>> comparatorMap = Map.of(
                 PREFIX_NAME, isDesc -> isDesc ? Comparators.NAME_COMPARATOR.reversed()

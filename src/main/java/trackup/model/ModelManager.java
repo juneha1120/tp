@@ -8,9 +8,9 @@ import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import trackup.commons.core.GuiSettings;
 import trackup.commons.core.LogsCenter;
 import trackup.model.event.Event;
@@ -25,6 +25,7 @@ public class ModelManager implements Model {
     private final AddressBook addressBook;
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredPersons;
+    private final SortedList<Person> sortedFilteredPersons;
     private final ObservableList<Event> eventList;
 
     /**
@@ -38,6 +39,7 @@ public class ModelManager implements Model {
         this.addressBook = new AddressBook(addressBook);
         this.userPrefs = new UserPrefs(userPrefs);
         this.filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.sortedFilteredPersons = new SortedList<>(filteredPersons);
         this.eventList = this.addressBook.getEventList();
     }
 
@@ -124,6 +126,9 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
+        if (this.sortedFilteredPersons.getComparator() == null) {
+            return sortedFilteredPersons;
+        }
         return filteredPersons;
     }
 
@@ -131,6 +136,11 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate) {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
+    }
+
+    @Override
+    public void sortFilteredPersonList(Comparator<Person> comparator) {
+        sortedFilteredPersons.setComparator(comparator);
     }
 
     //=========== Event ======================================================================================
@@ -164,18 +174,6 @@ public class ModelManager implements Model {
     public ObservableList<Event> getEventList() {
         return eventList;
     }
-
-    @Override
-    public void sortFilteredPersonList(Comparator<Person> comparator) {
-        requireNonNull(comparator);
-        Predicate<? super Person> currentPredicate = filteredPersons.getPredicate();
-        filteredPersons.setPredicate(null);
-        ObservableList<Person> currentFiltered = FXCollections.observableArrayList(filteredPersons);
-        currentFiltered.sort(comparator);
-        addressBook.setPersons(currentFiltered);
-        filteredPersons.setPredicate(currentPredicate);
-    }
-
 
     @Override
     public boolean equals(Object other) {
