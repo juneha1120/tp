@@ -92,9 +92,10 @@ public class PersonCard extends UiPart<Region> {
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
                     + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
         }
-        renderNotes();
-
-        person.getNotes().addListener((ListChangeListener<Note>) change -> renderNotes());
+        if (visibility.isShowNote()) {
+            renderNotes();
+            person.getNotes().addListener((ListChangeListener<Note>) change -> renderNotes());
+        }
     }
 
     private void renderNotes() {
