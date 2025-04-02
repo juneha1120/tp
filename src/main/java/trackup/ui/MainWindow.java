@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -75,6 +76,19 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private Label monthYearLabel;
 
+    @FXML
+    private Button personsButton;
+
+    @FXML
+    private Button eventsButton;
+
+    @FXML
+    private Button prevWeekButton;
+
+    @FXML
+    private Button nextWeekButton;
+
+
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
      */
@@ -99,6 +113,52 @@ public class MainWindow extends UiPart<Stage> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+
+        // F2 → Show Persons
+        primaryStage.getScene().getAccelerators().put(
+                KeyCombination.valueOf("F2"),
+                () -> personsButton.fire()
+        );
+
+        // F3 → Show Events
+        primaryStage.getScene().getAccelerators().put(
+                KeyCombination.valueOf("F3"),
+                () -> eventsButton.fire()
+        );
+
+        // LEFT → Previous Week
+        primaryStage.getScene().getAccelerators().put(
+                KeyCombination.valueOf("LEFT"),
+                () -> prevWeekButton.fire()
+        );
+
+        // RIGHT → Next Week
+        primaryStage.getScene().getAccelerators().put(
+                KeyCombination.valueOf("RIGHT"),
+                () -> nextWeekButton.fire()
+        );
+
+        // Add workaround for TextInputControl consuming function keys
+        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getTarget() instanceof TextInputControl) {
+                if (KeyCombination.valueOf("F1").match(event)) {
+                    helpMenuItem.getOnAction().handle(new ActionEvent());
+                    event.consume();
+                } else if (KeyCombination.valueOf("F2").match(event)) {
+                    personsButton.fire();
+                    event.consume();
+                } else if (KeyCombination.valueOf("F3").match(event)) {
+                    eventsButton.fire();
+                    event.consume();
+                } else if (KeyCombination.valueOf("LEFT").match(event)) {
+                    prevWeekButton.fire();
+                    event.consume();
+                } else if (KeyCombination.valueOf("RIGHT").match(event)) {
+                    nextWeekButton.fire();
+                    event.consume();
+                }
+            }
+        });
     }
 
     /**

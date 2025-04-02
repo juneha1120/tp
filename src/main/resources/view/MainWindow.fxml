@@ -61,9 +61,9 @@
                 <padding>
                   <Insets top="10" right="10" bottom="10" left="10" />
                 </padding>
-                <Button text="👤 Persons" onAction="#handleShowPersons"
+                <Button fx:id="personsButton" text="👤 Persons (F2)" onAction="#handleShowPersons"
                         style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 6 14;" />
-                <Button text="📅 Events" onAction="#handleShowEvents"
+                <Button fx:id="eventsButton" text="📅 Events (F3)" onAction="#handleShowEvents"
                         style="-fx-background-color: #3a3a3a; -fx-text-fill: white; -fx-background-radius: 8; -fx-padding: 6 14;" />
               </HBox>
 
@@ -84,9 +84,9 @@
               <Label fx:id="monthYearLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
               <Pane HBox.hgrow="ALWAYS" />
               <HBox spacing="10">
-                <Button text="⬅ Prev Week" onAction="#handlePreviousWeek"
+                <Button fx:id="prevWeekButton" text="⬅ Prev Week" onAction="#handlePreviousWeek"
                         style="-fx-background-color: #2f2f2f; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 6 12;" />
-                <Button text="Next Week ➡" onAction="#handleNextWeek"
+                <Button fx:id="nextWeekButton" text="Next Week ➡" onAction="#handleNextWeek"
                         style="-fx-background-color: #2f2f2f; -fx-text-fill: white; -fx-background-radius: 6; -fx-padding: 6 12;" />
               </HBox>
             </HBox>
