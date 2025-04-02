@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import trackup.logic.commands.FindCommand;
 import trackup.logic.parser.exceptions.ParseException;
+import trackup.model.person.Name;
 import trackup.model.person.NameContainsKeywordsPredicate;
 
 /**
@@ -27,7 +28,15 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
+        // Validate each keyword using Name.isValidName()
+        for (String keyword : nameKeywords) {
+            if (!Name.isValidName(keyword)) {
+                throw new ParseException(Name.MESSAGE_CONSTRAINTS);
+            }
+        }
+
         return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)));
     }
+
 
 }
