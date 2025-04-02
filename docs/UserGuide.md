@@ -100,6 +100,23 @@ Format: `list [<CATEGORY>]`
 - `list Client` — displays only contacts categorized as Client.
 - `list Investor` — displays only contacts categorized as Investor.
 
+### Sorting current displayed list: `sort`
+
+Sorts displayed contacts in TrackUp by the given attributes of Person.
+
+Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`
+
+* Displays all contacts if no attribute is specified.
+* If an attribute is provided, displays the result after sorting by the specified attribute.
+* `<BOOLEAN>`: `true` or `false`, case-insensitive, to indicate if the sorting is descending.
+* Prefixes for attributes: `-n`NAME `-p`PHONE `-e`EMAIL `-a`ADDRESS `-c`CATEGORY `-t`TAG
+
+**Examples:**
+- `sort` — displays all contacts.
+- `sort -n true` — displays result list of contacts sorted by name in descending order.
+- `sort -t -n true` — displays result list of contacts first sorted by tag in ascending order,
+then sorted by name in descending order
+
 ### Editing a person : `edit`
 
 Edits an existing person in TrackUp.
