@@ -61,10 +61,12 @@ public class AddCommandParser implements Parser<AddCommand> {
 
         // If any required field is missing, throw a descriptive error
         if (!missingFields.isEmpty()) {
-            String errorMessage = "Missing required field"
-                    + (missingFields.size() > 1 ? "s" : "")
-                    + ": " + String.join(", ", missingFields);
-            throw new ParseException(errorMessage);
+            StringBuilder errorMessageBuilder = new StringBuilder("Missing required field");
+            if (missingFields.size() > 1) {
+                errorMessageBuilder.append("s");
+            }
+            errorMessageBuilder.append(": ").append(String.join(", ", missingFields));
+            throw new ParseException(errorMessageBuilder.toString());
         }
 
         // No duplicates allowed for single-value fields
