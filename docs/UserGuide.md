@@ -266,6 +266,35 @@ Format: `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>]
 * `delevent -c 2` - deletes all events linked to the contact at index 2.
 * `delevent -t "Workshop" -c 1 -c 4` - deletes all events with "Workshop" in the title that are linked to contacts at index 1 or 4.
 
+### Toggling field visibility: `toggle`
+
+Toggles the visibility of a specific field in the TrackUp contact list UI.  
+This command is useful for customizing the information you want displayed for each contact.
+
+Format: `toggle <FIELD>`
+
+**Supported Fields:**
+- `name`
+- `phone`
+- `email`
+- `address`
+- `tag`
+- `category`
+- `note`
+- `datetime`
+
+**Details:**
+- Each field starts out **visible by default**.
+- Executing the command will **invert the visibility** of the given field.
+- Toggled fields affect the **main contact list display**.
+- Repeating the command for the same field will toggle it back.
+
+**Examples:**
+- `toggle name` hides the contact's name field if it's currently shown.
+- `toggle phone` shows the phone field again if it was previously hidden.
+- `toggle note` hides the note field in the contact display.
+- `toggle datetime` toggles the visibility of the datetime field.
+
 ### Clearing all entries : `clear`
 
 Clears all contacts from TrackUp.
