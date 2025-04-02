@@ -81,7 +81,7 @@ public class Person {
     }
 
     public ObservableList<Note> getNotes() {
-        return FXCollections.unmodifiableObservableList(notes);
+        return notes;
     }
 
     /**

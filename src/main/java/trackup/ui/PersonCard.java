@@ -96,7 +96,7 @@ public class PersonCard extends UiPart<Region> {
     private void renderNotes() {
         notesBox.getChildren().clear();
 
-        person.getNotes().stream().limit(3).forEach(note -> {
+        person.getNotes().stream().limit(Person.MAX_NOTES).forEach(note -> {
             Label noteLabel = new Label(note.text);
             noteLabel.setWrapText(true);
             noteLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
