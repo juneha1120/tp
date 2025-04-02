@@ -55,7 +55,6 @@ public class UniqueEventList implements Iterable<Event> {
      */
     public void setEvent(Event target, Event editedEvent) {
         requireAllNonNull(target, editedEvent);
-        assert target != null && editedEvent != null;
 
         int index = internalList.indexOf(target);
         if (index == -1) {

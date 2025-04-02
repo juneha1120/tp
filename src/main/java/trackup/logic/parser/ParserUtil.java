@@ -206,7 +206,6 @@ public class ParserUtil {
 
         for (String indexStr : indexes) {
             Index index = parseIndex(indexStr);
-            assert index.getZeroBased() >= 0 : "Parsed index should be non-negative";
             indexSet.add(index);
         }
         return indexSet;
