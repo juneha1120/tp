@@ -159,13 +159,13 @@ public class DeleteEventCommandTest {
 
         // contactIndexes empty
         DeleteEventCommand emptyContactCommandA = new DeleteEventCommand("Meeting", startA, endA, Set.of());
-        DeleteEventCommand emptyContactCommandB = new DeleteEventCommand("Meeting", startA, endB, Set.of());
+        DeleteEventCommand emptyContactCommandB = new DeleteEventCommand("Meeting", startA, endA, Set.of());
         assertTrue(emptyContactCommandA.equals(emptyContactCommandB));
 
         // contactIndexes not empty
         DeleteEventCommand notEmptyContactCommandA = new DeleteEventCommand("Meeting", startA, endA, indexSetA);
-        DeleteEventCommand notEmptyContactCommandB = new DeleteEventCommand("Meeting", startA, endB, indexSetB);
-        assertTrue(notEmptyContactCommandA.equals(notEmptyContactCommandB));
+        DeleteEventCommand notEmptyContactCommandB = new DeleteEventCommand("Meeting", startA, endA, indexSetB);
+        assertFalse(notEmptyContactCommandA.equals(notEmptyContactCommandB));
 
         // All but contactIndexes are null
         assertFalse(allFieldsCommand.equals(new DeleteEventCommand(null, null, null, indexSetA)));
