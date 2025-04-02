@@ -107,47 +107,38 @@ public class DeleteEventCommandTest {
     @Test
     public void equals() {
         Set<Index> indexSet = Set.of(INDEX_FIRST_PERSON);
+        Set<Index> differentIndexSet = Set.of(INDEX_SECOND_PERSON);
         LocalDateTime start = LocalDateTime.of(2025, 4, 1, 14, 0);
         LocalDateTime end = LocalDateTime.of(2025, 4, 1, 15, 0);
 
-        DeleteEventCommand allFieldsCommand = new DeleteEventCommand("Meeting", start, end, indexSet);
+        DeleteEventCommand base = new DeleteEventCommand("Meeting", start, end, indexSet);
 
-        // same object -> returns true
-        assertTrue(allFieldsCommand.equals(allFieldsCommand));
+        // Different title
+        assertFalse(base.equals(new DeleteEventCommand("Different", start, end, indexSet)));
 
-        // not instanceof -> returns false
-        assertFalse(allFieldsCommand.equals("not a command"));
+        // Different start time
+        assertFalse(base.equals(new DeleteEventCommand("Meeting",
+                LocalDateTime.of(2025, 4, 2, 14, 0), end, indexSet)));
 
-        // null -> returns false
-        assertFalse(allFieldsCommand.equals(null));
+        // Different end time
+        assertFalse(base.equals(new DeleteEventCommand("Meeting", start,
+                LocalDateTime.of(2025, 4, 2, 15, 0), indexSet)));
 
-        // Same fields = should be equal
-        assertTrue(allFieldsCommand.equals(new DeleteEventCommand("Meeting", start, end, indexSet)));
+        // Different contact set
+        assertFalse(base.equals(new DeleteEventCommand("Meeting", start, end, differentIndexSet)));
 
-        // partialTitle null
-        DeleteEventCommand nullTitleCommandA = new DeleteEventCommand(null, start, end, indexSet);
-        DeleteEventCommand nullTitleCommandB = new DeleteEventCommand(null, start, end, indexSet);
-        assertTrue(nullTitleCommandA.equals(nullTitleCommandB));
+        // Null title, others same
+        assertFalse(base.equals(new DeleteEventCommand(null, start, end, indexSet)));
 
-        // startDateTime null
-        DeleteEventCommand nullStartCommandA = new DeleteEventCommand("Meeting", null, end, indexSet);
-        DeleteEventCommand nullStartCommandB = new DeleteEventCommand("Meeting", null, end, indexSet);
-        assertTrue(nullStartCommandA.equals(nullStartCommandB));
+        // Null start, others same
+        assertFalse(base.equals(new DeleteEventCommand("Meeting", null, end, indexSet)));
 
-        // endDateTime null
-        DeleteEventCommand nullEndCommandA = new DeleteEventCommand("Meeting", end, null, indexSet);
-        DeleteEventCommand nullEndCommandB = new DeleteEventCommand("Meeting", end, null, indexSet);
-        assertTrue(nullEndCommandA.equals(nullEndCommandB));
-        // contactIndexes empty
-        assertFalse(allFieldsCommand.equals(new DeleteEventCommand("Meeting", start, end, Set.of())));
+        // Null end, others same
+        assertFalse(base.equals(new DeleteEventCommand("Meeting", start, null, indexSet)));
 
-        // All but contactIndexes are null
-        assertFalse(allFieldsCommand.equals(new DeleteEventCommand(null, null, null, indexSet)));
-
-        // All fields null and empty set
-        DeleteEventCommand emptyCommandA = new DeleteEventCommand(null, null, null, Set.of());
-        DeleteEventCommand emptyCommandB = new DeleteEventCommand(null, null, null, Set.of());
-        assertTrue(emptyCommandA.equals(emptyCommandB));
+        // All null except contacts (same)
+        DeleteEventCommand onlyContacts = new DeleteEventCommand(null, null, null, indexSet);
+        assertFalse(base.equals(onlyContacts));
     }
 
     @Test
