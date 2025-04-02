@@ -237,6 +237,39 @@ Format: `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>]
 * `delevent -c 2` deletes all events linked to the contact at index 2.
 * `delevent -t "Workshop" -c 1 -c 4` deletes all events with "Workshop" in the title that are linked to contacts at index 1 or 4.
 
+
+### Adding a note to a person: `addnote`
+
+Adds a short note to the specified person in TrackUp.
+
+Format: `addnote <PERSON_INDEX> <NOTE_TEXT>`
+
+**Details:**
+- `<PERSON_INDEX>` refers to the contact’s index in the currently displayed list (must be a positive integer).
+- Each person can have **up to 3 notes**.
+- Notes should be **short and descriptive**. The maximum note length is 50 characters.
+- Notes are displayed beneath the person’s details in the UI.
+
+**Examples:**
+- `addnote 1 Met at tech networking event`
+- `addnote 2 Follow up next week regarding proposal`
+
+### Deleting a note from a person: `delnote`
+
+Deletes a specific note from a person in TrackUp.
+
+Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
+
+**Details:**
+- `<PERSON_INDEX>` refers to the person in the currently displayed list.
+- `<NOTE_INDEX>` refers to the position of the note in that person’s list of notes (must be a positive integer).
+- Notes are displayed in order; the first note is index 1.
+
+**Examples:**
+- `delnote 2 1` — deletes the **first** note from the **second** person in the list.
+- `find John` followed by `delnote 1 2` — deletes the **second** note from the **first person** in the search results for "John".
+
+
 ### Exiting the program : `exit`
 
 Exits TrackUp

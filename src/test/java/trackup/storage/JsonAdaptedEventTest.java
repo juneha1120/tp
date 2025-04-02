@@ -64,8 +64,8 @@ public class JsonAdaptedEventTest {
 
     @Test
     public void toModelType_invalidContact_throwsIllegalValueException() {
-        List<JsonAdaptedPerson> invalidContacts = List.of(
-                new JsonAdaptedPerson(null, "12345678", "email@example.com", "Some Street", List.of(), null));
+        List<JsonAdaptedPerson> invalidContacts = List.of(new JsonAdaptedPerson(
+                null, "12345678", "email@example.com", "Some Street", List.of(), null, List.of()));
         JsonAdaptedEvent event = new JsonAdaptedEvent(VALID_TITLE, VALID_START, VALID_END, invalidContacts);
         assertThrows(IllegalValueException.class, event::toModelType);
     }

@@ -1,10 +1,13 @@
 package trackup.testutil;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import trackup.model.category.Category;
+import trackup.model.note.Note;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -29,6 +32,7 @@ public class PersonBuilder {
     private Address address;
     private Set<Tag> tags;
     private Optional<Category> category;
+    private List<Note> notes;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -40,6 +44,7 @@ public class PersonBuilder {
         address = new Address(DEFAULT_ADDRESS);
         tags = new HashSet<>();
         category = Optional.empty();
+        notes = new ArrayList<>();
     }
 
     /**
@@ -52,6 +57,7 @@ public class PersonBuilder {
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
         category = personToCopy.getCategory();
+        notes = personToCopy.getNotes();
     }
 
     /**
@@ -110,8 +116,26 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the notes for the {@code Person} that we are building.
+     */
+    public PersonBuilder withNotes(String... noteStrings) {
+        notes.clear();
+        for (String noteText : noteStrings) {
+            notes.add(new Note(noteText));
+        }
+        return this;
+    }
+
+    /**
+     * Builds and returns the {@code Person}.
+     */
     public Person build() {
-        return new Person(name, phone, email, address, tags, category);
+        Person person = new Person(name, phone, email, address, tags, category);
+        for (Note note : notes) {
+            person.addNote(note);
+        }
+        return person;
     }
 
 }
