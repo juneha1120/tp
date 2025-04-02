@@ -29,6 +29,11 @@ public class ParserUtil {
 
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 
+    // Add this assertion to ensure formatter is not null (defensive)
+    static {
+        assert DATE_TIME_FORMATTER != null : "DATE_TIME_FORMATTER should have been initialized";
+    }
+
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
@@ -124,10 +129,13 @@ public class ParserUtil {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
+            Tag tag = parseTag(tagName);
+            assert tag != null : "Parsed tag should not be null";
+            tagSet.add(tag);
         }
         return tagSet;
     }
+
 
     /**
      * Parses a {@code String category} into a {@code Category}.
@@ -144,6 +152,8 @@ public class ParserUtil {
 
         String formattedCategory = category.trim().substring(0, 1).toUpperCase()
                 + category.trim().substring(1).toLowerCase();
+
+        assert !formattedCategory.isEmpty() : "Formatted category should not be empty";
 
         if (!Category.isValidCategoryName(formattedCategory)) {
             throw new ParseException(Category.MESSAGE_CONSTRAINTS);
@@ -175,12 +185,16 @@ public class ParserUtil {
      */
     public static LocalDateTime parseEventTime(String dateTime) throws ParseException {
         requireNonNull(dateTime);
+        String trimmedDateTime = dateTime.trim();
+        assert !trimmedDateTime.isEmpty() : "Date-time string should not be empty";
+
         try {
-            return LocalDateTime.parse(dateTime.trim(), DATE_TIME_FORMATTER);
+            return LocalDateTime.parse(trimmedDateTime, DATE_TIME_FORMATTER);
         } catch (DateTimeParseException e) {
             throw new ParseException(MESSAGE_INVALID_DATE_TIME);
         }
     }
+
 
     /**
      * Parses a {@code Collection<String> indexes} into a {@code Set<Index>}.
@@ -189,9 +203,12 @@ public class ParserUtil {
     public static Set<Index> parseContacts(Collection<String> indexes) throws ParseException {
         requireNonNull(indexes);
         final Set<Index> indexSet = new HashSet<>();
+
         for (String indexStr : indexes) {
-            indexSet.add(parseIndex(indexStr));
+            Index index = parseIndex(indexStr);
+            indexSet.add(index);
         }
         return indexSet;
     }
+
 }
