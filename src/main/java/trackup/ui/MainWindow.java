@@ -116,26 +116,22 @@ public class MainWindow extends UiPart<Stage> {
 
         // F2 → Show Persons
         primaryStage.getScene().getAccelerators().put(
-                KeyCombination.valueOf("F2"),
-                () -> personsButton.fire()
+                KeyCombination.valueOf("F2"), () -> personsButton.fire()
         );
 
         // F3 → Show Events
         primaryStage.getScene().getAccelerators().put(
-                KeyCombination.valueOf("F3"),
-                () -> eventsButton.fire()
+                KeyCombination.valueOf("F3"), () -> eventsButton.fire()
         );
 
         // LEFT → Previous Week
         primaryStage.getScene().getAccelerators().put(
-                KeyCombination.valueOf("LEFT"),
-                () -> prevWeekButton.fire()
+                KeyCombination.valueOf("LEFT"), () -> prevWeekButton.fire()
         );
 
         // RIGHT → Next Week
         primaryStage.getScene().getAccelerators().put(
-                KeyCombination.valueOf("RIGHT"),
-                () -> nextWeekButton.fire()
+                KeyCombination.valueOf("RIGHT"), () -> nextWeekButton.fire()
         );
 
         // Add workaround for TextInputControl consuming function keys
