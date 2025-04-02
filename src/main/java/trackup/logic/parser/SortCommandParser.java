@@ -28,6 +28,9 @@ import trackup.model.person.Person;
  */
 public class SortCommandParser implements Parser<SortCommand> {
 
+    private static final String INVALID_SORT_VALUE_MESSAGE =
+            "Invalid sort order for prefix '%s': '%s'. Expected 'true' or 'false' (case-insensitive).";
+
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
      * and returns a SortCommand object for execution.
@@ -53,10 +56,16 @@ public class SortCommandParser implements Parser<SortCommand> {
         for (Prefix prefix : comparatorMap.keySet()) {
             Optional<String> valueOpt = argMultimap.getValue(prefix);
             if (valueOpt.isPresent()) {
-                boolean isDescending = Boolean.parseBoolean(valueOpt.get().strip());
+                String rawValue = valueOpt.get().strip();
+                String value = rawValue.toLowerCase();
+                if (!value.equals("true") && !value.equals("false")) {
+                    throw new ParseException(String.format(INVALID_SORT_VALUE_MESSAGE, prefix.getPrefix(), rawValue));
+                }
+
+                boolean isDescending = Boolean.parseBoolean(value);
                 Comparator<Person> comparator = comparatorMap.get(prefix);
                 Integer index = args.indexOf(prefix.getPrefix());
-                comparators.add(new Pair<>(index, isDescending ? comparator : comparator.reversed()));
+                comparators.add(new Pair<>(index, isDescending ? comparator.reversed() : comparator));
             }
         }
 
