@@ -269,6 +269,34 @@ Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
 - `delnote 2 1` — deletes the **first** note from the **second** person in the list.
 - `find John` followed by `delnote 1 2` — deletes the **second** note from the **first person** in the search results for "John".
 
+### Toggling field visibility: `toggle`
+
+Toggles the visibility of a specific field in the TrackUp contact list UI.  
+This command is useful for customizing the information you want displayed for each contact.
+
+Format: `toggle <FIELD>`
+
+**Supported Fields:**
+- `name`
+- `phone`
+- `email`
+- `address`
+- `tag`
+- `category`
+- `note`
+- `datetime`
+
+**Details:**
+- Each field starts out **visible by default**.
+- Executing the command will **invert the visibility** of the given field.
+- Toggled fields affect the **main contact list display**.
+- Repeating the command for the same field will toggle it back.
+
+**Examples:**
+- `toggle name` hides the contact's name field if it's currently shown.
+- `toggle phone` shows the phone field again if it was previously hidden.
+- `toggle note` hides the note field in the contact display.
+- `toggle datetime` toggles the visibility of the datetime field.
 
 ### Exiting the program : `exit`
 
