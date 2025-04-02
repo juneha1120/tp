@@ -138,7 +138,6 @@ public class DeleteEventCommandTest {
         DeleteEventCommand nullEndCommandA = new DeleteEventCommand("Meeting", end, null, indexSet);
         DeleteEventCommand nullEndCommandB = new DeleteEventCommand("Meeting", end, null, indexSet);
         assertTrue(nullEndCommandA.equals(nullEndCommandB));
-        
         // contactIndexes empty
         assertFalse(allFieldsCommand.equals(new DeleteEventCommand("Meeting", start, end, Set.of())));
 
