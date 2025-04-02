@@ -1,6 +1,7 @@
 package trackup.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static trackup.logic.Messages.MESSAGE_MULTIPLE_PEOPLE_TO_DELETE;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
@@ -50,7 +51,6 @@ public class DeleteByCommand extends Command {
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
     public static final String MESSAGE_NO_PERSON_TO_DELETE = "No Person Matches Criteria: %1$s";
-    public static final String MESSAGE_MULTIPLE_PEOPLE_TO_DELETE = "Multiple People Matches Criteria: %1$s";
     public static final String MESSAGE_NO_CRITERIA_SPECIFIED = "At least one field to edit must be provided.";
 
     private final Optional<Name> deleteByName;
