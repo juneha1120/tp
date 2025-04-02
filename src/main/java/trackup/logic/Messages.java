@@ -19,6 +19,10 @@ public class Messages {
     public static final String MESSAGE_DUPLICATE_FIELDS =
                 "Multiple values specified for the following single-valued field(s): ";
 
+    public static final String MESSAGE_MULTIPLE_PEOPLE_TO_DELETE =
+            "Multiple contacts match the provided attributes: %s. Please refine your input to uniquely identify a contact.";
+
+
     /**
      * Returns an error message indicating the duplicate prefixes.
      */
