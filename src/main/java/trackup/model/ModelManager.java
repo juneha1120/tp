@@ -133,6 +133,17 @@ public class ModelManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    @Override
+    public void sortFilteredPersonList(Comparator<Person> comparator) {
+        requireNonNull(comparator);
+        Predicate<? super Person> currentPredicate = filteredPersons.getPredicate();
+        filteredPersons.setPredicate(null);
+        ObservableList<Person> currentFiltered = FXCollections.observableArrayList(filteredPersons);
+        currentFiltered.sort(comparator);
+        addressBook.setPersons(currentFiltered);
+        filteredPersons.setPredicate(currentPredicate);
+    }
+
     //=========== Event ======================================================================================
 
     @Override
@@ -164,18 +175,6 @@ public class ModelManager implements Model {
     public ObservableList<Event> getEventList() {
         return eventList;
     }
-
-    @Override
-    public void sortFilteredPersonList(Comparator<Person> comparator) {
-        requireNonNull(comparator);
-        Predicate<? super Person> currentPredicate = filteredPersons.getPredicate();
-        filteredPersons.setPredicate(null);
-        ObservableList<Person> currentFiltered = FXCollections.observableArrayList(filteredPersons);
-        currentFiltered.sort(comparator);
-        addressBook.setPersons(currentFiltered);
-        filteredPersons.setPredicate(currentPredicate);
-    }
-
 
     @Override
     public boolean equals(Object other) {
