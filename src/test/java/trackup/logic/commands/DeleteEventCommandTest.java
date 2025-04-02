@@ -127,15 +127,17 @@ public class DeleteEventCommandTest {
         // Same fields = should be equal
         assertTrue(allFieldsCommand.equals(new DeleteEventCommand("Meeting", startA, endA, indexSetA)));
 
-        // partialTitle null
+        // partialTitle both null
         DeleteEventCommand nullTitleCommandA = new DeleteEventCommand(null, startA, endA, indexSetA);
         DeleteEventCommand nullTitleCommandB = new DeleteEventCommand(null, startA, endA, indexSetA);
         assertTrue(nullTitleCommandA.equals(nullTitleCommandB));
 
-        // partialTitle not null
+        // partialTitle both not null
         DeleteEventCommand notNullTitleCommandA = new DeleteEventCommand("Meeting", startA, endA, indexSetA);
         DeleteEventCommand notNullTitleCommandB = new DeleteEventCommand("Follow-up", startA, endA, indexSetA);
         assertFalse(notNullTitleCommandA.equals(notNullTitleCommandB));
+        // partialTitle null for one
+        assertFalse(nullTitleCommandA.equals(notNullTitleCommandA));
 
         // startDateTime null
         DeleteEventCommand nullStartCommandA = new DeleteEventCommand("Meeting", null, endA, indexSetA);
@@ -146,6 +148,8 @@ public class DeleteEventCommandTest {
         DeleteEventCommand notNullStartCommandA = new DeleteEventCommand("Meeting", startA, endA, indexSetA);
         DeleteEventCommand notNullStartCommandB = new DeleteEventCommand("Meeting", startB, endA, indexSetA);
         assertFalse(notNullStartCommandA.equals(notNullStartCommandB));
+        // startDateTime null for one
+        assertFalse(nullStartCommandA.equals(notNullStartCommandA));
 
         // endDateTime null
         DeleteEventCommand nullEndCommandA = new DeleteEventCommand("Meeting", startA, null, indexSetA);
@@ -156,6 +160,8 @@ public class DeleteEventCommandTest {
         DeleteEventCommand notNullEndCommandA = new DeleteEventCommand("Meeting", startA, endA, indexSetA);
         DeleteEventCommand notNullEndCommandB = new DeleteEventCommand("Meeting", startA, endB, indexSetA);
         assertFalse(notNullEndCommandA.equals(notNullEndCommandB));
+        // endDateTime null for one
+        assertFalse(nullEndCommandA.equals(notNullEndCommandA));
 
         // contactIndexes empty
         DeleteEventCommand emptyContactCommandA = new DeleteEventCommand("Meeting", startA, endA, Set.of());
@@ -166,6 +172,8 @@ public class DeleteEventCommandTest {
         DeleteEventCommand notEmptyContactCommandA = new DeleteEventCommand("Meeting", startA, endA, indexSetA);
         DeleteEventCommand notEmptyContactCommandB = new DeleteEventCommand("Meeting", startA, endA, indexSetB);
         assertFalse(notEmptyContactCommandA.equals(notEmptyContactCommandB));
+        // contactIndexes empty for one
+        assertFalse(emptyContactCommandA.equals(notEmptyContactCommandA));
 
         // All but contactIndexes are null
         assertFalse(allFieldsCommand.equals(new DeleteEventCommand(null, null, null, indexSetA)));
