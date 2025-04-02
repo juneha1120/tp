@@ -102,7 +102,7 @@ public class SearchCommandTest {
         expectedModel.updateFilteredPersonList(p -> false); // No matches
 
         assertCommandSuccess(searchCommand, model,
-                String.format(SearchCommand.MESSAGE_SUCCESS, "Nonexistent Keyword"), expectedModel);
+                String.format(SearchCommand.MESSAGE_NO_MATCH, "Nonexistent Keyword"), expectedModel);
     }
 
     @Test
