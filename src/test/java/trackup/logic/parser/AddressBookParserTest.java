@@ -4,23 +4,30 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static trackup.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static trackup.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static trackup.logic.parser.CliSyntax.PREFIX_EVENT_CONTACT;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
 import static trackup.testutil.Assert.assertThrows;
 import static trackup.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static trackup.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
 import trackup.commons.core.index.Index;
 import trackup.logic.commands.AddCommand;
+import trackup.logic.commands.AddEventCommand;
 import trackup.logic.commands.AddNoteCommand;
 import trackup.logic.commands.ClearCommand;
 import trackup.logic.commands.DeleteByCommand;
 import trackup.logic.commands.DeleteCommand;
+import trackup.logic.commands.DeleteEventCommand;
 import trackup.logic.commands.DeleteNoteCommand;
 import trackup.logic.commands.EditCommand;
 import trackup.logic.commands.EditCommand.EditPersonDescriptor;
@@ -31,10 +38,13 @@ import trackup.logic.commands.ListCommand;
 import trackup.logic.commands.SearchCommand;
 import trackup.logic.commands.ToggleCommand;
 import trackup.logic.parser.exceptions.ParseException;
+import trackup.model.event.Event;
 import trackup.model.person.Name;
 import trackup.model.person.NameContainsKeywordsPredicate;
 import trackup.model.person.Person;
 import trackup.testutil.EditPersonDescriptorBuilder;
+import trackup.testutil.EventBuilder;
+import trackup.testutil.EventUtil;
 import trackup.testutil.PersonBuilder;
 import trackup.testutil.PersonUtil;
 
@@ -119,6 +129,40 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ToggleCommand.COMMAND_WORD + " " + ToggleCommand.NAME_FIELD_STRING)
                 instanceof ToggleCommand);
     }
+
+    @Test
+    public void parseCommand_addevent() throws Exception {
+        Event event = new EventBuilder()
+                .withTitle("Team Meeting")
+                .withStart(LocalDateTime.of(2025, 4, 1, 14, 0))
+                .withEnd(LocalDateTime.of(2025, 4, 1, 15, 0))
+                .withContacts(new HashSet<>()) // use indexes for linking below
+                .build();
+
+        Set<Index> contactIndexes = Set.of(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON);
+
+        AddEventCommand command = (AddEventCommand) parser.parseCommand(
+                EventUtil.getAddEventCommand(event, contactIndexes));
+        AddEventCommand expectedCommand = new AddEventCommand(
+                event.getTitle(),
+                event.getStartDateTime(),
+                event.getEndDateTime(),
+                contactIndexes
+        );
+        assertEquals(expectedCommand, command);
+    }
+
+    @Test
+    public void parseCommand_delevent() throws Exception {
+        DeleteEventCommand command = (DeleteEventCommand) parser.parseCommand(
+                DeleteEventCommand.COMMAND_WORD + " "
+                        + PREFIX_EVENT_CONTACT + "1 " + PREFIX_EVENT_CONTACT + "2");
+        DeleteEventCommand expected = new DeleteEventCommand(
+                null, null, null,
+                Set.of(INDEX_FIRST_PERSON, INDEX_SECOND_PERSON));
+        assertEquals(expected, command);
+    }
+
 
     @Test
     public void parseCommand_addnote() throws Exception {

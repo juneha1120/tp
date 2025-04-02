@@ -49,6 +49,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code persons} must not contain duplicate persons.
      */
     public void setPersons(List<Person> persons) {
+        requireNonNull(persons);
         this.persons.setPersons(persons);
     }
 
@@ -57,6 +58,7 @@ public class AddressBook implements ReadOnlyAddressBook {
      * {@code events} must not contain duplicate events.
      */
     public void setEvents(List<Event> events) {
+        requireNonNull(events);
         this.events.setEvents(events);
     }
 

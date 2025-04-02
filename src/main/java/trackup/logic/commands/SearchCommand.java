@@ -22,6 +22,7 @@ public class SearchCommand extends Command {
             + "Example: " + COMMAND_WORD + " John";
 
     public static final String MESSAGE_SUCCESS = "Listed persons matching: %1$s";
+    public static final String MESSAGE_NO_MATCH = "No matching person found with: %1$s";
 
     private final String keyword;
 
@@ -56,6 +57,11 @@ public class SearchCommand extends Command {
                         .contains(lowerKeyword));
 
         model.updateFilteredPersonList(matchesKeyword);
+
+        if (model.getFilteredPersonList().isEmpty()) {
+            return new CommandResult(String.format(MESSAGE_NO_MATCH, keyword));
+        }
+
         return new CommandResult(String.format(MESSAGE_SUCCESS, keyword));
     }
 

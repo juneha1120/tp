@@ -29,7 +29,7 @@ title: User Guide
 
    * `list` : Lists all contacts.
 
-   * `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add -n "John Doe" -p 98765432 -e johnd@example.com -a "John street, block 123, #01-01"` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -47,7 +47,7 @@ title: User Guide
 
 **:information_source: Notes about the command format:**<br>
 
-- Words in `UPPER_CASE` indicate the parameters to be supplied by the user.
+- Words in `<UPPER_CASE>` indicate the parameters to be supplied by the user.
   e.g., in `add -n <NAME>`, `<NAME>` is a parameter which can be used as `add -n "John Doe"`.
 - Items in square brackets are optional.
   e.g., `-c <CATEGORY>` is optional.
@@ -80,6 +80,9 @@ Format: `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <T
 - **NAME**, **PHONE**, **EMAIL**, and **ADDRESS** are compulsory.
 - **CATEGORY** and **TAG** are optional.
 - **CATEGORY** should be one of: Client, Investor, Partner, Other.
+- If any required field (name, phone, email, or address) is missing, a descriptive error 
+  will appear indicating the exact missing attribute.
+
 
 
 **Examples:**
@@ -160,7 +163,8 @@ Format: `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATE
 - Deletes the person that matches the provided attributes.
 - At least one attribute must be specified.
 - Attribute matching is exact and case-sensitive.
-- If multiple contacts match the criteria, the system will display a message instead of deleting any contact.
+- If multiple contacts match the criteria, the system will display an error message
+  stating that multiple matches were found and that no contact will be deleted.
 
 **Examples:**
 - `deleteby -n John Doe` deletes the person named **John Doe** from the address book.

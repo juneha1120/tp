@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
@@ -40,6 +41,7 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
     private ResultDisplay resultDisplay;
     private HelpWindow helpWindow;
     private WeeklyCalendarView calendarView;
@@ -51,7 +53,13 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private StackPane listPanelStack;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -67,6 +75,19 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private Label monthYearLabel;
+
+    @FXML
+    private Button personsButton;
+
+    @FXML
+    private Button eventsButton;
+
+    @FXML
+    private Button prevWeekButton;
+
+    @FXML
+    private Button nextWeekButton;
+
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -92,6 +113,48 @@ public class MainWindow extends UiPart<Stage> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+
+        // F2 → Show Persons
+        primaryStage.getScene().getAccelerators().put(
+                KeyCombination.valueOf("F2"), () -> personsButton.fire()
+        );
+
+        // F3 → Show Events
+        primaryStage.getScene().getAccelerators().put(
+                KeyCombination.valueOf("F3"), () -> eventsButton.fire()
+        );
+
+        // LEFT → Previous Week
+        primaryStage.getScene().getAccelerators().put(
+                KeyCombination.valueOf("LEFT"), () -> prevWeekButton.fire()
+        );
+
+        // RIGHT → Next Week
+        primaryStage.getScene().getAccelerators().put(
+                KeyCombination.valueOf("RIGHT"), () -> nextWeekButton.fire()
+        );
+
+        // Add workaround for TextInputControl consuming function keys
+        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            if (event.getTarget() instanceof TextInputControl) {
+                if (KeyCombination.valueOf("F1").match(event)) {
+                    helpMenuItem.getOnAction().handle(new ActionEvent());
+                    event.consume();
+                } else if (KeyCombination.valueOf("F2").match(event)) {
+                    personsButton.fire();
+                    event.consume();
+                } else if (KeyCombination.valueOf("F3").match(event)) {
+                    eventsButton.fire();
+                    event.consume();
+                } else if (KeyCombination.valueOf("LEFT").match(event)) {
+                    prevWeekButton.fire();
+                    event.consume();
+                } else if (KeyCombination.valueOf("RIGHT").match(event)) {
+                    nextWeekButton.fire();
+                    event.consume();
+                }
+            }
+        });
     }
 
     /**
@@ -131,6 +194,9 @@ public class MainWindow extends UiPart<Stage> {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList(), logic.getGuiSettings().getVisibility());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        eventListPanel = new EventListPanel(logic.getEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
         resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -151,6 +217,8 @@ public class MainWindow extends UiPart<Stage> {
 
         calendarView.populateCalendar();
         updateMonthYearLabel(calendarView.getCurrentDate());
+
+        handleShowPersons();
     }
 
     private void updateMonthYearLabel(LocalDate date) {
@@ -249,4 +317,27 @@ public class MainWindow extends UiPart<Stage> {
         calendarView.showNextWeek();
         updateMonthYearLabel(calendarView.getCurrentWeekStart());
     }
+
+    /**
+     * Handles switching to person list.
+     */
+    @FXML
+    private void handleShowPersons() {
+        personListPanelPlaceholder.setVisible(true);
+        personListPanelPlaceholder.setManaged(true);
+        eventListPanelPlaceholder.setVisible(false);
+        eventListPanelPlaceholder.setManaged(false);
+    }
+
+    /**
+     * Handles switching to event list.
+     */
+    @FXML
+    private void handleShowEvents() {
+        personListPanelPlaceholder.setVisible(false);
+        personListPanelPlaceholder.setManaged(false);
+        eventListPanelPlaceholder.setVisible(true);
+        eventListPanelPlaceholder.setManaged(true);
+    }
+
 }
