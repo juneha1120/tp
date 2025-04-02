@@ -14,7 +14,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 import javafx.util.Pair;
 import trackup.logic.commands.SortCommand;
@@ -78,7 +77,8 @@ public class SortCommandParser implements Parser<SortCommand> {
         Comparator<Person> finalComparator = comparators.stream()
                 .map(Pair::getValue)
                 .reduce(Comparator::thenComparing)
-                .orElseThrow(() -> new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE)));
+                .orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE)));
 
         return new SortCommand(finalComparator);
     }
