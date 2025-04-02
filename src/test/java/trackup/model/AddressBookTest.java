@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static trackup.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static trackup.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static trackup.testutil.Assert.assertThrows;
+import static trackup.testutil.TypicalEvents.DUPLICATE_MEETING;
+import static trackup.testutil.TypicalEvents.MEETING_EVENT;
 import static trackup.testutil.TypicalPersons.ALICE;
 import static trackup.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -19,6 +21,8 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import trackup.model.event.Event;
+import trackup.model.event.exceptions.DuplicateEventException;
 import trackup.model.person.Person;
 import trackup.model.person.exceptions.DuplicatePersonException;
 import trackup.testutil.PersonBuilder;
@@ -50,7 +54,7 @@ public class AddressBookTest {
         Person editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND)
                 .build();
         List<Person> newPersons = Arrays.asList(ALICE, editedAlice);
-        AddressBookStub newData = new AddressBookStub(newPersons);
+        AddressBookStub newData = new AddressBookStub(newPersons, addressBook.getEventList());
 
         assertThrows(DuplicatePersonException.class, () -> addressBook.resetData(newData));
     }
@@ -86,7 +90,9 @@ public class AddressBookTest {
 
     @Test
     public void toStringMethod() {
-        String expected = AddressBook.class.getCanonicalName() + "{persons=" + addressBook.getPersonList() + "}";
+        String expected = AddressBook.class.getCanonicalName()
+                + "{persons=" + addressBook.getPersonList() + ", "
+                + "events=" + addressBook.getEventList() + "}";
         assertEquals(expected, addressBook.toString());
     }
 
@@ -103,6 +109,45 @@ public class AddressBookTest {
         AddressBook newData2 = new AddressBook();
         assertNotEquals(newData1.hashCode(), newData2.hashCode());
     }
+
+    @Test
+    public void resetData_withDuplicateEvents_throwsDuplicateEventException() {
+        // Both events are the same
+        List<Event> newEvents = Arrays.asList(MEETING_EVENT, DUPLICATE_MEETING);
+        AddressBookStub newData = new AddressBookStub(addressBook.getPersonList(), newEvents);
+
+        assertThrows(DuplicateEventException.class, () -> addressBook.resetData(newData));
+    }
+
+    @Test
+    public void hasEvent_nullEvent_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> addressBook.hasEvent(null));
+    }
+
+    @Test
+    public void hasEvent_eventNotInAddressBook_returnsFalse() {
+        assertFalse(addressBook.hasEvent(MEETING_EVENT));
+    }
+
+    @Test
+    public void hasEvent_eventInAddressBook_returnsTrue() {
+        addressBook.addPerson(ALICE); // MEETING_EVENT has ALICE
+        addressBook.addEvent(MEETING_EVENT);
+        assertTrue(addressBook.hasEvent(MEETING_EVENT));
+    }
+
+    @Test
+    public void addEvent_duplicateEvent_throwsDuplicateEventException() {
+        addressBook.addPerson(ALICE); // Required for event contact
+        addressBook.addEvent(MEETING_EVENT);
+        assertThrows(DuplicateEventException.class, () -> addressBook.addEvent(DUPLICATE_MEETING));
+    }
+
+    @Test
+    public void getEventList_modifyList_throwsUnsupportedOperationException() {
+        assertThrows(UnsupportedOperationException.class, () -> addressBook.getEventList().remove(0));
+    }
+
 
     @Test
     public void equals() {
@@ -128,14 +173,21 @@ public class AddressBookTest {
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
+        private final ObservableList<Event> events = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons) {
+        AddressBookStub(Collection<Person> persons, Collection<Event> events) {
             this.persons.setAll(persons);
+            this.events.setAll(events);
         }
 
         @Override
         public ObservableList<Person> getPersonList() {
             return persons;
+        }
+
+        @Override
+        public ObservableList<Event> getEventList() {
+            return events;
         }
     }
 

@@ -5,16 +5,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static trackup.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static trackup.testutil.Assert.assertThrows;
+import static trackup.testutil.TypicalEvents.LUNCH_EVENT;
+import static trackup.testutil.TypicalEvents.MEETING_EVENT;
 import static trackup.testutil.TypicalPersons.ALICE;
 import static trackup.testutil.TypicalPersons.BENSON;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
 import trackup.commons.core.GuiSettings;
+import trackup.commons.core.Visibility;
+import trackup.model.event.Event;
 import trackup.model.person.NameContainsKeywordsPredicate;
 import trackup.testutil.AddressBookBuilder;
 
@@ -38,7 +43,7 @@ public class ModelManagerTest {
     public void setUserPrefs_validUserPrefs_copiesUserPrefs() {
         UserPrefs userPrefs = new UserPrefs();
         userPrefs.setAddressBookFilePath(Paths.get("address/book/file/path"));
-        userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4));
+        userPrefs.setGuiSettings(new GuiSettings(1, 2, 3, 4, new Visibility()));
         modelManager.setUserPrefs(userPrefs);
         assertEquals(userPrefs, modelManager.getUserPrefs());
 
@@ -55,7 +60,7 @@ public class ModelManagerTest {
 
     @Test
     public void setGuiSettings_validGuiSettings_setsGuiSettings() {
-        GuiSettings guiSettings = new GuiSettings(1, 2, 3, 4);
+        GuiSettings guiSettings = new GuiSettings(1, 2, 3, 4, new Visibility());
         modelManager.setGuiSettings(guiSettings);
         assertEquals(guiSettings, modelManager.getGuiSettings());
     }
@@ -91,6 +96,30 @@ public class ModelManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         assertThrows(UnsupportedOperationException.class, () -> modelManager.getFilteredPersonList().remove(0));
+    }
+
+    @Test
+    public void hasEvent_nullEvent_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.hasEvent(null));
+    }
+
+    @Test
+    public void hasEvent_notInList_returnsFalse() {
+        assertFalse(modelManager.hasEvent(MEETING_EVENT));
+    }
+
+    @Test
+    public void hasEvent_inList_returnsTrue() {
+        modelManager.addEvent(MEETING_EVENT);
+        assertTrue(modelManager.hasEvent(MEETING_EVENT));
+    }
+
+    @Test
+    public void getEventList_isCorrect() {
+        modelManager.addEvent(MEETING_EVENT);
+        modelManager.addEvent(LUNCH_EVENT);
+        List<Event> expected = List.of(MEETING_EVENT, LUNCH_EVENT);
+        assertEquals(expected, modelManager.getEventList());
     }
 
     @Test

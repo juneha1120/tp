@@ -5,6 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static trackup.logic.parser.CliSyntax.PREFIX_EVENT_CONTACT;
+import static trackup.logic.parser.CliSyntax.PREFIX_EVENT_END;
+import static trackup.logic.parser.CliSyntax.PREFIX_EVENT_START;
+import static trackup.logic.parser.CliSyntax.PREFIX_EVENT_TITLE;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
 import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
 import static trackup.logic.parser.CliSyntax.PREFIX_TAG;
@@ -53,7 +57,6 @@ public class CommandTestUtil {
     public static final String CATEGORY_DESC_CLIENT = " " + PREFIX_CATEGORY + VALID_CATEGORY_CLIENT;
     public static final String CATEGORY_DESC_INVESTOR = " " + PREFIX_CATEGORY + VALID_CATEGORY_INVESTOR;
 
-
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
@@ -61,6 +64,23 @@ public class CommandTestUtil {
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
     public static final String INVALID_CATEGORY_DESC = " " + PREFIX_CATEGORY + "no_category";
     // not one of {"Client", "Investor", "Partner", "Other"}
+
+    public static final String VALID_EVENT_TITLE = "Meeting";
+    public static final String VALID_EVENT_START = "2025-04-01 14:00";
+    public static final String VALID_EVENT_END = "2025-04-01 15:00";
+    public static final String VALID_EVENT_INDEX_1 = "1";
+    public static final String VALID_EVENT_INDEX_2 = "3";
+
+    public static final String EVENT_TITLE_DESC = " " + PREFIX_EVENT_TITLE + VALID_EVENT_TITLE;
+    public static final String EVENT_START_DESC = " " + PREFIX_EVENT_START + VALID_EVENT_START;
+    public static final String EVENT_END_DESC = " " + PREFIX_EVENT_END + VALID_EVENT_END;
+    public static final String EVENT_CONTACT_DESC_1 = " " + PREFIX_EVENT_CONTACT + VALID_EVENT_INDEX_1;
+    public static final String EVENT_CONTACT_DESC_2 = " " + PREFIX_EVENT_CONTACT + VALID_EVENT_INDEX_2;
+
+    public static final String INVALID_EVENT_TITLE_DESC = " " + PREFIX_EVENT_TITLE + "";
+    public static final String INVALID_EVENT_START_DESC = " " + PREFIX_EVENT_START + "not-a-date";
+    public static final String INVALID_EVENT_END_DESC = " " + PREFIX_EVENT_END + "bad-date";
+    public static final String INVALID_EVENT_CONTACT_DESC = " " + PREFIX_EVENT_CONTACT + "a";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";

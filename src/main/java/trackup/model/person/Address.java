@@ -7,7 +7,7 @@ import static trackup.commons.util.AppUtil.checkArgument;
  * Represents a Person's address in the address book.
  * Guarantees: immutable; is valid as declared in {@link #isValidAddress(String)}
  */
-public class Address {
+public class Address implements Comparable<Address> {
 
     public static final String MESSAGE_CONSTRAINTS = "Addresses can take any values, and it should not be blank";
 
@@ -55,6 +55,11 @@ public class Address {
 
         Address otherAddress = (Address) other;
         return value.equals(otherAddress.value);
+    }
+
+    @Override
+    public int compareTo(Address address) {
+        return this.value.compareTo(address.value);
     }
 
     @Override

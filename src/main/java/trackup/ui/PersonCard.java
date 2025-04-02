@@ -2,11 +2,16 @@ package trackup.ui;
 
 import java.util.Comparator;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import trackup.commons.core.Visibility;
+import trackup.model.note.Note;
 import trackup.model.person.Person;
 
 /**
@@ -43,33 +48,66 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label category;
 
+    @FXML
+    private VBox notesBox;
+
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
-    public PersonCard(Person person, int displayedIndex) {
+    public PersonCard(Person person, int displayedIndex, Visibility visibility) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
+        id.setVisible(visibility.isShowId());
         name.setText(person.getName().fullName);
+        name.setVisible(visibility.isShowName());
         phone.setText(person.getPhone().value);
+        phone.setVisible(visibility.isShowPhone());
         address.setText(person.getAddress().value);
+        address.setVisible(visibility.isShowAddress());
         email.setText(person.getEmail().value);
+        email.setVisible(visibility.isShowEmail());
         person.getTags().stream()
                 .sorted(Comparator.comparing(tag -> tag.tagName))
-                .forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+                .forEach(tag -> {
+                    Label label = new Label(tag.tagName);
+                    label.setVisible(visibility.isShowTag());
+                    tags.getChildren().add(label);
+                });
         if (person.getCategory().isPresent()) {
             String categoryName = person.getCategory().get().categoryName;
             category.setText(categoryName);
+            category.setVisible(visibility.isShowCategory());
             String categoryColor = getCategoryColor(categoryName);
+            category.setStyle("-fx-background-color: #3B3B3B;"
+                    + "-fx-text-fill: " + categoryColor + "); -fx-border-radius: 5px; -fx-padding: 1px 2px;");
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
                     + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
         } else {
             category.setVisible(false);
             category.setManaged(false);
             String categoryColor = getCategoryColor(null);
+            category.setStyle("-fx-background-color: #3B3B3B;"
+                    + "-fx-text-fill: " + categoryColor + "); -fx-border-radius: 5px; -fx-padding: 1px 2px;");
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
                     + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
         }
+        renderNotes();
+
+        person.getNotes().addListener((ListChangeListener<Note>) change -> renderNotes());
+    }
+
+    private void renderNotes() {
+        notesBox.getChildren().clear();
+
+        person.getNotes().stream().limit(Person.MAX_NOTES).forEach(note -> {
+            Label noteLabel = new Label(note.text);
+            noteLabel.setWrapText(true);
+            noteLabel.setTextOverrun(OverrunStyle.ELLIPSIS);
+            noteLabel.setMaxWidth(250);
+            noteLabel.getStyleClass().add("note-label");
+            notesBox.getChildren().add(noteLabel);
+        });
     }
 
     public String getCategoryColor(String categoryName) {

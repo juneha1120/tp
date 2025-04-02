@@ -13,13 +13,15 @@
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
     "tags" : [ "owesMoney", "friends" ],
-    "category" : "Investor"
+    "category" : "Investor",
+    "notes": [ "Follow up next week", "Met at event" ]
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
     "address" : "wall street",
-    "tags" : [ ]
+    "tags" : [ ],
+    "notes": [ "Cool" ]
   }, {
     "name" : "Daniel Meier",
     "phone" : "87652533",
@@ -44,5 +46,6 @@
     "email" : "anna@example.com",
     "address" : "4th street",
     "tags" : [ ]
-  } ]
+  } ],
+  "events" : [ ]
 }
