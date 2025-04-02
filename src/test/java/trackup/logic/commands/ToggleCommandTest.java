@@ -40,20 +40,25 @@ public class ToggleCommandTest {
 
     @Test
     public void execute_toggleAllFields_success() {
+        // Toggle all fields once (to false)
         assertToggleField(ToggleCommand.NAME_FIELD_STRING);
         assertToggleField(ToggleCommand.PHONE_FIELD_STRING);
         assertToggleField(ToggleCommand.EMAIL_FIELD_STRING);
         assertToggleField(ToggleCommand.ADDRESS_FIELD_STRING);
         assertToggleField(ToggleCommand.TAG_FIELD_STRING);
         assertToggleField(ToggleCommand.CATEGORY_FIELD_STRING);
+        assertToggleField(ToggleCommand.NOTE_FIELD_STRING);
+        assertToggleField(ToggleCommand.DATETIME_FIELD_STRING);
 
-        // Twice for false -> true
+        // Toggle all fields again (to true)
         assertToggleField(ToggleCommand.NAME_FIELD_STRING);
         assertToggleField(ToggleCommand.PHONE_FIELD_STRING);
         assertToggleField(ToggleCommand.EMAIL_FIELD_STRING);
         assertToggleField(ToggleCommand.ADDRESS_FIELD_STRING);
         assertToggleField(ToggleCommand.TAG_FIELD_STRING);
         assertToggleField(ToggleCommand.CATEGORY_FIELD_STRING);
+        assertToggleField(ToggleCommand.NOTE_FIELD_STRING);
+        assertToggleField(ToggleCommand.DATETIME_FIELD_STRING);
     }
 
     private void assertToggleField(String field) {
@@ -77,6 +82,8 @@ public class ToggleCommandTest {
         case ToggleCommand.ADDRESS_FIELD_STRING -> visibility.isShowAddress();
         case ToggleCommand.TAG_FIELD_STRING -> visibility.isShowTag();
         case ToggleCommand.CATEGORY_FIELD_STRING -> visibility.isShowCategory();
+        case ToggleCommand.NOTE_FIELD_STRING -> visibility.isShowNote();
+        case ToggleCommand.DATETIME_FIELD_STRING -> visibility.isShowDatetime();
         default -> throw new IllegalArgumentException("Unknown field: " + field);
         };
     }
