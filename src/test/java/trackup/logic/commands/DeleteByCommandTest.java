@@ -10,6 +10,8 @@ import static org.mockito.Mockito.when;
 import static trackup.testutil.Assert.assertThrows;
 import static trackup.testutil.TypicalPersons.ALICE;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Predicate;
@@ -20,10 +22,12 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import trackup.commons.util.ToStringBuilder;
 import trackup.logic.Messages;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.model.Model;
+import trackup.model.event.Event;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -34,8 +38,17 @@ import trackup.testutil.PersonBuilder;
 
 public class DeleteByCommandTest {
 
+    private static final String TITLE_MEETING = "Team Meeting";
+    private static final LocalDateTime START = LocalDateTime.of(2024, 5, 1, 10, 0);
+    private static final LocalDateTime END = LocalDateTime.of(2024, 5, 1, 12, 0);
+    private static final LocalDateTime DIFFERENT_START = LocalDateTime.of(2024, 5, 2, 10, 0);
+    private static final LocalDateTime DIFFERENT_END = LocalDateTime.of(2024, 5, 2, 12, 0);
+
     @Mock
     private Model model;
+
+    @Mock
+    private Event event;
 
     @BeforeEach
     public void setUp() {
@@ -52,6 +65,9 @@ public class DeleteByCommandTest {
     public void execute_personFound_success() throws Exception {
         when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
         when(model.hasPerson(ALICE)).thenReturn(true);
+        List<Event> eventList = List.of();
+        ObservableList<Event> observableEventList = FXCollections.observableArrayList(eventList);
+        when(model.getEventList()).thenReturn(observableEventList);
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.of(ALICE.getName()), Optional.empty(), Optional.empty(),
@@ -68,6 +84,9 @@ public class DeleteByCommandTest {
     public void execute_deleteByPhone_success() throws Exception {
         when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
         when(model.hasPerson(ALICE)).thenReturn(true);
+        List<Event> eventList = List.of();
+        ObservableList<Event> observableEventList = FXCollections.observableArrayList(eventList);
+        when(model.getEventList()).thenReturn(observableEventList);
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.empty(), Optional.of(ALICE.getPhone()), Optional.empty(),
@@ -84,6 +103,9 @@ public class DeleteByCommandTest {
     public void execute_deleteByEmail_success() throws Exception {
         when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
         when(model.hasPerson(ALICE)).thenReturn(true);
+        List<Event> eventList = List.of();
+        ObservableList<Event> observableEventList = FXCollections.observableArrayList(eventList);
+        when(model.getEventList()).thenReturn(observableEventList);
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.of(ALICE.getEmail()),
@@ -100,6 +122,14 @@ public class DeleteByCommandTest {
     public void execute_deleteByAddress_success() throws Exception {
         when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
         when(model.hasPerson(ALICE)).thenReturn(true);
+        when(event.getContacts()).thenReturn(Set.of(ALICE));
+        when(event.getTitle()).thenReturn(TITLE_MEETING);
+        when(event.getStartDateTime()).thenReturn(START);
+        when(event.getEndDateTime()).thenReturn(END);
+        when(event.getContacts()).thenReturn(Set.of(ALICE));
+        List<Event> eventList = List.of(event);
+        ObservableList<Event> observableEventList = FXCollections.observableArrayList(eventList);
+        when(model.getEventList()).thenReturn(observableEventList);
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.empty(),
@@ -117,6 +147,9 @@ public class DeleteByCommandTest {
         Tag tag = ALICE.getTags().iterator().next();
         when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(ALICE));
         when(model.hasPerson(ALICE)).thenReturn(true);
+        List<Event> eventList = List.of();
+        ObservableList<Event> observableEventList = FXCollections.observableArrayList(eventList);
+        when(model.getEventList()).thenReturn(observableEventList);
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.empty(),

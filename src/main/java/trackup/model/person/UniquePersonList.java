@@ -55,6 +55,7 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public void setPerson(Person target, Person editedPerson) {
         requireAllNonNull(target, editedPerson);
+        assert target != null && editedPerson != null;
 
         int index = internalList.indexOf(target);
         if (index == -1) {
@@ -89,6 +90,7 @@ public class UniquePersonList implements Iterable<Person> {
      * {@code persons} must not contain duplicate persons.
      */
     public void setPersons(List<Person> persons) {
+        requireNonNull(persons);
         requireAllNonNull(persons);
         if (!personsAreUnique(persons)) {
             throw new DuplicatePersonException();
@@ -138,6 +140,7 @@ public class UniquePersonList implements Iterable<Person> {
      * Returns true if {@code persons} contains only unique persons.
      */
     private boolean personsAreUnique(List<Person> persons) {
+        assert persons != null : "Input list for uniqueness check should not be null.";
         for (int i = 0; i < persons.size() - 1; i++) {
             for (int j = i + 1; j < persons.size(); j++) {
                 if (persons.get(i).isSamePerson(persons.get(j))) {
