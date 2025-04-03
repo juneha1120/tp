@@ -2,6 +2,7 @@ package trackup.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
 import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 import trackup.logic.commands.DeleteByCommand;
 import trackup.logic.parser.exceptions.ParseException;
+import trackup.model.category.Category;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -29,17 +31,19 @@ public class DeleteByCommandParser implements Parser<DeleteByCommand> {
      */
     public DeleteByCommand parse(String args) throws ParseException {
         requireNonNull(args);
-        ArgumentMultimap argMultimap =
-                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_CATEGORY);
 
         // No duplicates for tag allowed in delete by command
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG);
+        argMultimap.verifyNoDuplicatePrefixesFor(
+                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_CATEGORY);
 
         Optional<Name> deleteByName = Optional.empty();
         Optional<Phone> deleteByPhone = Optional.empty();
         Optional<Email> deleteByEmail = Optional.empty();
         Optional<Address> deleteByAddress = Optional.empty();
         Optional<Tag> deleteByTag = Optional.empty();
+        Optional<Category> deleteByCategory = Optional.empty();
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             deleteByName = Optional.of(ParserUtil.parseName(argMultimap.getValue(PREFIX_NAME).get()));
@@ -56,13 +60,18 @@ public class DeleteByCommandParser implements Parser<DeleteByCommand> {
         if (argMultimap.getValue(PREFIX_TAG).isPresent()) {
             deleteByTag = Optional.of(ParserUtil.parseTag(argMultimap.getValue(PREFIX_TAG).get()));
         }
+        if (argMultimap.getValue(PREFIX_CATEGORY).isPresent()) {
+            deleteByCategory = Optional.ofNullable(ParserUtil.parseCategory(
+                    argMultimap.getValue(PREFIX_CATEGORY).get()));
+        }
 
         if (deleteByName.isEmpty() && deleteByPhone.isEmpty() && deleteByEmail.isEmpty()
-                && deleteByAddress.isEmpty() && deleteByTag.isEmpty()) {
+                && deleteByAddress.isEmpty() && deleteByTag.isEmpty() && deleteByCategory.isEmpty()) {
             throw new ParseException(DeleteByCommand.MESSAGE_NO_CRITERIA_SPECIFIED);
         }
 
-        return new DeleteByCommand(deleteByName, deleteByPhone, deleteByEmail, deleteByAddress, deleteByTag);
+        return new DeleteByCommand(
+                deleteByName, deleteByPhone, deleteByEmail, deleteByAddress, deleteByTag, deleteByCategory);
     }
 
 

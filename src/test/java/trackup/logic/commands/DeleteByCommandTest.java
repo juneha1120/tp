@@ -58,7 +58,7 @@ public class DeleteByCommandTest {
     @Test
     public void constructor_nullCriteria_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () ->
-                new DeleteByCommand(null, null, null, null, null));
+                new DeleteByCommand(null, null, null, null, null, null));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class DeleteByCommandTest {
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.of(ALICE.getName()), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty());
 
         CommandResult commandResult = deleteCommand.execute(model);
 
@@ -90,7 +90,7 @@ public class DeleteByCommandTest {
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.empty(), Optional.of(ALICE.getPhone()), Optional.empty(),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty());
 
         CommandResult commandResult = deleteCommand.execute(model);
 
@@ -109,7 +109,7 @@ public class DeleteByCommandTest {
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.of(ALICE.getEmail()),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty());
 
         CommandResult commandResult = deleteCommand.execute(model);
 
@@ -133,7 +133,7 @@ public class DeleteByCommandTest {
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.of(ALICE.getAddress()), Optional.empty());
+                Optional.of(ALICE.getAddress()), Optional.empty(), Optional.empty());
 
         CommandResult commandResult = deleteCommand.execute(model);
 
@@ -153,7 +153,7 @@ public class DeleteByCommandTest {
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.of(tag));
+                Optional.empty(), Optional.of(tag), Optional.empty());
 
         CommandResult commandResult = deleteCommand.execute(model);
 
@@ -168,7 +168,7 @@ public class DeleteByCommandTest {
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.of(new Name("Nonexistent Name")), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
 
         assertThrows(CommandException.class, () -> deleteCommand.execute(model));
     }
@@ -181,21 +181,18 @@ public class DeleteByCommandTest {
 
         DeleteByCommand deleteCommand = new DeleteByCommand(
                 Optional.of(new Name("John Doe")), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
 
         CommandResult commandResult = deleteCommand.execute(model);
 
-        assertEquals(
-                String.format(Messages.MESSAGE_MULTIPLE_PEOPLE_TO_DELETE, deleteCommand.toString()),
-                commandResult.getFeedbackToUser()
-        );
+        assertEquals(DeleteByCommand.MESSAGE_MULTIPLE_PEOPLE_TO_DELETE, commandResult.getFeedbackToUser());
     }
 
     @Test
     public void getPredicate_matchesByName() {
         Name testName = new Name("John Doe");
         DeleteByCommand command = new DeleteByCommand(Optional.of(testName), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Predicate<Person> predicate = command.getPredicate();
         Person matchingPerson = new Person(testName, new Phone("12345678"), new Email("john@example.com"),
                 new Address("Street 1"), Set.of(new Tag("Friend")), Optional.empty());
@@ -211,7 +208,7 @@ public class DeleteByCommandTest {
     public void getPredicate_matchesByPhone() {
         Phone testPhone = new Phone("12345678");
         DeleteByCommand command = new DeleteByCommand(Optional.empty(), Optional.of(testPhone),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Predicate<Person> predicate = command.getPredicate();
         Person matchingPerson = new Person(new Name("John Doe"), testPhone, new Email("john@example.com"),
                 new Address("Street 1"), Set.of(new Tag("Friend")), Optional.empty());
@@ -227,7 +224,7 @@ public class DeleteByCommandTest {
     public void getPredicate_matchesByAddress() {
         Address testAddress = new Address("Street 1");
         DeleteByCommand command = new DeleteByCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.of(testAddress), Optional.empty());
+                Optional.empty(), Optional.of(testAddress), Optional.empty(), Optional.empty());
         Predicate<Person> predicate = command.getPredicate();
         Person matchingPerson = new Person(new Name("John Doe"), new Phone("12345678"), new Email("john@example.com"),
                 testAddress, Set.of(new Tag("Friend")), Optional.empty());
@@ -243,7 +240,7 @@ public class DeleteByCommandTest {
     public void getPredicate_matchesByEmail() {
         Email testEmail = new Email("john@example.com");
         DeleteByCommand command = new DeleteByCommand(Optional.empty(), Optional.empty(),
-                Optional.of(testEmail), Optional.empty(), Optional.empty());
+                Optional.of(testEmail), Optional.empty(), Optional.empty(), Optional.empty());
         Predicate<Person> predicate = command.getPredicate();
         Person matchingPerson = new Person(new Name("John Doe"), new Phone("12345678"), testEmail,
                 new Address("Street 1"), Set.of(new Tag("Friend")), Optional.empty());
@@ -259,7 +256,7 @@ public class DeleteByCommandTest {
     public void getPredicate_matchesByTag() {
         Tag testTag = new Tag("Friend");
         DeleteByCommand command = new DeleteByCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.of(testTag));
+                Optional.empty(), Optional.empty(), Optional.of(testTag), Optional.empty());
         Predicate<Person> predicate = command.getPredicate();
         Person matchingPerson = new Person(new Name("John Doe"), new Phone("12345678"), new Email("john@example.com"),
                 new Address("Street 1"), Set.of(testTag), Optional.empty());
@@ -277,7 +274,7 @@ public class DeleteByCommandTest {
         Phone testPhone = new Phone("12345678");
         Email testEmail = new Email("john@example.com");
         DeleteByCommand command = new DeleteByCommand(Optional.of(testName), Optional.of(testPhone),
-                Optional.of(testEmail), Optional.empty(), Optional.empty());
+                Optional.of(testEmail), Optional.empty(), Optional.empty(), Optional.empty());
         Predicate<Person> predicate = command.getPredicate();
         Set<Tag> testTags = Set.of(new Tag("Friend"));
         Person matchingPerson = new Person(testName, testPhone, testEmail, new Address("Street 1"),
@@ -292,7 +289,7 @@ public class DeleteByCommandTest {
     @Test
     public void getPredicate_noCriteriaMatchesAll() {
         DeleteByCommand command = new DeleteByCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         Predicate<Person> predicate = command.getPredicate();
         Person person = new Person(new Name("John Doe"), new Phone("12345678"), new Email("john@example.com"),
                 new Address("Street 1"), Set.of(new Tag("Friend")), Optional.empty());
@@ -308,7 +305,7 @@ public class DeleteByCommandTest {
         Address testAddress = new Address("Street 1");
         Tag testTag = new Tag("Friend");
         DeleteByCommand command = new DeleteByCommand(Optional.of(testName), Optional.of(testPhone),
-                Optional.of(testEmail), Optional.of(testAddress), Optional.of(testTag));
+                Optional.of(testEmail), Optional.of(testAddress), Optional.of(testTag), Optional.empty());
 
         ToStringBuilder stringBuilder = new ToStringBuilder(command);
         command.addCriteriaToStringBuilder(stringBuilder);
@@ -324,7 +321,7 @@ public class DeleteByCommandTest {
     @Test
     public void addCriteriaToStringBuilder_excludesEmptyFields() {
         DeleteByCommand command = new DeleteByCommand(Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
 
         ToStringBuilder stringBuilder = new ToStringBuilder(command);
         command.addCriteriaToStringBuilder(stringBuilder);
@@ -341,22 +338,22 @@ public class DeleteByCommandTest {
     public void equals() {
         DeleteByCommand deleteByName = new DeleteByCommand(
                 Optional.of(new Name("Alice")), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         DeleteByCommand deleteByPhone = new DeleteByCommand(
                 Optional.empty(), Optional.of(new Phone("12345678")),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         DeleteByCommand deleteByEmail = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.of(new Email("alice@example.com")),
-                Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty());
         DeleteByCommand deleteByAddress = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.of(new Address("123 Street")), Optional.empty());
+                Optional.of(new Address("123 Street")), Optional.empty(), Optional.empty());
         DeleteByCommand deleteByTag = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.of(new Tag("Friend")));
+                Optional.of(new Tag("Friend")), Optional.empty());
         DeleteByCommand deleteByEmpty = new DeleteByCommand(
                 Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty(),
-                Optional.empty());
+                Optional.empty(), Optional.empty());
 
         // same object -> returns true
         assertEquals(deleteByName, deleteByName);
@@ -364,7 +361,7 @@ public class DeleteByCommandTest {
         // same values -> returns true
         DeleteByCommand deleteByNameCopy = new DeleteByCommand(
                 Optional.of(new Name("Alice")), Optional.empty(),
-                Optional.empty(), Optional.empty(), Optional.empty());
+                Optional.empty(), Optional.empty(), Optional.empty(), Optional.empty());
         assertEquals(deleteByName, deleteByNameCopy);
 
         // different types -> returns false

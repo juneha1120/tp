@@ -25,6 +25,9 @@ public class Messages {
             "Multiple contacts match the provided attributes: %s. "
                     + "Please refine your input to uniquely identify a contact.";
 
+    public static final String MESSAGE_NO_PERSON_TO_DELETE =
+            "No Person Matches Criteria: %1$s";
+
     /**
      * Returns an error message indicating the duplicate prefixes.
      */

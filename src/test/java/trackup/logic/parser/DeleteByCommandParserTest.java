@@ -1,6 +1,7 @@
 package trackup.logic.parser;
 
 import static trackup.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
+import static trackup.logic.commands.CommandTestUtil.CATEGORY_DESC_CLIENT;
 import static trackup.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
 import static trackup.logic.commands.CommandTestUtil.INVALID_ADDRESS_DESC;
 import static trackup.logic.commands.CommandTestUtil.INVALID_EMAIL_DESC;
@@ -11,11 +12,13 @@ import static trackup.logic.commands.CommandTestUtil.NAME_DESC_AMY;
 import static trackup.logic.commands.CommandTestUtil.PHONE_DESC_AMY;
 import static trackup.logic.commands.CommandTestUtil.TAG_DESC_FRIEND;
 import static trackup.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
+import static trackup.logic.commands.CommandTestUtil.VALID_CATEGORY_CLIENT;
 import static trackup.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
 import static trackup.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static trackup.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static trackup.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
 import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -29,6 +32,7 @@ import org.junit.jupiter.api.Test;
 
 import trackup.logic.Messages;
 import trackup.logic.commands.DeleteByCommand;
+import trackup.model.category.Category;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -46,11 +50,12 @@ public class DeleteByCommandParserTest {
                 Optional.of(new Phone(VALID_PHONE_AMY)),
                 Optional.of(new Email(VALID_EMAIL_AMY)),
                 Optional.of(new Address(VALID_ADDRESS_AMY)),
-                Optional.of(new Tag(VALID_TAG_FRIEND))
+                Optional.of(new Tag(VALID_TAG_FRIEND)),
+                Optional.of(new Category(VALID_CATEGORY_CLIENT))
         );
 
         assertParseSuccess(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                        + TAG_DESC_FRIEND, expectedCommand);
+                        + TAG_DESC_FRIEND + CATEGORY_DESC_CLIENT, expectedCommand);
     }
 
     @Test
@@ -60,7 +65,8 @@ public class DeleteByCommandParserTest {
                 Optional.empty(),
                 Optional.of(new Email(VALID_EMAIL_AMY)),
                 Optional.empty(),
-                Optional.of(new Tag(VALID_TAG_FRIEND))
+                Optional.of(new Tag(VALID_TAG_FRIEND)),
+                Optional.empty()
         );
 
         assertParseSuccess(parser, NAME_DESC_AMY + EMAIL_DESC_AMY + TAG_DESC_FRIEND, expectedCommand);
@@ -99,27 +105,32 @@ public class DeleteByCommandParserTest {
     public void parse_duplicateFields_failure() {
         // multiple names
         assertParseFailure(parser, NAME_DESC_AMY + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                        + ADDRESS_DESC_AMY,
+                        + ADDRESS_DESC_AMY + CATEGORY_DESC_CLIENT,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME));
 
         // multiple phones
         assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                        + ADDRESS_DESC_AMY,
+                        + ADDRESS_DESC_AMY + CATEGORY_DESC_CLIENT,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_PHONE));
 
         // multiple emails
         assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + EMAIL_DESC_AMY
-                        + ADDRESS_DESC_AMY,
+                        + ADDRESS_DESC_AMY + CATEGORY_DESC_CLIENT,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_EMAIL));
 
         // multiple addresses
         assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                        + ADDRESS_DESC_AMY,
+                        + ADDRESS_DESC_AMY + CATEGORY_DESC_CLIENT,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_ADDRESS));
 
         // multiple tags
         assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
-                        + TAG_DESC_FRIEND + TAG_DESC_FRIEND,
+                        + TAG_DESC_FRIEND + TAG_DESC_FRIEND + CATEGORY_DESC_CLIENT,
                 Messages.getErrorMessageForDuplicatePrefixes(PREFIX_TAG));
+
+        // multiple categories
+        assertParseFailure(parser, NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY + ADDRESS_DESC_AMY
+                        + TAG_DESC_FRIEND + CATEGORY_DESC_CLIENT + CATEGORY_DESC_CLIENT,
+                Messages.getErrorMessageForDuplicatePrefixes(PREFIX_CATEGORY));
     }
 }

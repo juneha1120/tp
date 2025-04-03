@@ -23,10 +23,12 @@ import org.junit.jupiter.api.Test;
 import trackup.commons.core.index.Index;
 import trackup.logic.commands.AddCommand;
 import trackup.logic.commands.AddEventCommand;
+import trackup.logic.commands.AddNoteCommand;
 import trackup.logic.commands.ClearCommand;
 import trackup.logic.commands.DeleteByCommand;
 import trackup.logic.commands.DeleteCommand;
 import trackup.logic.commands.DeleteEventCommand;
+import trackup.logic.commands.DeleteNoteCommand;
 import trackup.logic.commands.EditCommand;
 import trackup.logic.commands.EditCommand.EditPersonDescriptor;
 import trackup.logic.commands.ExitCommand;
@@ -76,7 +78,7 @@ public class AddressBookParserTest {
         DeleteByCommand command = (DeleteByCommand) parser.parseCommand(
                 DeleteByCommand.COMMAND_WORD + " " + PREFIX_NAME + name.fullName);
         assertEquals(new DeleteByCommand(Optional.of(name), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty()), command);
+                Optional.empty(), Optional.empty(), Optional.empty()), command);
     }
 
     @Test
@@ -161,6 +163,23 @@ public class AddressBookParserTest {
         assertEquals(expected, command);
     }
 
+
+    @Test
+    public void parseCommand_addnote() throws Exception {
+        AddNoteCommand command = (AddNoteCommand) parser.parseCommand(
+                AddNoteCommand.COMMAND_WORD + " 1 Met at conference, follow up next week");
+
+        assertEquals(new AddNoteCommand(Index.fromOneBased(1),
+                "Met at conference, follow up next week"), command);
+    }
+
+    @Test
+    public void parseCommand_delnote() throws Exception {
+        DeleteNoteCommand command = (DeleteNoteCommand) parser.parseCommand(
+                DeleteNoteCommand.COMMAND_WORD + " 1 2");
+
+        assertEquals(new DeleteNoteCommand(Index.fromOneBased(1), Index.fromOneBased(2)), command);
+    }
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() {
