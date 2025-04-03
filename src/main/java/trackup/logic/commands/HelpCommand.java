@@ -10,13 +10,9 @@ public class HelpCommand extends Command {
     public static final String COMMAND_WORD = "help";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
-            + "Example: " + COMMAND_WORD;
+            + "Example: " + COMMAND_WORD + " + [COMMAND_WORD]";
 
-    public static final String SHOWING_HELP_MESSAGE = "Available Commands:\n"
-            + "- help: Shows details on available commands\n"
-            + "- add: Adds a new contact\n"
-            + "- delete: Removes a contact\n"
-            + "- list: Displays stored contacts";
+    public static final String SHOWING_HELP_MESSAGE = "Opened help window.\n";
 
     private final String showingCommandMessage;
     /**
@@ -56,6 +52,6 @@ public class HelpCommand extends Command {
         if (!showingCommandMessage.isEmpty()) {
             return new CommandResult(showingCommandMessage, false, false);
         }
-        return new CommandResult(SHOWING_HELP_MESSAGE, true, false);
+        return new CommandResult(SHOWING_HELP_MESSAGE + MESSAGE_USAGE, true, false);
     }
 }
