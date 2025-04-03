@@ -1,6 +1,7 @@
 package trackup.logic.parser;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
@@ -24,6 +25,12 @@ import trackup.testutil.TypicalPersons;
 public class SortCommandParserTest {
 
     private final SortCommandParser parser = new SortCommandParser();
+
+    @Test
+    public void parse_emptySpace_returnsNullComparator() throws ParseException {
+        SortCommand command = parser.parse(" ");
+        assertNull(command.getComparator());
+    }
 
     @Test
     public void parse_validSingleFieldAscending_success() throws ParseException {
