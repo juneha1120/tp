@@ -39,6 +39,9 @@ public class PersonListPanel extends UiPart<Region> {
         visibility.showAddressProperty().addListener((obs, oldVal, newVal) -> personListView.refresh());
         visibility.showTagProperty().addListener((obs, oldVal, newVal) -> personListView.refresh());
         visibility.showCategoryProperty().addListener((obs, oldVal, newVal) -> personListView.refresh());
+        visibility.showNoteProperty().addListener((obs, oldVal, newVal) -> personListView.refresh());
+        visibility.showDatetimeProperty().addListener((obs, oldVal, newVal) -> personListView.refresh());
+
     }
 
     /**
