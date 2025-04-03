@@ -53,7 +53,7 @@ public class HelpCommandParserTest {
         HelpCommand expected = new HelpCommand(
                 ClearCommand.COMMAND_WORD,
                 ClearCommand.COMMAND_WORD,
-                "Adds a contact to TrackUp."); // Note: This appears to be a typo in the actual implementation
+                "Clears all contacts from TrackUp."); // Note: This appears to be a typo in the actual implementation
         assertEquals(expected, parser.parse(ClearCommand.COMMAND_WORD));
     }
 
