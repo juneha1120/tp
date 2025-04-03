@@ -32,6 +32,14 @@ The following sequence diagram illustrates the process of adding a contact and h
 
 ![AddCommand Sequence Diagram](images/AddCommandSequenceDiagram.png)
 
+### DeleteByCommand Sequence Diagram
+
+The following diagram illustrates how the `deleteby` command is parsed and executed.
+
+![DeleteByCommand Sequence Diagram](images/DeleteByCommandSequenceDiagram.png)
+
+
+
 ### Architecture
 
 <img src="images/ArchitectureDiagram.png" width="500" />
@@ -143,6 +151,12 @@ The `Model` component,
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
 </div>
+
+### Class Diagram of DeleteByCommand and Related Model Interactions
+
+The following diagram shows the relationship between `DeleteByCommand` and core model classes.
+
+![DeleteByCommand Class Diagram](images/DeleteByCommandClassDiagram.png)
 
 
 ### Storage component
@@ -256,6 +270,20 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
+### Specific Error Messaging for Contact Deletion
+
+To provide users with more informative feedback during failed deletions (e.g., due to contact links in events), we plan to enhance the `DeleteCommand` and `DeleteByCommand` classes to inspect references before deletion.
+
+The command will throw a `CommandException` with a message such as:  
+`"The contact Amy Lee could not be deleted as it is referenced by event: Pitch Call with Investors."`
+
+This prevents silent failure and helps users take corrective action quickly.
+
+A possible update to the sequence diagram to accommodate this logic is shown below:
+
+![DeleteCommand Specific Error Sequence Diagram](images/DeleteCommandSpecificErrorDiagram.png)
+
+
 ### \[Proposed\] Data archiving
 
 - We propose implementing data archiving by allowing the user to archive inactive contacts. Archived contacts
@@ -263,6 +291,31 @@ will not appear in the active contact list but will be stored separately for ret
 data will be saved in a designated JSON file, archive.json, and displayed upon user request via an archive command.
 
 ---
+
+---
+
+## **Planned Enhancements**
+
+The following enhancements are planned for upcoming iterations:
+
+1. **More Specific Error Messages for Contact Deletion**
+    - *Current Behavior*: Shows a generic failure message.
+    - *Planned*: Display messages like  
+      `"The contact Amy Lee could not be deleted as it is referenced by another contact Ben Chua."`
+    - *Reason*: Improves clarity and user understanding.
+
+2. **Edit Command Input Validation Enhancements**
+    - *Current*: Accepts input with missing fields without clear feedback.
+    - *Planned*: Explicitly alert users when all fields are missing in an edit command.
+
+> ℹ️ As per the module guidelines, only the first _N = (teamSize × 2)_ enhancements here are protected from bug reports.
+
+## **Rejected Enhancements**
+
+These were considered but not implemented for v1.6:
+
+- **Automatic Merging of Duplicate Contacts**  
+  Rejected due to complexity in detecting semantic duplicates.
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -434,6 +487,11 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
     - 3a1. TrackUp shows an error message: `"Invalid contact index. Please enter a valid number."`
     - Use case resumes at step 2.
 
+- 3c. The contact is referenced by an event or another entity.
+    - 3c1. TrackUp shows: `"The contact Amy Lee could not be deleted as it is referenced by event: Pitch Call."`
+    - Use case ends.
+
+
 ---
 
 ### Use Case: Add an Event
@@ -508,6 +566,8 @@ Use case ends.
 1. Error Handling: The application should provide meaningful error messages for invalid user input.
 2. Fault Recovery: The application should automatically recover from crashes by restoring the last saved state.
 3. Data Integrity: Data should not be corrupted even in the event of an unexpected shutdown.
+4. Informative Deletion Errors: When deletion fails due to dependencies (e.g., linked events), the app should indicate which contact or event is causing the block.
+
 
 **Testability**
 1. Automated Testing: The application should support unit and integration testing to ensure correctness.

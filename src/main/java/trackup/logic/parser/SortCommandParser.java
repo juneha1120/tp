@@ -1,6 +1,5 @@
 package trackup.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static trackup.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
@@ -13,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 import javafx.util.Pair;
@@ -36,7 +36,9 @@ public class SortCommandParser implements Parser<SortCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public SortCommand parse(String args) throws ParseException {
-        requireNonNull(args);
+        if ((Objects.equals(args, " "))) {
+            return new SortCommand(null);
+        }
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
                 args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_CATEGORY);
