@@ -39,6 +39,8 @@ public class ToggleCommand extends Command {
     public static final String ADDRESS_FIELD_STRING = "address";
     public static final String TAG_FIELD_STRING = "tag";
     public static final String CATEGORY_FIELD_STRING = "category";
+    public static final String NOTE_FIELD_STRING = "note";
+    public static final String DATETIME_FIELD_STRING = "datetime";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle the given field in the address book UI. "
             + "Parameters: "
@@ -97,6 +99,16 @@ public class ToggleCommand extends Command {
             yield new CommandResult(String.format(
                     visibility.isShowCategory() ? MESSAGE_UNHIDE_SUCCESS : MESSAGE_HIDE_SUCCESS, fieldName));
         }
+        case NOTE_FIELD_STRING -> {
+            visibility.setShowNote(!visibility.isShowNote());
+            yield new CommandResult(String.format(
+                    visibility.isShowNote() ? MESSAGE_UNHIDE_SUCCESS : MESSAGE_HIDE_SUCCESS, fieldName));
+        }
+        case DATETIME_FIELD_STRING -> {
+            visibility.setShowDatetime(!visibility.isShowDatetime());
+            yield new CommandResult(String.format(
+                    visibility.isShowDatetime() ? MESSAGE_UNHIDE_SUCCESS : MESSAGE_HIDE_SUCCESS, fieldName));
+        }
         default -> throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_FORMAT);
         };
 
@@ -120,12 +132,11 @@ public class ToggleCommand extends Command {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof ToggleCommand)) {
+        if (!(other instanceof ToggleCommand otherCommand)) {
             return false;
         }
 
         // state check
-        ToggleCommand otherCommand = (ToggleCommand) other;
         return this.fieldName.equals(otherCommand.fieldName);
     }
 }

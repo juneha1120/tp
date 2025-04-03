@@ -20,6 +20,8 @@ public class Visibility {
     private boolean showAddress = true;
     private boolean showTag = true;
     private boolean showCategory = true;
+    private boolean showNote = true;
+    private boolean showDatetime = true;
 
     // Transient JavaFX properties (not serialized)
     private transient BooleanProperty showIdProperty;
@@ -29,6 +31,8 @@ public class Visibility {
     private transient BooleanProperty showAddressProperty;
     private transient BooleanProperty showTagProperty;
     private transient BooleanProperty showCategoryProperty;
+    private transient BooleanProperty showNoteProperty;
+    private transient BooleanProperty showDatetimeProperty;
 
     /**
      * Constructs a {@code Visibility} object with all UI elements set to be visible by default.
@@ -225,6 +229,60 @@ public class Visibility {
     }
 
     /**
+     * Returns whether the note should be visible.
+     */
+    public boolean isShowNote() {
+        return showNote;
+    }
+
+    /**
+     * Sets whether the note should be visible.
+     */
+    public void setShowNote(boolean value) {
+        this.showNote = value;
+        if (showNoteProperty != null) {
+            showNoteProperty.set(value);
+        }
+    }
+
+    /**
+     * Returns the {@link BooleanProperty} for note visibility, allowing UI binding.
+     */
+    public BooleanProperty showNoteProperty() {
+        if (showNoteProperty == null) {
+            showNoteProperty = new SimpleBooleanProperty(showNote);
+        }
+        return showNoteProperty;
+    }
+
+    /**
+     * Returns the {@link BooleanProperty} for note visibility, allowing UI binding.
+     */
+    public BooleanProperty showDatetimeProperty() {
+        if (showDatetimeProperty == null) {
+            showDatetimeProperty = new SimpleBooleanProperty(showDatetime);
+        }
+        return showDatetimeProperty;
+    }
+
+    /**
+     * Returns whether the note should be visible.
+     */
+    public boolean isShowDatetime() {
+        return showDatetime;
+    }
+
+    /**
+     * Sets whether the note should be visible.
+     */
+    public void setShowDatetime(boolean value) {
+        this.showDatetime = value;
+        if (showDatetimeProperty != null) {
+            showDatetimeProperty.set(value);
+        }
+    }
+
+    /**
      * Returns true if this {@code Visibility} is equal to another.
      * Compares all boolean visibility values.
      */
@@ -244,7 +302,9 @@ public class Visibility {
                 && isShowEmail() == otherVisibility.isShowEmail()
                 && isShowAddress() == otherVisibility.isShowAddress()
                 && isShowTag() == otherVisibility.isShowTag()
-                && isShowCategory() == otherVisibility.isShowCategory();
+                && isShowCategory() == otherVisibility.isShowCategory()
+                && isShowNote() == otherVisibility.isShowNote()
+                && isShowDatetime() == otherVisibility.isShowDatetime();
     }
 
     /**
@@ -259,7 +319,9 @@ public class Visibility {
                 isShowEmail(),
                 isShowAddress(),
                 isShowTag(),
-                isShowCategory()
+                isShowCategory(),
+                isShowNote(),
+                isShowDatetime()
         );
     }
 
@@ -276,6 +338,8 @@ public class Visibility {
                 .add("showAddress", isShowAddress())
                 .add("showTag", isShowTag())
                 .add("showCategory", isShowCategory())
+                .add("showNote", isShowNote())
+                .add("showDatetime", isShowDatetime())
                 .toString();
     }
 }

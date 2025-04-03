@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import trackup.commons.core.Visibility;
 import trackup.model.event.Event;
 
 /**
@@ -36,14 +37,16 @@ public class EventCard extends UiPart<Region> {
     /**
      * Creates an {@code EventCard} with the given {@code Event} and index to display.
      */
-    public EventCard(Event event, int displayedIndex) {
+    public EventCard(Event event, int displayedIndex, Visibility visibility) {
         super(FXML);
         this.event = event;
 
         id.setText(displayedIndex + ". ");
         title.setText(event.getTitle());
         startTime.setText("From: " + event.getStartDateTime().format(formatter));
+        startTime.setVisible(visibility.isShowDatetime());
         endTime.setText("To: " + event.getEndDateTime().format(formatter));
+        endTime.setVisible(visibility.isShowDatetime());
 
         event.getContacts()
                 .forEach(person -> {

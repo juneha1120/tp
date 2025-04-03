@@ -28,6 +28,8 @@ public class VisibilityTest {
         assertTrue(visibility.isShowAddress());
         assertTrue(visibility.isShowTag());
         assertTrue(visibility.isShowCategory());
+        assertTrue(visibility.isShowNote());
+        assertTrue(visibility.isShowDatetime());
     }
 
     @Test
@@ -129,12 +131,42 @@ public class VisibilityTest {
     }
 
     @Test
+    public void setShowNote_updatesProperty_onlySetterChangesState() {
+        BooleanProperty prop = visibility.showNoteProperty();
+        assertTrue(prop.get());
+        visibility.setShowNote(false);
+        assertFalse(visibility.isShowNote());
+        assertFalse(prop.get());
+
+        prop.set(true);
+        assertFalse(visibility.isShowNote());
+        assertTrue(prop.get());
+        assertEquals(prop, visibility.showNoteProperty());
+    }
+
+    @Test
+    public void setShowDatetime_updatesProperty_onlySetterChangesState() {
+        BooleanProperty prop = visibility.showDatetimeProperty();
+        assertTrue(prop.get());
+        visibility.setShowDatetime(false);
+        assertFalse(visibility.isShowDatetime());
+        assertFalse(prop.get());
+
+        prop.set(true);
+        assertFalse(visibility.isShowDatetime());
+        assertTrue(prop.get());
+        assertEquals(prop, visibility.showDatetimeProperty());
+    }
+
+    @Test
     public void equals_sameValues_returnsTrue() {
         Visibility other = new Visibility();
         assertEquals(visibility, other);
 
-        visibility.setShowEmail(false);
-        other.setShowEmail(false);
+        visibility.setShowNote(false);
+        other.setShowNote(false);
+        visibility.setShowDatetime(false);
+        other.setShowDatetime(false);
         assertEquals(visibility, other);
     }
 
@@ -142,6 +174,14 @@ public class VisibilityTest {
     public void equals_differentValues_returnsFalse() {
         Visibility other = new Visibility();
         other.setShowPhone(false);
+        assertNotEquals(visibility, other);
+
+        other = new Visibility();
+        other.setShowNote(false);
+        assertNotEquals(visibility, other);
+
+        other = new Visibility();
+        other.setShowDatetime(false);
         assertNotEquals(visibility, other);
     }
 
@@ -153,6 +193,14 @@ public class VisibilityTest {
         assertEquals(a.hashCode(), b.hashCode());
 
         b.setShowCategory(false);
+        assertNotEquals(a.hashCode(), b.hashCode());
+
+        b = new Visibility();
+        b.setShowDatetime(false);
+        assertNotEquals(a.hashCode(), b.hashCode());
+
+        b = new Visibility();
+        b.setShowNote(false);
         assertNotEquals(a.hashCode(), b.hashCode());
     }
 
@@ -166,5 +214,7 @@ public class VisibilityTest {
         assertTrue(result.contains("showAddress=true"));
         assertTrue(result.contains("showTag=true"));
         assertTrue(result.contains("showCategory=true"));
+        assertTrue(result.contains("showNote=true"));
+        assertTrue(result.contains("showDatetime=true"));
     }
 }

@@ -24,6 +24,7 @@ import trackup.logic.commands.exceptions.CommandException;
 import trackup.model.Model;
 import trackup.model.category.Category;
 import trackup.model.event.Event;
+import trackup.model.note.Note;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -127,7 +128,14 @@ public class EditCommand extends Command {
             updatedCategory = editPersonDescriptor.getCategory();
         }
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags, updatedCategory);
+        Person updatedPerson = new Person(updatedName, updatedPhone, updatedEmail,
+                updatedAddress, updatedTags, updatedCategory);
+
+        for (Note note : personToEdit.getNotes()) {
+            updatedPerson.addNote(note);
+        }
+
+        return updatedPerson;
     }
 
     @Override
