@@ -1,5 +1,6 @@
 package trackup.logic.parser;
 
+import static java.util.Objects.requireNonNull;
 import static trackup.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
@@ -13,7 +14,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 import javafx.util.Pair;
 import trackup.logic.commands.SortCommand;
@@ -27,38 +27,44 @@ import trackup.model.person.Person;
  */
 public class SortCommandParser implements Parser<SortCommand> {
 
+    private static final String INVALID_SORT_VALUE_MESSAGE =
+            "Invalid sort order for prefix '%s': '%s'. Expected 'true' or 'false' (case-insensitive).";
+
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
      * and returns a SortCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
     public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
 
-        Map<Prefix, Function<Boolean, Comparator<Person>>> comparatorMap = Map.of(
-                PREFIX_NAME, isDesc -> isDesc ? Comparators.NAME_COMPARATOR.reversed()
-                        : Comparators.NAME_COMPARATOR,
-                PREFIX_PHONE, isDesc -> isDesc ? Comparators.PHONE_COMPARATOR.reversed()
-                        : Comparators.PHONE_COMPARATOR,
-                PREFIX_EMAIL, isDesc -> isDesc ? Comparators.EMAIL_COMPARATOR.reversed()
-                        : Comparators.EMAIL_COMPARATOR,
-                PREFIX_ADDRESS, isDesc -> isDesc ? Comparators.ADDRESS_COMPARATOR.reversed()
-                        : Comparators.ADDRESS_COMPARATOR,
-                PREFIX_TAG, isDesc -> isDesc ? Comparators.TAG_COMPARATOR.reversed()
-                        : Comparators.TAG_COMPARATOR,
-                PREFIX_CATEGORY, isDesc -> isDesc ? Comparators.CATEGORY_COMPARATOR.reversed()
-                        : Comparators.CATEGORY_COMPARATOR
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(
+                args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TAG, PREFIX_CATEGORY);
+
+        Map<Prefix, Comparator<Person>> comparatorMap = Map.of(
+                PREFIX_NAME, Comparators.NAME_COMPARATOR,
+                PREFIX_PHONE, Comparators.PHONE_COMPARATOR,
+                PREFIX_EMAIL, Comparators.EMAIL_COMPARATOR,
+                PREFIX_ADDRESS, Comparators.ADDRESS_COMPARATOR,
+                PREFIX_TAG, Comparators.TAG_COMPARATOR,
+                PREFIX_CATEGORY, Comparators.CATEGORY_COMPARATOR
         );
 
-        List<Pair<Prefix, Comparator<Person>>> comparators = new ArrayList<>();
+        List<Pair<Integer, Comparator<Person>>> comparators = new ArrayList<>();
 
         for (Prefix prefix : comparatorMap.keySet()) {
-            Pair<Prefix, String> prefixValue = getPrefixValue(prefix, args);
-            if (prefixValue.getValue() != null) {
-                int index = args.indexOf(prefix.getPrefix());
-                if (index != -1) {
-                    boolean isDescending = Boolean.parseBoolean(prefixValue.getValue());
-                    comparators.add(new Pair<>(prefix, comparatorMap.get(prefix).apply(isDescending)));
+            Optional<String> valueOpt = argMultimap.getValue(prefix);
+            if (valueOpt.isPresent()) {
+                String rawValue = valueOpt.get().strip();
+                String value = rawValue.toLowerCase();
+                if (!value.equals("true") && !value.equals("false")) {
+                    throw new ParseException(String.format(INVALID_SORT_VALUE_MESSAGE, prefix.getPrefix(), rawValue));
                 }
+
+                boolean isDescending = Boolean.parseBoolean(value);
+                Comparator<Person> comparator = comparatorMap.get(prefix);
+                Integer index = args.indexOf(prefix.getPrefix());
+                comparators.add(new Pair<>(index, isDescending ? comparator.reversed() : comparator));
             }
         }
 
@@ -66,11 +72,13 @@ public class SortCommandParser implements Parser<SortCommand> {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
         }
 
-        comparators.sort(Comparator.comparingInt(p -> args.indexOf(p.getKey().getPrefix())));
-        Comparator<Person> finalComparator = comparators.get(0).getValue();
-        for (int i = 1; i < comparators.size(); i++) {
-            finalComparator = finalComparator.thenComparing(comparators.get(i).getValue());
-        }
+        comparators.sort(Comparator.comparingInt(Pair::getKey));
+
+        Comparator<Person> finalComparator = comparators.stream()
+                .map(Pair::getValue)
+                .reduce(Comparator::thenComparing)
+                .orElseThrow(() -> new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE)));
 
         return new SortCommand(finalComparator);
     }
