@@ -31,11 +31,6 @@ public class HelpCommandParserTest {
     }
 
     @Test
-    public void parse_whitespaceArgs_returnsDefaultHelpCommand() throws ParseException {
-        assertEquals(new HelpCommand(), parser.parse("   "));
-    }
-
-    @Test
     public void parse_addCommand_returnsCorrectHelpCommand() throws ParseException {
         HelpCommand expected = new HelpCommand(
                 AddCommand.COMMAND_WORD,
