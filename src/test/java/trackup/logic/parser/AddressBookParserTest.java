@@ -78,7 +78,7 @@ public class AddressBookParserTest {
         DeleteByCommand command = (DeleteByCommand) parser.parseCommand(
                 DeleteByCommand.COMMAND_WORD + " " + PREFIX_NAME + name.fullName);
         assertEquals(new DeleteByCommand(Optional.of(name), Optional.empty(), Optional.empty(),
-                Optional.empty(), Optional.empty()), command);
+                Optional.empty(), Optional.empty(), Optional.empty()), command);
     }
 
     @Test

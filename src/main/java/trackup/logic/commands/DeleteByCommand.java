@@ -2,6 +2,7 @@ package trackup.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
 import static trackup.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static trackup.logic.parser.CliSyntax.PREFIX_NAME;
 import static trackup.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -18,6 +19,7 @@ import trackup.commons.util.ToStringBuilder;
 import trackup.logic.Messages;
 import trackup.logic.commands.exceptions.CommandException;
 import trackup.model.Model;
+import trackup.model.category.Category;
 import trackup.model.event.Event;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
@@ -40,13 +42,15 @@ public class DeleteByCommand extends Command {
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS"
-            + PREFIX_TAG + "TAG\n"
+            + PREFIX_TAG + "TAG"
+            + PREFIX_CATEGORY + "CATEGORY\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends";
+            + PREFIX_TAG + "friends"
+            + PREFIX_CATEGORY + "client";
 
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
     public static final String MESSAGE_MULTIPLE_PEOPLE_TO_DELETE =
@@ -65,6 +69,7 @@ public class DeleteByCommand extends Command {
     private final Optional<Email> deleteByEmail;
     private final Optional<Address> deleteByAddress;
     private final Optional<Tag> deleteByTag;
+    private final Optional<Category> deleteByCategory;
 
     /**
      * Constructs a {@code DeleteByCommand} with optional filtering criteria.
@@ -72,24 +77,27 @@ public class DeleteByCommand extends Command {
      * a person for deletion. If a parameter is present, it will be used as a
      * criterion for filtering. If all parameters are empty, the command is invalid.
      *
-     * @param name    An optional {@link Name} used as a deletion criterion.
-     * @param phone   An optional {@link Phone} used as a deletion criterion.
-     * @param email   An optional {@link Email} used as a deletion criterion.
-     * @param address An optional {@link Address} used as a deletion criterion.
-     * @param tag     An optional {@link Tag} used as a deletion criterion.
+     * @param name     An optional {@link Name} used as a deletion criterion.
+     * @param phone    An optional {@link Phone} used as a deletion criterion.
+     * @param email    An optional {@link Email} used as a deletion criterion.
+     * @param address  An optional {@link Address} used as a deletion criterion.
+     * @param tag      An optional {@link Tag} used as a deletion criterion.
+     * @param category An optional {@link Category} used as a deletion criterion.
      */
     public DeleteByCommand(Optional<Name> name, Optional<Phone> phone, Optional<Email> email, Optional<Address> address,
-                           Optional<Tag> tag) {
+                           Optional<Tag> tag, Optional<Category> category) {
         requireNonNull(name);
         requireNonNull(phone);
         requireNonNull(email);
         requireNonNull(address);
         requireNonNull(tag);
+        requireNonNull(category);
         this.deleteByName = name;
         this.deleteByPhone = phone;
         this.deleteByEmail = email;
         this.deleteByAddress = address;
         this.deleteByTag = tag;
+        this.deleteByCategory = category;
     }
 
     /**
@@ -104,7 +112,8 @@ public class DeleteByCommand extends Command {
                 && deleteByPhone.map(phone -> phone.equals(person.getPhone())).orElse(true)
                 && deleteByEmail.map(email -> email.equals(person.getEmail())).orElse(true)
                 && deleteByAddress.map(address -> address.equals(person.getAddress())).orElse(true)
-                && deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true);
+                && deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true)
+                && deleteByCategory.map(category -> category.equals(person.getCategory())).orElse(true);
     }
 
     /**
@@ -119,6 +128,7 @@ public class DeleteByCommand extends Command {
         deleteByEmail.ifPresent(value -> stringBuilder.add("email", value));
         deleteByAddress.ifPresent(value -> stringBuilder.add("address", value));
         deleteByTag.ifPresent(value -> stringBuilder.add("tag", value));
+        deleteByCategory.ifPresent(value -> stringBuilder.add("category", value));
     }
 
     @Override
@@ -173,7 +183,8 @@ public class DeleteByCommand extends Command {
                 && deleteByPhone.equals(otherDeleteCommand.deleteByPhone)
                 && deleteByEmail.equals(otherDeleteCommand.deleteByEmail)
                 && deleteByAddress.equals(otherDeleteCommand.deleteByAddress)
-                && deleteByTag.equals(otherDeleteCommand.deleteByTag);
+                && deleteByTag.equals(otherDeleteCommand.deleteByTag)
+                && deleteByCategory.equals(otherDeleteCommand.deleteByCategory);
     }
 
     @Override
