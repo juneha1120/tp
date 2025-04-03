@@ -306,7 +306,12 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handlePreviousWeek() {
         calendarView.showPreviousWeek();
-        updateMonthYearLabel(calendarView.getCurrentWeekStart());
+        if (calendarView.getCurrentDate().isAfter(calendarView.getCurrentWeekStart())
+            && calendarView.getCurrentDate().isBefore(calendarView.getCurrentWeekStart().plusDays(6))) {
+            updateMonthYearLabel(calendarView.getCurrentDate());
+        } else {
+            updateMonthYearLabel(calendarView.getCurrentWeekStart());
+        }
     }
 
     /**
@@ -315,7 +320,12 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private void handleNextWeek() {
         calendarView.showNextWeek();
-        updateMonthYearLabel(calendarView.getCurrentWeekStart());
+        if (calendarView.getCurrentDate().isAfter(calendarView.getCurrentWeekStart())
+                && calendarView.getCurrentDate().isBefore(calendarView.getCurrentWeekStart().plusDays(6))) {
+            updateMonthYearLabel(calendarView.getCurrentDate());
+        } else {
+            updateMonthYearLabel(calendarView.getCurrentWeekStart());
+        }
     }
 
     /**
