@@ -39,7 +39,7 @@ public class DeleteEventCommand extends Command {
             + PREFIX_EVENT_TITLE + "Meeting ";
 
     public static final String MESSAGE_SUCCESS = "Deleted event(s): %1$s";
-    public static final String MESSAGE_EVENT_NOT_FOUND = "No matching events found.";
+    public static final String MESSAGE_EVENT_NOT_FOUND = "No matching events found";
 
     private final String partialTitle;
     private final LocalDateTime startDateTime;

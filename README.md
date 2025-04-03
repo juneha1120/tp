@@ -1,7 +1,7 @@
 [![Java CI](https://github.com/AY2425S2-CS2103T-F14-4/tp/actions/workflows/gradle.yml/badge.svg)](https://github.com/AY2425S2-CS2103T-F14-4/tp/actions/workflows/gradle.yml)
 [![codecov](https://codecov.io/gh/AY2425S2-CS2103T-F14-4/tp/graph/badge.svg?token=H4Z1Q1GOF6)](https://codecov.io/gh/AY2425S2-CS2103T-F14-4/tp)
 
-![Ui](docs/images/Ui1.png)
+![Ui](docs/images/Ui.png)
 
 * **TrackUp** is designed for **business professionals, teams, and founders** who need to manage contacts and events efficiently.<br>
   Example usages:

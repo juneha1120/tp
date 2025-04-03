@@ -103,73 +103,6 @@ A person can have any number of tags (including 0)
 - `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01 -c Client -t friend`
 - `add -n Betsy Crowe -p 1234567 -e betsycrowe@example.com -a Newgate Prison`
 
-### Listing all persons : `list`
-
-Displays all contacts in TrackUp, optionally filtering by category.
-
-Format: `list [<CATEGORY>]`
-
-**Notes**
-- `CATEGORY` is **optional** and **case-insensitive**.
-- Displays **all** contacts if no category is specified.
-- If a category is provided, **only** contacts from that category are shown.
-
-**Examples:**
-- `list` — displays all contacts.
-- `list Client` — displays only contacts categorised as Client.
-- `list Investor` — displays only contacts categorised as Investor.
-
-### Sorting current displayed list: `sort`
-
-Sorts displayed contacts in TrackUp by the given attributes of Person.
-
-Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`
-
-* Displays all contacts if no attribute is specified.
-* If an attribute is provided, displays the result after sorting by the specified attribute.
-* `<BOOLEAN>`: `true` or `false`, case-insensitive, to indicate if the sorting is descending.
-* Prefixes for attributes: `-n`NAME `-p`PHONE `-e`EMAIL `-a`ADDRESS `-c`CATEGORY `-t`TAG
-
-**Examples:**
-- `sort` — displays all contacts.
-- `sort -n true` — displays result list of contacts sorted by name in descending order.
-- `sort -t -n true` — displays result list of contacts first sorted by tag in ascending order,
-then sorted by name in descending order
-
-### Editing a person : `edit`
-
-Edits an existing person in TrackUp.
-
-Format: `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]...`
-
-**Notes:**
-- `INDEX` refers to the contact's index in the **current** displayed person list (must be a positive integer).
-- **At least one** of the optional fields must be provided.
-- When editing tags, the existing tags of the person will be removed i.e. adding of tags is not **cumulative**. 
-- You can **remove** all the person’s tags by typing `-t` without specifying any tags after it.
-
-**Examples:**
-- `edit 1 -p 91234567 -e johnd@example.com` — updates the phone number and email of the first contact.
-- `edit 2 -n "Betsy Crower" -c Investor` — updates the name and sets the category to Investor for the second contact.
-
-### Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-**Notes:**
-- The search is **case-insensitive**. e.g. `hans` will match `Hans`.
-- The **order** of keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
-- Only the **name** attribute is searched.
-- Only **full word** matches are considered. e.g. `Han` will not match `Hans`.
-- Persons matching **at least one** keyword will be returned (i.e., an OR search).
-
-**Examples:**
-- `find John` - returns persons with name such as `John Doe`.
-- `find alex david` - returns persons with names such as  `Alex Yeoh` and `David Li`.
-  ![result for 'find alex david'](images/findAlexDavidResult.png)
-
 ### Deleting a person : `delete`
 
 Deletes the specified contact from TrackUp.
@@ -205,6 +138,74 @@ Format: `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATE
 - `deleteby -a 311, Clementi Ave 2, #02-25` - deletes the person living at **311, Clementi Ave 2, #02-25**.
 - `deleteby -c Client` - deletes the person with the category **Client**.
 - `deleteby -n John Doe -p 98765432` - deletes the person named **John Doe** with phone number **98765432**.
+
+### Editing a person : `edit`
+
+Edits an existing person in TrackUp.
+
+Format: `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]...`
+
+**Notes:**
+- `INDEX` refers to the contact's index in the **current** displayed person list (must be a positive integer).
+- **At least one** of the optional fields must be provided.
+- When editing tags, the existing tags of the person will be removed i.e. adding of tags is not **cumulative**.
+- You can **remove** all the person’s tags by typing `-t` without specifying any tags after it.
+
+**Examples:**
+- `edit 1 -p 91234567 -e johnd@example.com` — updates the phone number and email of the first contact.
+- `edit 2 -n "Betsy Crower" -c Investor` — updates the name and sets the category to Investor for the second contact.
+
+### Listing all persons : `list`
+
+Displays all contacts in TrackUp, optionally filtering by category.
+
+Format: `list [<CATEGORY>]`
+
+**Notes**
+- `CATEGORY` is **optional** and **case-insensitive**.
+- Displays **all** contacts if no category is specified.
+- If a category is provided, **only** contacts from that category are shown.
+
+**Examples:**
+- `list` — displays all contacts.
+- `list Client` — displays only contacts categorised as Client.
+- `list Investor` — displays only contacts categorised as Investor.
+
+### Sorting persons list: `sort`
+
+Sorts displayed contacts in TrackUp by the given attributes.
+
+Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`
+
+**Notes:**
+* Displays all contacts if no attribute is specified.
+* If an attribute is provided, displays the result after sorting by the specified attribute.
+* `BOOLEAN` should be either `true` or `false` and is case-insensitive, to indicate if the sorting is descending.
+* Prefixes for attributes: `-n` for name, `-p` for phone, `-e` for email, `-a` for address, `-c` for category, and `-t` for tag.
+
+**Examples:**
+- `sort` — displays all contacts.
+- `sort -n true` — displays result list of contacts sorted by name in descending order.
+- `sort -t -n true` — displays result list of contacts first sorted by tag in ascending order,
+then sorted by name in descending order.
+
+### Locating persons by name: `find`
+
+Finds persons whose names contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+**Notes:**
+- The search is **case-insensitive**. e.g. `hans` will match `Hans`.
+- The **order** of keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+- Only the **name** attribute is searched.
+- Only **full word** matches are considered. e.g. `Han` will not match `Hans`.
+- Persons matching **at least one** keyword will be returned (i.e., an OR search).
+
+**Examples:**
+- `find John` - returns persons with name such as `John Doe`.
+- `find alex david` - returns persons with names such as  `Alex Yeoh` and `David Li`.
+  ![result for 'find alex david'](images/findAlexDavidResult.png)
 
 ### Searching for a person: `search`
 
@@ -272,8 +273,8 @@ Adds a short note to the specified person in TrackUp.
 
 Format: `addnote <PERSON_INDEX> <NOTE_TEXT>`
 
-**Details:**
-- `<PERSON_INDEX>` refers to the contact’s index in the currently displayed list (must be a positive integer).
+**Notes:**
+- `PERSON_INDEX` refers to the contact’s index in the currently displayed list (must be a positive integer).
 - Each person can have **up to 3 notes**.
 - Notes should be **short and descriptive**. The maximum note length is 50 characters.
 - Notes are displayed beneath the person’s details in the UI.
@@ -288,9 +289,9 @@ Deletes a specific note from a person in TrackUp.
 
 Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
 
-**Details:**
-- `<PERSON_INDEX>` refers to the person in the currently displayed list.
-- `<NOTE_INDEX>` refers to the position of the note in that person’s list of notes (must be a positive integer).
+**Notes:**
+- `PERSON_INDEX` refers to the person in the currently displayed list.
+- `NOTE_INDEX` refers to the position of the note in that person’s list of notes (must be a positive integer).
 - Notes are displayed in order; the first note is index 1.
 
 **Examples:**
@@ -300,7 +301,7 @@ Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
 ### Toggling field visibility: `toggle`
 
 Toggles the visibility of a specific field in the TrackUp contact list UI.  
-This command is useful for customizing the information you want displayed for each contact.
+This command is useful for customising the information you want displayed for each contact.
 
 Format: `toggle <FIELD>`
 
@@ -314,17 +315,17 @@ Format: `toggle <FIELD>`
 - `note`
 - `datetime`
 
-**Details:**
+**Notes:**
 - Each field starts out **visible by default**.
 - Executing the command will **invert the visibility** of the given field.
 - Toggled fields affect the **main contact list display**.
 - Repeating the command for the same field will toggle it back.
 
 **Examples:**
-- `toggle name` hides the contact's name field if it's currently shown.
-- `toggle phone` shows the phone field again if it was previously hidden.
-- `toggle note` hides the note field in the contact display.
-- `toggle datetime` toggles the visibility of the datetime field.
+- `toggle name` - hides the contact's name field if it's currently shown.
+- `toggle phone` - shows the phone field again if it was previously hidden.
+- `toggle note` - hides the note field in the contact display.
+- `toggle datetime` - toggles the visibility of the datetime field.
 
 ### Clearing all entries : `clear`
 
@@ -352,8 +353,6 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 
 ### Archiving data files `[coming in v2.0]`
 
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## FAQ
@@ -375,15 +374,22 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 
 ## Command Summary
 
-| **Action**               | **Format, Examples**                                                                                                                                                                              |
-|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Add**                  | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>]  [-t <TAG>]`<br>e.g., `add -n "James Ho" -p 22224444 -e jamesho@example.com -a "123, Clementi Rd, 1234665" -c Client -t friend` |
-| **Clear**                | `clear`                                                                                                                                                                                           |
-| **Delete**               | `delete <INDEX>`<br>e.g., `delete 3`                                                                                                                                                              |
-| **Delete by Attributes** | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`<br>e.g., `deleteby -n "John Doe"`                                                                      |
-| **Edit**                 | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`<br>e.g., `edit 2 -n "James Lee" -e jameslee@example.com`                                           |
-| **Find**                 | `find <KEYWORD>`<br>e.g., `find John`                                                                                                                                                             |
-| **List**                 | `list [<CATEGORY>]`<br>e.g., `list`, `list Client`                                                                                                                                                |
-| **Search**               | `search <KEYWORD>`<br>e.g., `search John`, `search Client`                                                                                                                                        |
-| **Help**                 | `help`                                                                                                                                                                                            |
-| **Exit**                 | `exit`                                                                                                                                                                                            |
+| **Action**                | **Format, Examples**                                                                                                                                                                 |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Viewing help**          | `help [<COMMAND_WORD>]`  <br> e.g., `help`, `help add`, `help delete`                                                                                                                |
+| **Adding a person**       | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]...`  <br> e.g., `add -n John Doe -p 98765432 -e johnd@example.com -a John street -c Client -t friend`   |
+| **Deleting a person**     | `delete <INDEX>`  <br> e.g., `delete 3`, `list` followed by `delete 2`, `find Betsy` followed by `delete 1`                                                                          |
+| **Deleting by attribute** | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`  <br> e.g., `deleteby -n John Doe`, `deleteby -p 98765432`                                |
+| **Editing a person**      | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]...`  <br> e.g., `edit 1 -p 91234567 -e johnd@example.com`                              |
+| **Listing persons**       | `list [<CATEGORY>]`  <br> e.g., `list`, `list Client`, `list Investor`                                                                                                               |
+| **Sorting persons**       | `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`  <br> e.g., `sort`, `sort -n true`, `sort -t -n true`                               |
+| **Finding by name**       | `find KEYWORD [MORE_KEYWORDS]`  <br> e.g., `find John`, `find alex david`                                                                                                            |
+| **Searching persons**     | `search <KEYWORD>`  <br> e.g., `search John`, `search 98765432`, `search Clementi`, `search doe`                                                                                     |
+| **Adding an event**       | `addevent -t <EVENT_TITLE> -s <START_DATETIME> -e <END_DATETIME> [-c <CONTACT_INDEX>]...`  <br> e.g., `addevent -t "Team Meeting" -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` |
+| **Deleting an event**     | `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>] [-c <CONTACT_INDEX>]...`  <br> e.g., `delevent -t Meeting`, `delevent -c 2`                                 |
+| **Adding a note**         | `addnote <PERSON_INDEX> <NOTE_TEXT>`  <br> e.g., `addnote 1 Met at tech networking event`, `addnote 2 Follow up next week regarding proposal`                                        |
+| **Deleting a note**       | `delnote <PERSON_INDEX> <NOTE_INDEX>`  <br> e.g., `delnote 2 1`, `find John` followed by `delnote 1 2`                                                                               |
+| **Toggling visibility**   | `toggle <FIELD>`  <br> e.g., `toggle name`, `toggle phone`, `toggle note`, `toggle datetime`                                                                                         |
+| **Clearing all entries**  | `clear`                                                                                                                                                                              |
+| **Exiting the program**   | `exit`                                                                                                                                                                               |
+

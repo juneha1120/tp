@@ -6,7 +6,7 @@ title: TrackUp
 [![CI Status](https://github.com/AY2425S2-CS2103T-F14-4/tp/workflows/Java%20CI/badge.svg)](https://github.com/AY2425S2-CS2103T-F14-4/tp/actions)
 [![codecov](https://codecov.io/gh/AY2425S2-CS2103T-F14-4/tp/graph/badge.svg?token=H4Z1Q1GOF6)](https://codecov.io/gh/AY2425S2-CS2103T-F14-4/tp)
 
-![Ui](images/Ui1.png)
+![Ui](images/Ui.png)
 
 **TrackUp is a desktop application designed to help you manage both your contacts and events.** It combines a Graphical User Interface (GUI) with a flexible Command Line Interface (CLI) and is designed for fast and intuitive command input with clear visual feedback.
 
