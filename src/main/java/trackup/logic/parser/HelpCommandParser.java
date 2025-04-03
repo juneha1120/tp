@@ -40,7 +40,7 @@ public class HelpCommandParser implements Parser<HelpCommand> {
                 "Adds an event to TrackUp's calendar.");
         case ClearCommand.COMMAND_WORD -> new HelpCommand(ClearCommand.COMMAND_WORD,
                 ClearCommand.COMMAND_WORD,
-                "Adds a contact to TrackUp.");
+                "Clears all contacts from TrackUp.");
         case DeleteCommand.COMMAND_WORD -> new HelpCommand(DeleteCommand.COMMAND_WORD,
                 DeleteCommand.MESSAGE_USAGE,
                 "Deletes the specified contact from TrackUp.");
