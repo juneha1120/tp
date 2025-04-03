@@ -3,7 +3,7 @@
 
 ![Ui](docs/images/Ui.png)
 
-* **TrackUp** is designed for **business professionals, teams, and founders** who need to manage contacts and events efficiently.<br>
+* **TrackUp** is designed for **business professionals, teams, and early stage startup founders** who need to manage contacts and events efficiently.<br>
   Example usages:
   * As a relationship management tool for keeping track of clients, investors, and partners
   * As a workflow and scheduling assistant to organise meetings, follow-ups, and deadlines
