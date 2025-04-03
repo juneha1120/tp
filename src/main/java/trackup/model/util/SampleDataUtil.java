@@ -1,6 +1,11 @@
 package trackup.model.util;
 
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -8,6 +13,7 @@ import java.util.stream.Collectors;
 import trackup.model.AddressBook;
 import trackup.model.ReadOnlyAddressBook;
 import trackup.model.category.Category;
+import trackup.model.event.Event;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -42,10 +48,38 @@ public class SampleDataUtil {
         };
     }
 
+    public static Event[] getSampleEvents() {
+        Person[] samplePersons = getSamplePersons();
+
+        LocalDateTime now = LocalDateTime.now();
+
+        LocalDateTime thisTuesday = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
+        LocalDateTime thisThursday = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.THURSDAY));
+        LocalDateTime thisSaturday = now.with(TemporalAdjusters.nextOrSame(DayOfWeek.SATURDAY));
+
+        return new Event[] {
+            new Event("Follow-Ups",
+                thisTuesday.with(LocalTime.of(6, 0)),
+                thisTuesday.with(LocalTime.of(8, 0)),
+                new HashSet<>(Set.of(samplePersons[0], samplePersons[1]))),
+            new Event("Contract Negotiations",
+                thisThursday.with(LocalTime.of(1, 0)),
+                thisThursday.with(LocalTime.of(3, 0)),
+                new HashSet<>(Set.of(samplePersons[2], samplePersons[3]))),
+            new Event("Quarterly Reports",
+                thisSaturday.with(LocalTime.of(13, 0)),
+                thisSaturday.with(LocalTime.of(15, 0)),
+                new HashSet<>(Set.of(samplePersons[4], samplePersons[5])))
+        };
+    }
+
     public static ReadOnlyAddressBook getSampleAddressBook() {
         AddressBook sampleAb = new AddressBook();
         for (Person samplePerson : getSamplePersons()) {
             sampleAb.addPerson(samplePerson);
+        }
+        for (Event sampleEvent : getSampleEvents()) {
+            sampleAb.addEvent(sampleEvent);
         }
         return sampleAb;
     }

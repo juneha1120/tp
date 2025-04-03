@@ -65,8 +65,7 @@ public class SortCommandParserTest {
     public void parse_missingBooleanValue_throwsParseException() throws ParseException {
         // Test missing boolean value
         Comparator<?> expected = Comparators.NAME_COMPARATOR;
-        SortCommand command = parser.parse(" " + PREFIX_NAME);
-        assertEquals(expected, command.getComparator());
+        assertThrows(ParseException.class, () -> parser.parse(" " + PREFIX_NAME));
     }
 
     @Test

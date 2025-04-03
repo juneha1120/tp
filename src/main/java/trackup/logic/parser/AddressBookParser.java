@@ -10,11 +10,13 @@ import java.util.regex.Pattern;
 import trackup.commons.core.LogsCenter;
 import trackup.logic.commands.AddCommand;
 import trackup.logic.commands.AddEventCommand;
+import trackup.logic.commands.AddNoteCommand;
 import trackup.logic.commands.ClearCommand;
 import trackup.logic.commands.Command;
 import trackup.logic.commands.DeleteByCommand;
 import trackup.logic.commands.DeleteCommand;
 import trackup.logic.commands.DeleteEventCommand;
+import trackup.logic.commands.DeleteNoteCommand;
 import trackup.logic.commands.EditCommand;
 import trackup.logic.commands.ExitCommand;
 import trackup.logic.commands.FindCommand;
@@ -100,6 +102,12 @@ public class AddressBookParser {
 
         case ToggleCommand.COMMAND_WORD:
             return new ToggleCommandParser().parse(arguments);
+
+        case AddNoteCommand.COMMAND_WORD:
+            return new AddNoteCommandParser().parse(arguments);
+
+        case DeleteNoteCommand.COMMAND_WORD:
+            return new DeleteNoteCommandParser().parse(arguments);
 
         default:
             logger.finer("This user input caused a ParseException: " + userInput);

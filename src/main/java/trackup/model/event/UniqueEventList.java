@@ -68,6 +68,7 @@ public class UniqueEventList implements Iterable<Event> {
         internalList.set(index, editedEvent);
     }
 
+
     /**
      * Removes the equivalent event from the list.
      * The event must exist in the list.
@@ -78,17 +79,18 @@ public class UniqueEventList implements Iterable<Event> {
             throw new EventNotFoundException();
         }
     }
-
     public void setEvents(UniqueEventList replacement) {
         requireNonNull(replacement);
         internalList.setAll(replacement.internalList);
     }
+
 
     /**
      * Replaces the contents of this list with {@code events}.
      * {@code events} must not contain duplicate events.
      */
     public void setEvents(List<Event> events) {
+        requireNonNull(events);
         requireAllNonNull(events);
         if (!eventsAreUnique(events)) {
             throw new DuplicateEventException();

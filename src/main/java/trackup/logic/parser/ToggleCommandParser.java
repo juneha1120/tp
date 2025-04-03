@@ -20,7 +20,8 @@ public class ToggleCommandParser implements Parser<ToggleCommand> {
 
         return switch (fieldName) {
         case ToggleCommand.NAME_FIELD_STRING, ToggleCommand.PHONE_FIELD_STRING, ToggleCommand.EMAIL_FIELD_STRING,
-                ToggleCommand.ADDRESS_FIELD_STRING, ToggleCommand.TAG_FIELD_STRING, ToggleCommand.CATEGORY_FIELD_STRING
+                ToggleCommand.ADDRESS_FIELD_STRING, ToggleCommand.TAG_FIELD_STRING, ToggleCommand.CATEGORY_FIELD_STRING,
+                ToggleCommand.NOTE_FIELD_STRING, ToggleCommand.DATETIME_FIELD_STRING
                 -> new ToggleCommand(fieldName);
         default ->
                 throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ToggleCommand.MESSAGE_USAGE));

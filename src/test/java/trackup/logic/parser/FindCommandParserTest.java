@@ -9,6 +9,7 @@ import java.util.Arrays;
 import org.junit.jupiter.api.Test;
 
 import trackup.logic.commands.FindCommand;
+import trackup.model.person.Name;
 import trackup.model.person.NameContainsKeywordsPredicate;
 
 public class FindCommandParserTest {
@@ -30,5 +31,12 @@ public class FindCommandParserTest {
         // multiple whitespaces between keywords
         assertParseSuccess(parser, " \n Alice \n \t Bob  \t", expectedFindCommand);
     }
+
+    @Test
+    public void parse_invalidNameWithQuotes_throwsParseException() {
+        String invalidInput = "\"John\""; // the quotes make the name invalid
+        assertParseFailure(parser, invalidInput, Name.MESSAGE_CONSTRAINTS);
+    }
+
 
 }

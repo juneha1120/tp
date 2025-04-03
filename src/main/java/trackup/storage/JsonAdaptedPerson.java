@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import trackup.commons.exceptions.IllegalValueException;
 import trackup.model.category.Category;
+import trackup.model.note.Note;
 import trackup.model.person.Address;
 import trackup.model.person.Email;
 import trackup.model.person.Name;
@@ -32,14 +33,18 @@ class JsonAdaptedPerson {
     private final String address;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final String category;
+    private final List<JsonAdaptedNote> notes = new ArrayList<>();
+
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
      */
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
-            @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("tags") List<JsonAdaptedTag> tags, @JsonProperty("category") String category) {
+                             @JsonProperty("email") String email, @JsonProperty("address") String address,
+                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
+                             @JsonProperty("category") String category,
+                             @JsonProperty("notes") List<JsonAdaptedNote> notes) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -48,6 +53,9 @@ class JsonAdaptedPerson {
             this.tags.addAll(tags);
         }
         this.category = category;
+        if (notes != null) {
+            this.notes.addAll(notes);
+        }
     }
 
     /**
@@ -62,6 +70,9 @@ class JsonAdaptedPerson {
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
         category = source.getCategory().map(c -> c.categoryName).orElse(null);
+        notes.addAll(source.getNotes().stream()
+                .map(JsonAdaptedNote::new)
+                .collect(Collectors.toList()));
     }
 
     /**
@@ -119,8 +130,23 @@ class JsonAdaptedPerson {
             modelCategory = new Category(category);
         }
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags,
+        final List<Note> modelNotes = new ArrayList<>();
+        for (JsonAdaptedNote jsonNote : notes) {
+            modelNotes.add(jsonNote.toModelType());
+        }
+
+        if (modelNotes.size() > Person.MAX_NOTES) {
+            throw new IllegalValueException(String.format("A person can have at most %d notes.", Person.MAX_NOTES));
+        }
+
+        Person person = new Person(modelName, modelPhone, modelEmail, modelAddress, modelTags,
                 Optional.ofNullable(modelCategory));
+
+        for (Note note : modelNotes) {
+            person.addNote(note); // safe since we already checked the size
+        }
+
+        return person;
     }
 
 }

@@ -29,7 +29,7 @@ title: User Guide
 
    * `list` : Lists all contacts.
 
-   * `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` : Adds a contact named `John Doe` to the Address Book.
+   * `add -n "John Doe" -p 98765432 -e johnd@example.com -a "John street, block 123, #01-01"` : Adds a contact named `John Doe` to the Address Book.
 
    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -47,7 +47,7 @@ title: User Guide
 
 **:information_source: Notes about the command format:**<br>
 
-- Words in `UPPER_CASE` indicate the parameters to be supplied by the user.
+- Words in `<UPPER_CASE>` indicate the parameters to be supplied by the user.
   e.g., in `add -n <NAME>`, `<NAME>` is a parameter which can be used as `add -n "John Doe"`.
 - Items in square brackets are optional.
   e.g., `-c <CATEGORY>` is optional.
@@ -80,6 +80,9 @@ Format: `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <T
 - **NAME**, **PHONE**, **EMAIL**, and **ADDRESS** are compulsory.
 - **CATEGORY** and **TAG** are optional.
 - **CATEGORY** should be one of: Client, Investor, Partner, Other.
+- If any required field (name, phone, email, or address) is missing, a descriptive error 
+  will appear indicating the exact missing attribute.
+
 
 
 **Examples:**
@@ -99,6 +102,23 @@ Format: `list [<CATEGORY>]`
 - `list` — displays all contacts.
 - `list Client` — displays only contacts categorized as Client.
 - `list Investor` — displays only contacts categorized as Investor.
+
+### Sorting current displayed list: `sort`
+
+Sorts displayed contacts in TrackUp by the given attributes of Person.
+
+Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`
+
+* Displays all contacts if no attribute is specified.
+* If an attribute is provided, displays the result after sorting by the specified attribute.
+* `<BOOLEAN>`: `true` or `false`, case-insensitive, to indicate if the sorting is descending.
+* Prefixes for attributes: `-n`NAME `-p`PHONE `-e`EMAIL `-a`ADDRESS `-c`CATEGORY `-t`TAG
+
+**Examples:**
+- `sort` — displays all contacts.
+- `sort -n true` — displays result list of contacts sorted by name in descending order.
+- `sort -t -n true` — displays result list of contacts first sorted by tag in ascending order,
+then sorted by name in descending order
 
 ### Editing a person : `edit`
 
@@ -160,7 +180,8 @@ Format: `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATE
 - Deletes the person that matches the provided attributes.
 - At least one attribute must be specified.
 - Attribute matching is exact and case-sensitive.
-- If multiple contacts match the criteria, the system will display a message instead of deleting any contact.
+- If multiple contacts match the criteria, the system will display an error message
+  stating that multiple matches were found and that no contact will be deleted.
 
 **Examples:**
 - `deleteby -n John Doe` deletes the person named **John Doe** from the address book.
@@ -232,6 +253,67 @@ Format: `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>]
 * `delevent -s 2025-03-30 14:00 -e 2025-03-30 15:00` deletes all events exactly matching this start and end time.
 * `delevent -c 2` deletes all events linked to the contact at index 2.
 * `delevent -t "Workshop" -c 1 -c 4` deletes all events with "Workshop" in the title that are linked to contacts at index 1 or 4.
+
+
+### Adding a note to a person: `addnote`
+
+Adds a short note to the specified person in TrackUp.
+
+Format: `addnote <PERSON_INDEX> <NOTE_TEXT>`
+
+**Details:**
+- `<PERSON_INDEX>` refers to the contact’s index in the currently displayed list (must be a positive integer).
+- Each person can have **up to 3 notes**.
+- Notes should be **short and descriptive**. The maximum note length is 50 characters.
+- Notes are displayed beneath the person’s details in the UI.
+
+**Examples:**
+- `addnote 1 Met at tech networking event`
+- `addnote 2 Follow up next week regarding proposal`
+
+### Deleting a note from a person: `delnote`
+
+Deletes a specific note from a person in TrackUp.
+
+Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
+
+**Details:**
+- `<PERSON_INDEX>` refers to the person in the currently displayed list.
+- `<NOTE_INDEX>` refers to the position of the note in that person’s list of notes (must be a positive integer).
+- Notes are displayed in order; the first note is index 1.
+
+**Examples:**
+- `delnote 2 1` — deletes the **first** note from the **second** person in the list.
+- `find John` followed by `delnote 1 2` — deletes the **second** note from the **first person** in the search results for "John".
+
+### Toggling field visibility: `toggle`
+
+Toggles the visibility of a specific field in the TrackUp contact list UI.  
+This command is useful for customizing the information you want displayed for each contact.
+
+Format: `toggle <FIELD>`
+
+**Supported Fields:**
+- `name`
+- `phone`
+- `email`
+- `address`
+- `tag`
+- `category`
+- `note`
+- `datetime`
+
+**Details:**
+- Each field starts out **visible by default**.
+- Executing the command will **invert the visibility** of the given field.
+- Toggled fields affect the **main contact list display**.
+- Repeating the command for the same field will toggle it back.
+
+**Examples:**
+- `toggle name` hides the contact's name field if it's currently shown.
+- `toggle phone` shows the phone field again if it was previously hidden.
+- `toggle note` hides the note field in the contact display.
+- `toggle datetime` toggles the visibility of the datetime field.
 
 ### Exiting the program : `exit`
 

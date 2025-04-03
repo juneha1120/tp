@@ -7,6 +7,8 @@ import static trackup.logic.parser.CliSyntax.PREFIX_EVENT_START;
 import static trackup.logic.parser.CliSyntax.PREFIX_EVENT_TITLE;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -106,14 +108,20 @@ public class DeleteEventCommand extends Command {
         }
 
         DeleteEventCommand otherCommand = (DeleteEventCommand) other;
-        return partialTitle.equals(otherCommand.partialTitle)
-                && startDateTime.equals(otherCommand.startDateTime)
-                && endDateTime.equals(otherCommand.endDateTime)
+        return ((partialTitle == null && otherCommand.partialTitle == null)
+                || (partialTitle != null && partialTitle.equals(otherCommand.partialTitle)))
+                && ((startDateTime == null && otherCommand.startDateTime == null)
+                || (startDateTime != null && startDateTime.equals(otherCommand.startDateTime)))
+                && ((endDateTime == null && otherCommand.endDateTime == null)
+                || (endDateTime != null && endDateTime.equals(otherCommand.endDateTime)))
                 && contactIndexes.equals(otherCommand.contactIndexes);
     }
 
     @Override
     public String toString() {
+        List<Index> sortedIndexes = new ArrayList<>(contactIndexes);
+        sortedIndexes.sort(Comparator.comparingInt(Index::getZeroBased));
+
         return new ToStringBuilder(this)
                 .add("partialTitle", partialTitle)
                 .add("startDateTime", startDateTime)
