@@ -1,0 +1,25 @@
+@startuml
+class DeleteByCommand {
+  - Optional<Name> deleteByName
+  - Optional<Phone> deleteByPhone
+  - Optional<Email> deleteByEmail
+  - Optional<Address> deleteByAddress
+  - Optional<Tag> deleteByTag
+  + execute(Model): CommandResult
+  + getPredicate(): Predicate<Person>
+  + toString(): String
+}
+
+class Model {
+  + updateFilteredPersonList(Predicate): void
+  + getFilteredPersonList(): List<Person>
+  + deletePerson(Person): void
+  + getEventList(): List<Event>
+  + setEvent(Event, Event): void
+}
+
+DeleteByCommand --> Model
+DeleteByCommand --> Person
+DeleteByCommand --> Event
+
+@enduml
