@@ -1,6 +1,5 @@
 package trackup.logic.parser;
 
-import static java.util.Objects.requireNonNull;
 import static trackup.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static trackup.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static trackup.logic.parser.CliSyntax.PREFIX_CATEGORY;
