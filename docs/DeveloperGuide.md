@@ -32,6 +32,14 @@ The following sequence diagram illustrates the process of adding a contact and h
 
 ![AddCommand Sequence Diagram](images/AddCommandSequenceDiagram.png)
 
+### DeleteByCommand Sequence Diagram
+
+The following diagram illustrates how the `deleteby` command is parsed and executed.
+
+![DeleteByCommand Sequence Diagram](images/DeleteByCommandSequenceDiagram.png)
+
+
+
 ### Architecture
 
 <img src="images/ArchitectureDiagram.png" width="280" />
@@ -131,6 +139,12 @@ The `Model` component,
 <img src="images/BetterModelClassDiagram.png" width="450" />
 
 </div>
+
+### Class Diagram of DeleteByCommand and Related Model Interactions
+
+The following diagram shows the relationship between `DeleteByCommand` and core model classes.
+
+![DeleteByCommand Class Diagram](images/DeleteByCommandClassDiagram.png)
 
 
 ### Storage component

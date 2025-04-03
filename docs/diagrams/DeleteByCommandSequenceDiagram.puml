@@ -1,0 +1,39 @@
+@startuml
+actor User
+participant "LogicManager" as Logic
+participant "AddressBookParser" as Parser
+participant "DeleteByCommandParser" as DelParser
+participant "DeleteByCommand" as DelCommand
+participant "Model" as Model
+participant "Person" as Person
+participant "Event" as Event
+
+User -> Logic : execute("deleteby -n John")
+Logic -> Parser : parseCommand("deleteby -n John")
+Parser -> DelParser : parse(args)
+DelParser -> DelCommand : new DeleteByCommand(name=John)
+DelParser --> Parser : return DeleteByCommand
+Parser --> Logic : return DeleteByCommand
+Logic -> DelCommand : execute(Model)
+
+DelCommand -> Model : updateFilteredPersonList()
+DelCommand -> Model : getFilteredPersonList()
+Model --> DelCommand : filteredList
+
+alt 1 match
+    DelCommand -> Model : getEventList()
+    loop for each Event
+        alt contact in event
+            DelCommand -> Model : setEvent(updatedEvent)
+        end
+    end
+    DelCommand -> Model : deletePerson(person)
+    DelCommand --> Logic : CommandResult(success)
+else 0 match
+    DelCommand --> Logic : CommandException("No Person Matches Criteria")
+else >1 match
+    DelCommand --> Logic : CommandResult(multiple match error)
+end
+
+Logic --> User : Display Result
+@enduml
