@@ -29,7 +29,7 @@
 
       <VBox>
         <HBox HBox.hgrow="ALWAYS">
-          <VBox>
+          <VBox HBox.hgrow="ALWAYS">
             <!-- Menu Bar at the top -->
             <MenuBar fx:id="menuBarAddressBook" VBox.vgrow="NEVER">
               <Menu mnemonicParsing="false" text="File">
@@ -75,7 +75,7 @@
             </VBox>
           </VBox>
 
-          <VBox VBox.vgrow="ALWAYS">
+          <VBox VBox.vgrow="ALWAYS" minWidth="760" prefWidth="760" maxWidth="760">
             <!-- Calendar Header: Month-Year + Prev/Next -->
             <HBox alignment="CENTER_LEFT" spacing="20">
               <padding>
@@ -94,7 +94,7 @@
             <!-- Calendar Container with GridPane -->
             <ScrollPane fx:id="calendarScrollPane" fitToWidth="true" VBox.vgrow="ALWAYS"
                         style="-fx-background-color: transparent;">
-              <VBox fx:id="calendarContainer" styleClass="pane-with-border" prefWidth="1110">
+              <VBox fx:id="calendarContainer" styleClass="pane-with-border">
               </VBox>
             </ScrollPane>
           </VBox>
