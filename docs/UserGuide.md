@@ -153,8 +153,11 @@ Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <B
 **Examples:**
 - `sort` — displays all contacts.
 - `sort -n true` — displays result list of contacts sorted by name in descending order.
-- `sort -t -n true` — displays result list of contacts first sorted by tag in ascending order,
-then sorted by name in descending order
+
+**Notes:**
+- TrackUp currently supports sorting by only one field at a time.
+  Compound sorting like `sort -t -n true` is not supported.
+
 
 ### Editing a person : `edit`
 
@@ -452,22 +455,22 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 
 ## Command Summary
 
-| **Action**                | **Format, Examples**                                                                                                                                                                 |
-|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Viewing help**          | `help [<COMMAND_WORD>]`  <br> e.g., `help`, `help add`, `help delete`                                                                                                                |
-| **Adding a person**       | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]...`  <br> e.g., `add -n John Doe -p 98765432 -e johnd@example.com -a John street -c Client -t friend`   |
-| **Deleting a person**     | `delete <INDEX>`  <br> e.g., `delete 3`, `list` followed by `delete 2`, `find Betsy` followed by `delete 1`                                                                          |
-| **Deleting by attribute** | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`  <br> e.g., `deleteby -n John Doe`, `deleteby -p 98765432`                                |
-| **Editing a person**      | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]...`  <br> e.g., `edit 1 -p 91234567 -e johnd@example.com`                              |
-| **Listing persons**       | `list [<CATEGORY>]`  <br> e.g., `list`, `list Client`, `list Investor`                                                                                                               |
-| **Sorting persons**       | `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`  <br> e.g., `sort`, `sort -n true`, `sort -t -n true`                               |
-| **Finding by name**       | `find KEYWORD [MORE_KEYWORDS]`  <br> e.g., `find John`, `find alex david`                                                                                                            |
-| **Searching persons**     | `search <KEYWORD>`  <br> e.g., `search John`, `search 98765432`, `search Clementi`, `search doe`                                                                                     |
+| **Action**                | **Format, Examples**                                                                                                                                                                |
+|---------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Viewing help**          | `help [<COMMAND_WORD>]`  <br> e.g., `help`, `help add`, `help delete`                                                                                                               |
+| **Adding a person**       | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]...`  <br> e.g., `add -n John Doe -p 98765432 -e johnd@example.com -a John street -c Client -t friend`  |
+| **Deleting a person**     | `delete <INDEX>`  <br> e.g., `delete 3`, `list` followed by `delete 2`, `find Betsy` followed by `delete 1`                                                                         |
+| **Deleting by attribute** | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`  <br> e.g., `deleteby -n John Doe`, `deleteby -p 98765432`                               |
+| **Editing a person**      | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]...`  <br> e.g., `edit 1 -p 91234567 -e johnd@example.com`                             |
+| **Listing persons**       | `list [<CATEGORY>]`  <br> e.g., `list`, `list Client`, `list Investor`                                                                                                              |
+| **Sorting persons**       | `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`  <br> e.g., `sort`, `sort -n true`                             |
+| **Finding by name**       | `find KEYWORD [MORE_KEYWORDS]`  <br> e.g., `find John`, `find alex david`                                                                                                           |
+| **Searching persons**     | `search <KEYWORD>`  <br> e.g., `search John`, `search 98765432`, `search Clementi`, `search doe`                                                                                    |
 | **Adding an event**       | `addevent -t <EVENT_TITLE> -s <START_DATETIME> -e <END_DATETIME> [-c <CONTACT_INDEX>]...`  <br> e.g., `addevent -t "Team Meeting" -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` |
-| **Deleting an event**     | `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>] [-c <CONTACT_INDEX>]...`  <br> e.g., `delevent -t Meeting`, `delevent -c 2`                                 |
-| **Adding a note**         | `addnote <PERSON_INDEX> <NOTE_TEXT>`  <br> e.g., `addnote 1 Met at tech networking event`, `addnote 2 Follow up next week regarding proposal`                                        |
-| **Deleting a note**       | `delnote <PERSON_INDEX> <NOTE_INDEX>`  <br> e.g., `delnote 2 1`, `find John` followed by `delnote 1 2`                                                                               |
-| **Toggling visibility**   | `toggle <FIELD>`  <br> e.g., `toggle name`, `toggle phone`, `toggle note`, `toggle datetime`                                                                                         |
-| **Clearing all entries**  | `clear`                                                                                                                                                                              |
-| **Exiting the program**   | `exit`                                                                                                                                                                               |
+| **Deleting an event**     | `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>] [-c <CONTACT_INDEX>]...`  <br> e.g., `delevent -t Meeting`, `delevent -c 2`                                |
+| **Adding a note**         | `addnote <PERSON_INDEX> <NOTE_TEXT>`  <br> e.g., `addnote 1 Met at tech networking event`, `addnote 2 Follow up next week regarding proposal`                                       |
+| **Deleting a note**       | `delnote <PERSON_INDEX> <NOTE_INDEX>`  <br> e.g., `delnote 2 1`, `find John` followed by `delnote 1 2`                                                                              |
+| **Toggling visibility**   | `toggle <FIELD>`  <br> e.g., `toggle name`, `toggle phone`, `toggle note`, `toggle datetime`                                                                                        |
+| **Clearing all entries**  | `clear`                                                                                                                                                                             |
+| **Exiting the program**   | `exit`                                                                                                                                                                              |
 
