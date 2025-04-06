@@ -1,7 +1,5 @@
 package trackup.logic.parser;
 
-import static trackup.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
 import java.util.Optional;
 
 import trackup.logic.commands.ListCommand;
