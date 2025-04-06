@@ -126,11 +126,9 @@ public class ModelManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        if (this.sortedFilteredPersons.getComparator() == null) {
-            return sortedFilteredPersons;
-        }
-        return filteredPersons;
+        return sortedFilteredPersons;
     }
+
 
     @Override
     public void updateFilteredPersonList(Predicate<Person> predicate) {
