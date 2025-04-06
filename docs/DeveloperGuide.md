@@ -643,8 +643,15 @@ testers are expected to do more *exploratory* testing.
 ### Saving data
 
 1. **Handling missing or corrupted data files**
-    1. _{ Add instructions to simulate missing or corrupted files and describe the expected system behavior }_
 
-2. _{ Add additional test scenarios for data saving and recovery here }_
+    1. Delete or rename the `data/addressbook.json` file while the application is closed.
+        - **Expected:** When the app is launched again, it should recreate the file with default content without crashing.
+
+    2. Modify the JSON file and introduce an invalid value (e.g., change a phone number to `"abc"`).
+        - **Expected:** Upon startup, TrackUp will show an error dialog indicating corrupted data and load with an empty state.
+
+    3. Save a contact or event and then restart the app.
+        - **Expected:** The newly added data should persist across restarts.
+
 
 ---
