@@ -66,10 +66,10 @@ TrackUp needs **Java** (version 17 or higher) to run.
 - When copying commands from this PDF version, ensure that line breaks do not remove necessary spaces.
 </div>
 
-### Viewing help : `help`
+### Viewing help: `help`
 
 Shows a message to access the help page.  
-Shows the list of all commands, or full usage when a specific command is given.
+Shows a full usage with example when a specific command is given.
 
 ![help message](images/helpMessage.png)
 
@@ -81,7 +81,7 @@ Format: `help [<COMMAND_WORD>]`
 **Examples:**
 - `help`
 - `help add` - displays full usage for add command
-- `help delete` - displays full usage for delete command
+- `help delete` - displays full usage with description and example for delete command
 
 ### Adding a person: `add`
 
@@ -97,13 +97,14 @@ A person can have any number of tags (including 0)
 - `NAME`, `PHONE`, `EMAIL`, and `ADDRESS` are **compulsory**.
 - `CATEGORY` and `TAG` are **optional**.
 - `CATEGORY` should be **one** of: Client, Investor, Partner, Other and is case-insensitive.
+- `TAG` must be a single alphanumeric word with no spaces or special characters.
 - If any required field (name, phone, email, or address) is missing, a descriptive **error** will appear indicating the exact missing attribute.
 
 **Examples:**
 - `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01 -c Client -t friend`
 - `add -n Betsy Crowe -p 1234567 -e betsycrowe@example.com -a Newgate Prison`
 
-### Deleting a person : `delete`
+### Deleting a person: `delete`
 
 Deletes the specified contact from TrackUp.
 
@@ -139,24 +140,7 @@ Format: `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATE
 - `deleteby -c Client` - deletes the person with the category **Client**.
 - `deleteby -n John Doe -p 98765432` - deletes the person named **John Doe** with phone number **98765432**.
 
-### Sorting current displayed list: `sort`
-
-Sorts displayed contacts in TrackUp by the given attributes of Person.
-
-Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`
-
-* Displays all contacts if no attribute is specified.
-* If an attribute is provided, displays the result after sorting by the specified attribute.
-* `<BOOLEAN>`: `true` or `false`, case-insensitive, to indicate if the sorting is descending.
-* Prefixes for attributes: `-n`NAME `-p`PHONE `-e`EMAIL `-a`ADDRESS `-c`CATEGORY `-t`TAG
-
-**Examples:**
-- `sort` — displays all contacts.
-- `sort -n true` — displays result list of contacts sorted by name in descending order.
-- `sort -t -n true` — displays result list of contacts first sorted by tag in ascending order,
-then sorted by name in descending order
-
-### Editing a person : `edit`
+### Editing a person: `edit`
 
 Edits an existing person in TrackUp.
 
@@ -170,9 +154,9 @@ Format: `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <
 
 **Examples:**
 - `edit 1 -p 91234567 -e johnd@example.com` — updates the phone number and email of the first contact.
-- `edit 2 -n "Betsy Crower" -c Investor` — updates the name and sets the category to Investor for the second contact.
+- `edit 2 -n Betsy Crower -c Investor` — updates the name and sets the category to Investor for the second contact.
 
-### Listing all persons : `list`
+### Listing all persons: `list`
 
 Displays all contacts in TrackUp, optionally filtering by category.
 
@@ -190,14 +174,14 @@ Format: `list [<CATEGORY>]`
 
 ### Sorting persons list: `sort`
 
-Sorts displayed contacts in TrackUp by the given attributes.
+Sorts displayed contacts the **current** list by the given attributes.
 
 Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`
 
 **Notes:**
 * Displays all contacts if no attribute is specified.
 * If an attribute is provided, displays the result after sorting by the specified attribute.
-* `BOOLEAN` should be either `true` or `false` and is case-insensitive, to indicate if the sorting is descending.
+* `BOOLEAN` should be either `true` or `false` and is case-insensitive, to indicate if the sorting is ascending (`true`) or descending (`false`).
 * Prefixes for attributes: `-n` for name, `-p` for phone, `-e` for email, `-a` for address, `-c` for category, and `-t` for tag.
 
 **Examples:**
@@ -210,7 +194,7 @@ then sorted by name in descending order.
 
 Finds persons whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find <KEYWORD> [<MORE_KEYWORDS>]...`
 
 **Notes:**
 - The search is **case-insensitive**. e.g. `hans` will match `Hans`.
@@ -226,7 +210,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ### Searching for a person: `search`
 
-Finds persons whose name, phone, email, address, tags, or category contain the given keyword.
+Finds persons whose attributes contain the given keyword.
 
 Format: `search <KEYWORD>`
 
@@ -245,9 +229,9 @@ Format: `search <KEYWORD>`
 - `search client` - returns persons categorised as **Client**.
 - `search doe` - returns persons whose attributes contain **"doe"**, such as **John Doe** and **johndoe@example.com**.
 
-### Adding an event : `addevent`
+### Adding an event: `addevent`
 
-Adds an event to TrackUp's calendar.
+Adds an event to TrackUp.
 
 Format: `addevent -t <EVENT_TITLE> -s <START_DATETIME> -e <END_DATETIME> [-c <CONTACT_INDEX>]...`
 
@@ -261,12 +245,12 @@ An event can have any number of contacts linked (including 0)
 * `START_DATETIME` and `END_DATETIME` must be in **YYYY-MM-DD HH:MM** format.
 
 **Examples:**
-- `addevent -t "Team Meeting" -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` - adds a "Team Meeting" from 14:00 to 15:00 on March 30, 2025, linking it to contacts at index 1 and 3.
-- `addevent -t "Project Deadline" -s 2025-04-01 23:59 -e 2025-04-02 00:00` - adds a "Project Deadline" event without linking any contacts.
+- `addevent -t Team Meeting -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` - adds Team Meeting event from 14:00 to 15:00 on March 30, 2025, linking it to contacts at index 1 and 3.
+- `addevent -t Project Deadline -s 2025-04-01 23:59 -e 2025-04-02 00:00` - adds Project Deadline event without linking any contacts.
 
-### Deleting an event : `delevent`
+### Deleting an event: `delevent`
 
-Deletes events from TrackUp's calendar based on specified filters.
+Deletes events from TrackUp based on specified filters.
 
 Format: `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>] [-c <CONTACT_INDEX>]...`
 
@@ -282,7 +266,7 @@ Format: `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>]
 * `delevent -t Meeting` - deletes all events with "Meeting" in the title.
 * `delevent -s 2025-03-30 14:00 -e 2025-03-30 15:00` - deletes all events exactly matching this start and end time.
 * `delevent -c 2` - deletes all events linked to the contact at index 2.
-* `delevent -t "Workshop" -c 1 -c 4` - deletes all events with "Workshop" in the title that are linked to contacts at index 1 or 4.
+* `delevent -t Workshop -c 1 -c 4` - deletes all events with "Workshop" in the title that are linked to contacts at index 1 or 4.
 
 ### Adding a note to a person: `addnote`
 
@@ -292,7 +276,7 @@ Format: `addnote <PERSON_INDEX> <NOTE_TEXT>`
 
 **Notes:**
 - `PERSON_INDEX` refers to the contact’s index in the currently displayed list (must be a positive integer).
-- Each person can have **up to 3 notes**.
+- Each person can have **up to 5 notes**.
 - Notes should be **short and descriptive**. The maximum note length is 50 characters.
 - Notes are displayed beneath the person’s details in the UI.
 
@@ -344,74 +328,29 @@ Format: `toggle <FIELD>`
 - `toggle note` - hides the note field in the contact display.
 - `toggle datetime` - toggles the visibility of the datetime field.
 
-### Clearing all entries : `clear`
+### Using keyboard shortcuts
+
+TrackUp provides convenient keyboard shortcuts to quickly navigate and perform actions in the application.
+
+**Shortcuts and Actions:**
+- `F1` - opens the Help Window.
+- `F2` - shows the person list in the list panel. 
+- `F3` — shows the event list in the list panel.
+- `←` (Left Arrow) - moves to the previous week in the weekly calendar.
+- `→` (Right Arrow) - moves to the next week in the weekly calendar.
+
+**Notes:**
+- These shortcuts can be used from anywhere within the main application window.
+- If the command box is selected, `←` and `→` will not trigger calendar navigation. Instead, they will behave like normal text-editing keys.
+
+### Clearing all entries: `clear`
 
 Clears all contacts from TrackUp.
 
 Format: `clear`
 
 
-### Adding a note to a person: `addnote`
-
-Adds a short note to the specified person in TrackUp.
-
-Format: `addnote <PERSON_INDEX> <NOTE_TEXT>`
-
-**Details:**
-- `<PERSON_INDEX>` refers to the contact’s index in the currently displayed list (must be a positive integer).
-- Each person can have **up to 3 notes**.
-- Notes should be **short and descriptive**. The maximum note length is 50 characters.
-- Notes are displayed beneath the person’s details in the UI.
-
-**Examples:**
-- `addnote 1 Met at tech networking event`
-- `addnote 2 Follow up next week regarding proposal`
-
-### Deleting a note from a person: `delnote`
-
-Deletes a specific note from a person in TrackUp.
-
-Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
-
-**Details:**
-- `<PERSON_INDEX>` refers to the person in the currently displayed list.
-- `<NOTE_INDEX>` refers to the position of the note in that person’s list of notes (must be a positive integer).
-- Notes are displayed in order; the first note is index 1.
-
-**Examples:**
-- `delnote 2 1` — deletes the **first** note from the **second** person in the list.
-- `find John` followed by `delnote 1 2` — deletes the **second** note from the **first person** in the search results for "John".
-
-### Toggling field visibility: `toggle`
-
-Toggles the visibility of a specific field in the TrackUp contact list UI.  
-This command is useful for customizing the information you want displayed for each contact.
-
-Format: `toggle <FIELD>`
-
-**Supported Fields:**
-- `name`
-- `phone`
-- `email`
-- `address`
-- `tag`
-- `category`
-- `note`
-- `datetime`
-
-**Details:**
-- Each field starts out **visible by default**.
-- Executing the command will **invert the visibility** of the given field.
-- Toggled fields affect the **main contact list display**.
-- Repeating the command for the same field will toggle it back.
-
-**Examples:**
-- `toggle name` hides the contact's name field if it's currently shown.
-- `toggle phone` shows the phone field again if it was previously hidden.
-- `toggle note` hides the note field in the contact display.
-- `toggle datetime` toggles the visibility of the datetime field.
-
-### Exiting the program : `exit`
+### Exiting the program: `exit`
 
 Exits TrackUp.
 
@@ -452,22 +391,24 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 
 ## Command Summary
 
-| **Action**                | **Format, Examples**                                                                                                                                                                 |
-|---------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Viewing help**          | `help [<COMMAND_WORD>]`  <br> e.g., `help`, `help add`, `help delete`                                                                                                                |
-| **Adding a person**       | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]...`  <br> e.g., `add -n John Doe -p 98765432 -e johnd@example.com -a John street -c Client -t friend`   |
-| **Deleting a person**     | `delete <INDEX>`  <br> e.g., `delete 3`, `list` followed by `delete 2`, `find Betsy` followed by `delete 1`                                                                          |
-| **Deleting by attribute** | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`  <br> e.g., `deleteby -n John Doe`, `deleteby -p 98765432`                                |
-| **Editing a person**      | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]...`  <br> e.g., `edit 1 -p 91234567 -e johnd@example.com`                              |
-| **Listing persons**       | `list [<CATEGORY>]`  <br> e.g., `list`, `list Client`, `list Investor`                                                                                                               |
-| **Sorting persons**       | `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`  <br> e.g., `sort`, `sort -n true`, `sort -t -n true`                               |
-| **Finding by name**       | `find KEYWORD [MORE_KEYWORDS]`  <br> e.g., `find John`, `find alex david`                                                                                                            |
-| **Searching persons**     | `search <KEYWORD>`  <br> e.g., `search John`, `search 98765432`, `search Clementi`, `search doe`                                                                                     |
-| **Adding an event**       | `addevent -t <EVENT_TITLE> -s <START_DATETIME> -e <END_DATETIME> [-c <CONTACT_INDEX>]...`  <br> e.g., `addevent -t "Team Meeting" -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` |
-| **Deleting an event**     | `delevent [-t <TITLE_KEYWORD>] [-s <START_DATETIME>] [-e <END_DATETIME>] [-c <CONTACT_INDEX>]...`  <br> e.g., `delevent -t Meeting`, `delevent -c 2`                                 |
-| **Adding a note**         | `addnote <PERSON_INDEX> <NOTE_TEXT>`  <br> e.g., `addnote 1 Met at tech networking event`, `addnote 2 Follow up next week regarding proposal`                                        |
-| **Deleting a note**       | `delnote <PERSON_INDEX> <NOTE_INDEX>`  <br> e.g., `delnote 2 1`, `find John` followed by `delnote 1 2`                                                                               |
-| **Toggling visibility**   | `toggle <FIELD>`  <br> e.g., `toggle name`, `toggle phone`, `toggle note`, `toggle datetime`                                                                                         |
-| **Clearing all entries**  | `clear`                                                                                                                                                                              |
-| **Exiting the program**   | `exit`                                                                                                                                                                               |
+| **Action**                      | **Format**                                                                                        | **Examples**                                                            |
+|---------------------------------|---------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| **View help**                   | `help [<COMMAND_WORD>]`                                                                           | `help`, `help add`                                                      |
+| **Add a person**                | `add -n <NAME> -p <PHONE> -e <EMAIL> -a <ADDRESS> [-c <CATEGORY>] [-t <TAG>]...`                  | `add -n John -p 98765432 -e john@example.com -a Street 1`               |
+| **Delete a person**             | `delete <INDEX>`                                                                                  | `delete 3`                                                              |
+| **Delete person by attributes** | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`        | `deleteby -n John Doe`, `deleteby -p 98765432`                          |
+| **Edit a person**               | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]...` | `edit 1 -p 91234567 -e johnd@example.com`                               |
+| **List persons**                | `list [<CATEGORY>]`                                                                               | `list`, `list Client`                                                   |
+| **Sort persons**                | `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`  | `sort -n true`, `sort -t -n true`                                       |
+| **Find persons by name**        | `find <KEYWORD> [<MORE_KEYWORDS>]...`                                                             | `find John`, `find alex david`                                          |
+| **Search persons by attribute** | `search <KEYWORD>`                                                                                | `search John`, `search Clementi`                                        |
+| **Add an event**                | `addevent -t <TITLE> -s <START_DATETIME> -e <END_DATETIME> [-c <CONTACT_INDEX>]...`               | `addevent -t Meeting -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` |
+| **Delete an event**             | `delevent [-t <TITLE>] [-s <START_DATETIME>] [-e <END_DATETIME>] [-c <CONTACT_INDEX>]...`         | `delevent -t Meeting`, `delevent -c 2`                                  |
+| **Add a note**                  | `addnote <PERSON_INDEX> <NOTE_TEXT>`                                                              | `addnote 1 Follow up next week`                                         |
+| **Delete a note**               | `delnote <PERSON_INDEX> <NOTE_INDEX>`                                                             | `delnote 2 1`                                                           |
+| **Toggle field visibility**     | `toggle <FIELD>`                                                                                  | `toggle name`, `toggle phone`                                           |
+| **Keyboard shortcuts**          | F1, F2, F3, ←, →                                                                                  | F1: help, F2: person list, ←: previous week                             |
+| **Clear all contacts**          | `clear`                                                                                           | `clear`                                                                 |
+| **Exit program**                | `exit`                                                                                            | `exit`                                                                  |
+
 
