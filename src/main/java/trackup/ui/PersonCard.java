@@ -80,7 +80,7 @@ public class PersonCard extends UiPart<Region> {
             category.setVisible(visibility.isShowCategory());
             String categoryColor = getCategoryColor(categoryName);
             category.setStyle("-fx-background-color: #3B3B3B;"
-                    + "-fx-text-fill: " + categoryColor + "); -fx-border-radius: 5px; -fx-padding: 1px 2px;");
+                    + "-fx-text-fill: " + categoryColor + "); -fx-border-radius: 5px; -fx-padding: 1px 4px;");
             cardPane.setStyle("-fx-border-color: " + categoryColor + ");" + "-fx-border-width: 2px;"
                     + "-fx-background-color: " + categoryColor + ", 0.1);"); // 10% opacity
         } else {
