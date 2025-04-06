@@ -124,15 +124,25 @@ public class MainWindow extends UiPart<Stage> {
                 KeyCombination.valueOf("F3"), () -> eventsButton.fire()
         );
 
-        // LEFT → Previous Week
-        primaryStage.getScene().getAccelerators().put(
-                KeyCombination.valueOf("LEFT"), () -> prevWeekButton.fire()
-        );
+        // Add event filter for LEFT and RIGHT arrows with context check
+        getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
+            boolean isInTextInput = event.getTarget() instanceof TextInputControl;
 
-        // RIGHT → Next Week
-        primaryStage.getScene().getAccelerators().put(
-                KeyCombination.valueOf("RIGHT"), () -> nextWeekButton.fire()
-        );
+            if (!isInTextInput) {
+                switch (event.getCode()) {
+                case LEFT:
+                    prevWeekButton.fire();
+                    event.consume();
+                    break;
+                case RIGHT:
+                    nextWeekButton.fire();
+                    event.consume();
+                    break;
+                default:
+                    break;
+                }
+            }
+        });
 
         // Add workaround for TextInputControl consuming function keys
         getRoot().addEventFilter(KeyEvent.KEY_PRESSED, event -> {
@@ -145,12 +155,6 @@ public class MainWindow extends UiPart<Stage> {
                     event.consume();
                 } else if (KeyCombination.valueOf("F3").match(event)) {
                     eventsButton.fire();
-                    event.consume();
-                } else if (KeyCombination.valueOf("LEFT").match(event)) {
-                    prevWeekButton.fire();
-                    event.consume();
-                } else if (KeyCombination.valueOf("RIGHT").match(event)) {
-                    nextWeekButton.fire();
                     event.consume();
                 }
             }
@@ -307,7 +311,7 @@ public class MainWindow extends UiPart<Stage> {
     private void handlePreviousWeek() {
         calendarView.showPreviousWeek();
         if (calendarView.getCurrentDate().isAfter(calendarView.getCurrentWeekStart())
-            && calendarView.getCurrentDate().isBefore(calendarView.getCurrentWeekStart().plusDays(6))) {
+            && calendarView.getCurrentDate().isBefore(calendarView.getCurrentWeekStart().plusDays(7))) {
             updateMonthYearLabel(calendarView.getCurrentDate());
         } else {
             updateMonthYearLabel(calendarView.getCurrentWeekStart());
@@ -321,7 +325,7 @@ public class MainWindow extends UiPart<Stage> {
     private void handleNextWeek() {
         calendarView.showNextWeek();
         if (calendarView.getCurrentDate().isAfter(calendarView.getCurrentWeekStart())
-                && calendarView.getCurrentDate().isBefore(calendarView.getCurrentWeekStart().plusDays(6))) {
+                && calendarView.getCurrentDate().isBefore(calendarView.getCurrentWeekStart().plusDays(7))) {
             updateMonthYearLabel(calendarView.getCurrentDate());
         } else {
             updateMonthYearLabel(calendarView.getCurrentWeekStart());

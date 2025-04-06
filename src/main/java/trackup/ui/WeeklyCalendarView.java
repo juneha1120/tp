@@ -19,8 +19,10 @@ import trackup.model.event.Event;
  * and columns represent days of the week.
  */
 public class WeeklyCalendarView {
-    private static final int CELL_WIDTH = 100;
-    private static final int CELL_HEIGHT = 50;
+    private static final double CELL_WIDTH = 100;
+    private static final double CELL_HEIGHT = 50;
+    private static final double DAY_HEIGHT = 60;
+    private static final double TIME_WIDTH = 40;
 
     private GridPane calendarGrid;
     private ObservableList<Event> eventList;
@@ -67,8 +69,8 @@ public class WeeklyCalendarView {
 
             VBox dayBox = new VBox(5, dateLabel, dayLabel);
             dayBox.setAlignment(Pos.CENTER_LEFT);
-            dayBox.setMinSize(CELL_WIDTH, 60);
-            dayBox.setMaxSize(CELL_WIDTH, 60);
+            dayBox.setMinSize(CELL_WIDTH, DAY_HEIGHT);
+            dayBox.setMaxSize(CELL_WIDTH, DAY_HEIGHT);
             dayBox.setStyle("-fx-border-color: derive(#1d1d1d, 10%); -fx-border-width: 1px");
 
             if (dayDate.equals(LocalDate.now())) {
@@ -93,8 +95,8 @@ public class WeeklyCalendarView {
             timeLabel.setAlignment(Pos.CENTER);
             for (int j = 0; j < 8; j++) {
                 timeLabel.setMinHeight(getEventStack(j, i + 1).getHeight());
-                timeLabel.setMinWidth(40);
-                timeLabel.setMaxWidth(40);
+                timeLabel.setMinWidth(TIME_WIDTH);
+                timeLabel.setMaxWidth(TIME_WIDTH);
             }
 
             GridPane.setHalignment(timeLabel, HPos.CENTER);
