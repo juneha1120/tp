@@ -186,8 +186,8 @@ Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <B
 
 **Examples:**
 - `sort` — displays all contacts.
-- `sort -n true` — displays result list of contacts sorted by name in descending order.
-- `sort -t -n true` — displays result list of contacts first sorted by tag in ascending order,
+- `sort -n true` — displays result list of contacts sorted by name in ascending order.
+- `sort -t true -n false` — displays result list of contacts first sorted by tag in ascending order,
 then sorted by name in descending order.
 
 ### Locating persons by name: `find`
@@ -399,7 +399,7 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 | **Delete person by attributes** | `deleteby [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]`        | `deleteby -n John Doe`, `deleteby -p 98765432`                          |
 | **Edit a person**               | `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <CATEGORY>] [-t <TAG>]...` | `edit 1 -p 91234567 -e johnd@example.com`                               |
 | **List persons**                | `list [<CATEGORY>]`                                                                               | `list`, `list Client`                                                   |
-| **Sort persons**                | `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`  | `sort -n true`, `sort -t -n true`                                       |
+| **Sort persons**                | `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <BOOLEAN>] [-t <BOOLEAN>]`  | `sort -n true`, `sort -t true -n false`                                 |
 | **Find persons by name**        | `find <KEYWORD> [<MORE_KEYWORDS>]...`                                                             | `find John`, `find alex david`                                          |
 | **Search persons by attribute** | `search <KEYWORD>`                                                                                | `search John`, `search Clementi`                                        |
 | **Add an event**                | `addevent -t <TITLE> -s <START_DATETIME> -e <END_DATETIME> [-c <CONTACT_INDEX>]...`               | `addevent -t Meeting -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` |
