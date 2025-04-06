@@ -71,6 +71,9 @@ public class PersonCard extends UiPart<Region> {
                 .sorted(Comparator.comparing(tag -> tag.tagName))
                 .forEach(tag -> {
                     Label label = new Label(tag.tagName);
+                    label.setWrapText(true);
+                    label.setMaxWidth(310);
+                    label.setMinHeight(Region.USE_PREF_SIZE);
                     label.setVisible(visibility.isShowTag());
                     tags.getChildren().add(label);
                 });
