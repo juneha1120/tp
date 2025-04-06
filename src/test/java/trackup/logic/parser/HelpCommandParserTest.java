@@ -35,121 +35,91 @@ public class HelpCommandParserTest {
 
     @Test
     public void parse_addCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                AddCommand.COMMAND_WORD,
-                AddCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(AddCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(AddCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_addEventCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                AddEventCommand.COMMAND_WORD,
-                AddEventCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(AddEventCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(AddEventCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_clearCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                ClearCommand.COMMAND_WORD,
-                ClearCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(ClearCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(ClearCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_deleteCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                DeleteCommand.COMMAND_WORD,
-                DeleteCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(DeleteCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(DeleteCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_deleteByCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                DeleteByCommand.COMMAND_WORD,
-                DeleteByCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(DeleteByCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(DeleteByCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_deleteEventCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                DeleteEventCommand.COMMAND_WORD,
-                DeleteEventCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(DeleteEventCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(DeleteEventCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_editCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                EditCommand.COMMAND_WORD,
-                EditCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(EditCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(EditCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_exitCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                ExitCommand.COMMAND_WORD,
-                ExitCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(ExitCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(ExitCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_findCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                FindCommand.COMMAND_WORD,
-                FindCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(FindCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(FindCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_listCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                ListCommand.COMMAND_WORD,
-                ListCommand.COMMAND_WORD);
+        HelpCommand expected = new HelpCommand(ListCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(ListCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_searchCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                SearchCommand.COMMAND_WORD,
-                SearchCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(SearchCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(SearchCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_sortCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                SortCommand.COMMAND_WORD,
-                SortCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(SortCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(SortCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_addNoteCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                AddNoteCommand.COMMAND_WORD,
-                AddNoteCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(AddNoteCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(AddNoteCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_deleteNoteCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                DeleteNoteCommand.COMMAND_WORD,
-                DeleteNoteCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(DeleteNoteCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(DeleteNoteCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_toggleCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                ToggleCommand.COMMAND_WORD,
-                ToggleCommand.MESSAGE_USAGE);
+        HelpCommand expected = new HelpCommand(ToggleCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(ToggleCommand.COMMAND_WORD));
     }
 

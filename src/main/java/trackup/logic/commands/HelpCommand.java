@@ -17,22 +17,21 @@ public class HelpCommand extends Command {
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.\n";
 
-    private final String specificCommandUsage;
+    private final String usage;
 
     /**
      * Creates an HelpCommand
      */
     public HelpCommand() {
-        this.specificCommandUsage = "";
+        this.usage = "";
     }
 
     /**
      * Creates an HelpCommand according to the specified {@code Command}'s
-     * @param command {@code COMMAND_WORD} of the command
      * @param usage {@code COMMAND_USAGE} of the command
      */
-    public HelpCommand(String command, String usage) {
-        this.specificCommandUsage = usage;
+    public HelpCommand(String usage) {
+        this.usage = usage;
     }
     @Override
     public boolean equals(Object other) {
@@ -46,13 +45,13 @@ public class HelpCommand extends Command {
         }
 
         HelpCommand otherFindCommand = (HelpCommand) other;
-        return specificCommandUsage.equals(otherFindCommand.specificCommandUsage);
+        return usage.equals(otherFindCommand.usage);
     }
 
     @Override
     public CommandResult execute(Model model) {
-        if (!specificCommandUsage.isEmpty()) {
-            return new CommandResult(specificCommandUsage, false, false);
+        if (!usage.isEmpty()) {
+            return new CommandResult(usage, false, false);
         }
         return new CommandResult(SHOWING_HELP_MESSAGE + MESSAGE_USAGE, true, false);
     }
