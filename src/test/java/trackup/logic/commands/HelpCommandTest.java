@@ -20,6 +20,12 @@ public class HelpCommandTest {
         CommandResult expectedCommandResult = new CommandResult(SHOWING_HELP_MESSAGE + MESSAGE_USAGE, true, false);
         assertCommandSuccess(new HelpCommand(), model, expectedCommandResult, expectedModel);
     }
+    @Test
+    public void execute_helpAdd_success() {
+        CommandResult expectedCommandResult = new CommandResult(AddCommand.MESSAGE_USAGE, false, false);
+        assertCommandSuccess(new HelpCommand("add", AddCommand.MESSAGE_USAGE),
+                model, expectedCommandResult, expectedModel);
+    }
 
     @Test
     public void equals() {

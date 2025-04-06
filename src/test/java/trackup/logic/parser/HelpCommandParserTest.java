@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import trackup.logic.commands.AddCommand;
 import trackup.logic.commands.AddEventCommand;
+import trackup.logic.commands.AddNoteCommand;
 import trackup.logic.commands.ClearCommand;
 import trackup.logic.commands.DeleteByCommand;
 import trackup.logic.commands.DeleteCommand;
 import trackup.logic.commands.DeleteEventCommand;
+import trackup.logic.commands.DeleteNoteCommand;
 import trackup.logic.commands.EditCommand;
 import trackup.logic.commands.ExitCommand;
 import trackup.logic.commands.FindCommand;
@@ -19,6 +21,7 @@ import trackup.logic.commands.HelpCommand;
 import trackup.logic.commands.ListCommand;
 import trackup.logic.commands.SearchCommand;
 import trackup.logic.commands.SortCommand;
+import trackup.logic.commands.ToggleCommand;
 import trackup.logic.parser.exceptions.ParseException;
 
 public class HelpCommandParserTest {
@@ -124,6 +127,30 @@ public class HelpCommandParserTest {
                 SortCommand.COMMAND_WORD,
                 SortCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(SortCommand.COMMAND_WORD));
+    }
+
+    @Test
+    public void parse_addNoteCommand_returnsCorrectHelpCommand() throws ParseException {
+        HelpCommand expected = new HelpCommand(
+                AddNoteCommand.COMMAND_WORD,
+                AddNoteCommand.MESSAGE_USAGE);
+        assertEquals(expected, parser.parse(AddNoteCommand.COMMAND_WORD));
+    }
+
+    @Test
+    public void parse_deleteNoteCommand_returnsCorrectHelpCommand() throws ParseException {
+        HelpCommand expected = new HelpCommand(
+                DeleteNoteCommand.COMMAND_WORD,
+                DeleteNoteCommand.MESSAGE_USAGE);
+        assertEquals(expected, parser.parse(DeleteNoteCommand.COMMAND_WORD));
+    }
+
+    @Test
+    public void parse_toggleCommand_returnsCorrectHelpCommand() throws ParseException {
+        HelpCommand expected = new HelpCommand(
+                ToggleCommand.COMMAND_WORD,
+                ToggleCommand.MESSAGE_USAGE);
+        assertEquals(expected, parser.parse(ToggleCommand.COMMAND_WORD));
     }
 
     @Test
