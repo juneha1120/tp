@@ -25,8 +25,10 @@ public class ListCommandParser implements Parser<ListCommand> {
         if (!trimmedArgs.isEmpty()) {
             trimmedArgs = trimmedArgs.substring(0, 1).toUpperCase() + trimmedArgs.substring(1).toLowerCase();
             if (!Category.isValidCategoryName(trimmedArgs)) {
-                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, ListCommand.MESSAGE_USAGE));
+                throw new ParseException("Invalid category: '" + trimmedArgs
+                        + "'. Use one of the supported categories: Client, Partner, Investor, Other.");
             }
+
             category = Optional.of(new Category(trimmedArgs));
         }
 
