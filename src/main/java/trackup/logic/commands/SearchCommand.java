@@ -16,9 +16,10 @@ public class SearchCommand extends Command {
 
     public static final String COMMAND_WORD = "search";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds and lists all persons whose name, phone, email,"
-            + "or address contain the given keyword.\n"
-            + "Parameters: KEYWORD\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Finds persons whose attributes contain the given keyword.\n"
+            + "Parameter(s): "
+            + "<KEYWORD>\n"
             + "Example: " + COMMAND_WORD + " John";
 
     public static final String MESSAGE_SUCCESS = "Listed persons matching: %1$s";

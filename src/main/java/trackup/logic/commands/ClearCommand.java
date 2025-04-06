@@ -6,13 +6,14 @@ import trackup.model.AddressBook;
 import trackup.model.Model;
 
 /**
- * Clears the address book.
+ * Clears TrackUp's contacts.
  */
 public class ClearCommand extends Command {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
-
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Clears all contacts from TrackUp.\n";
+    public static final String MESSAGE_SUCCESS = "TrackUp's contacts has been cleared!";
 
     @Override
     public CommandResult execute(Model model) {

@@ -42,11 +42,11 @@ public class ToggleCommand extends Command {
     public static final String NOTE_FIELD_STRING = "note";
     public static final String DATETIME_FIELD_STRING = "datetime";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Toggle the given field in the address book UI. "
-            + "Parameters: "
-            + "[FIELD PREFIX]\n"
-            + "Example: " + COMMAND_WORD + " "
-            + NAME_FIELD_STRING;
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Toggles the visibility of a specific field in the TrackUp contact list UI.\n"
+            + "Parameter(s): "
+            + "<FIELD>\n"
+            + "Example: " + COMMAND_WORD + " " + NAME_FIELD_STRING;
 
     public static final String MESSAGE_HIDE_SUCCESS = "Field hidden: %1$s";
     public static final String MESSAGE_UNHIDE_SUCCESS = "Field unhidden: %1$s";

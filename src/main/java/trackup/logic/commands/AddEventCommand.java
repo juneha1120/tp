@@ -26,13 +26,14 @@ public class AddEventCommand extends Command {
 
     public static final String COMMAND_WORD = "addevent";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the calendar. "
-            + "Parameters: "
-            + PREFIX_EVENT_TITLE + "EVENT_TITLE "
-            + PREFIX_EVENT_START + "START_DATETIME "
-            + PREFIX_EVENT_END + "END_DATETIME "
-            + "[" + PREFIX_EVENT_CONTACT + "CONTACT_INDEX1 " + PREFIX_EVENT_CONTACT + "CONTACT_INDEX2,...]"
-            + "\nExample: " + COMMAND_WORD + " "
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds an event to TrackUp.\n"
+            + "Parameter(s): "
+            + PREFIX_EVENT_TITLE + "<EVENT_TITLE> "
+            + PREFIX_EVENT_START + "<START_DATETIME> "
+            + PREFIX_EVENT_END + "<END_DATETIME> "
+            + "[" + PREFIX_EVENT_CONTACT + "<CONTACT_INDEX>]...\n"
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_EVENT_TITLE + "Team Meeting "
             + PREFIX_EVENT_START + "2025-03-30 14:00 "
             + PREFIX_EVENT_END + "2025-03-30 15:00 "
