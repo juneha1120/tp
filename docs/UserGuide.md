@@ -410,5 +410,3 @@ Editing the data file incorrectly may cause TrackUp to discard all data or behav
 | **Keyboard shortcuts**          | F1, F2, F3, ←, →                                                                                  | F1: help, F2: person list, ←: previous week                             |
 | **Clear all contacts**          | `clear`                                                                                           | `clear`                                                                 |
 | **Exit program**                | `exit`                                                                                            | `exit`                                                                  |
-
-

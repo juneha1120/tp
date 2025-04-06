@@ -13,7 +13,7 @@ public class ClearCommand extends Command {
     public static final String COMMAND_WORD = "clear";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Clears all contacts from TrackUp.\n";
-    public static final String MESSAGE_SUCCESS = "TrackUp's contacts has been cleared!";
+    public static final String MESSAGE_SUCCESS = "TrackUp's contact list has been cleared!";
 
     @Override
     public CommandResult execute(Model model) {
