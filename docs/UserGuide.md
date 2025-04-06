@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-**TrackUp** is a **desktop application for managing contacts and events** that is optimised for a CLI-first experience while still offering the benefits of a GUI. 
+**TrackUp** is a **desktop application for managing contacts and events** that is optimised for a CLI-first experience while still offering the benefits of a GUI.
 
 Designed for startup founders, **TrackUp** streamlines relationship management, follow-ups, and event organisation — helping you work efficiently without unnecessary distractions.
 
@@ -28,16 +28,16 @@ TrackUp needs **Java** (version 17 or higher) to run.
    * This folder will be where TrackUp stores its data.
 
 4. **Open TrackUp**<br>
-   * Open the **Terminal** (on Mac) or **Command Prompt** (on Windows).   
-   * Go to the folder where you put the .jar file. To do that, type: `cd path-to-the-folder`  
-   (Replace “path-to-the-folder” with the actual folder location)  
-   * Then start the app by typing: `java -jar trackup.jar`  
+   * Open the **Terminal** (on Mac) or **Command Prompt** (on Windows).
+   * Go to the folder where you put the .jar file. To do that, type: `cd path-to-the-folder`
+   (Replace “path-to-the-folder” with the actual folder location)
+   * Then start the app by typing: `java -jar trackup.jar`
    * After a few seconds, the application will open with a window like this:
    ![Ui](images/Ui.png)
 
 5. **Try a command**<br>
    * Click on the command box at the top left of the application window.
-   * Type a command like this: `help` and pressing Enter will open the help window.  
+   * Type a command like this: `help` and pressing Enter will open the help window.
    * Here are a few more example commands you can try:
      * `list` - Lists all contacts.
      * `add -n John Doe -p 98765432 -e johnd@example.com -a John street, block 123, #01-01` - Adds a contact named `John Doe` to the Address Book.
@@ -68,7 +68,7 @@ TrackUp needs **Java** (version 17 or higher) to run.
 
 ### Viewing help : `help`
 
-Shows a message to access the help page.  
+Shows a message to access the help page.
 Shows the list of all commands, or full usage when a specific command is given.
 
 ![help message](images/helpMessage.png)
@@ -317,7 +317,7 @@ Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
 
 ### Toggling field visibility: `toggle`
 
-Toggles the visibility of a specific field in the TrackUp contact list UI.  
+Toggles the visibility of a specific field in the TrackUp contact list UI.
 This command is useful for customising the information you want displayed for each contact.
 
 Format: `toggle <FIELD>`
@@ -384,7 +384,7 @@ Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
 
 ### Toggling field visibility: `toggle`
 
-Toggles the visibility of a specific field in the TrackUp contact list UI.  
+Toggles the visibility of a specific field in the TrackUp contact list UI.
 This command is useful for customizing the information you want displayed for each contact.
 
 Format: `toggle <FIELD>`
