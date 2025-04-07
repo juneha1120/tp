@@ -8,10 +8,12 @@ import org.junit.jupiter.api.Test;
 
 import trackup.logic.commands.AddCommand;
 import trackup.logic.commands.AddEventCommand;
+import trackup.logic.commands.AddNoteCommand;
 import trackup.logic.commands.ClearCommand;
 import trackup.logic.commands.DeleteByCommand;
 import trackup.logic.commands.DeleteCommand;
 import trackup.logic.commands.DeleteEventCommand;
+import trackup.logic.commands.DeleteNoteCommand;
 import trackup.logic.commands.EditCommand;
 import trackup.logic.commands.ExitCommand;
 import trackup.logic.commands.FindCommand;
@@ -19,6 +21,7 @@ import trackup.logic.commands.HelpCommand;
 import trackup.logic.commands.ListCommand;
 import trackup.logic.commands.SearchCommand;
 import trackup.logic.commands.SortCommand;
+import trackup.logic.commands.ToggleCommand;
 import trackup.logic.parser.exceptions.ParseException;
 
 public class HelpCommandParserTest {
@@ -32,110 +35,92 @@ public class HelpCommandParserTest {
 
     @Test
     public void parse_addCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                AddCommand.COMMAND_WORD,
-                AddCommand.MESSAGE_USAGE,
-                "Adds a contact to TrackUp.");
+        HelpCommand expected = new HelpCommand(AddCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(AddCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_addEventCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                AddEventCommand.COMMAND_WORD,
-                AddEventCommand.MESSAGE_USAGE,
-                "Adds an event to TrackUp's calendar.");
+        HelpCommand expected = new HelpCommand(AddEventCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(AddEventCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_clearCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                ClearCommand.COMMAND_WORD,
-                ClearCommand.COMMAND_WORD,
-                "Clears all contacts from TrackUp."); // Note: This appears to be a typo in the actual implementation
+        HelpCommand expected = new HelpCommand(ClearCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(ClearCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_deleteCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                DeleteCommand.COMMAND_WORD,
-                DeleteCommand.MESSAGE_USAGE,
-                "Deletes the specified contact from TrackUp.");
+        HelpCommand expected = new HelpCommand(DeleteCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(DeleteCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_deleteByCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                DeleteByCommand.COMMAND_WORD,
-                DeleteByCommand.MESSAGE_USAGE,
-                "Deletes a contact from TrackUp using one or more attributes.");
+        HelpCommand expected = new HelpCommand(DeleteByCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(DeleteByCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_deleteEventCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                DeleteEventCommand.COMMAND_WORD,
-                DeleteEventCommand.MESSAGE_USAGE,
-                "Deletes events from TrackUp's calendar based on specified filters.");
+        HelpCommand expected = new HelpCommand(DeleteEventCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(DeleteEventCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_editCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                EditCommand.COMMAND_WORD,
-                EditCommand.MESSAGE_USAGE,
-                "Edits an existing person in TrackUp.");
+        HelpCommand expected = new HelpCommand(EditCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(EditCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_exitCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                ExitCommand.COMMAND_WORD,
-                ExitCommand.COMMAND_WORD,
-                "Exits TrackUp.");
+        HelpCommand expected = new HelpCommand(ExitCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(ExitCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_findCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                FindCommand.COMMAND_WORD,
-                FindCommand.MESSAGE_USAGE,
-                "Finds and lists all contacts in TrackUp whose names contain any of the specified keywords.");
+        HelpCommand expected = new HelpCommand(FindCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(FindCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_listCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                ListCommand.COMMAND_WORD,
-                ListCommand.COMMAND_WORD,
-                "Displays all contacts in TrackUp, optionally filtering by category.");
+        HelpCommand expected = new HelpCommand(ListCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(ListCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_searchCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                SearchCommand.COMMAND_WORD,
-                SearchCommand.MESSAGE_USAGE,
-                "Finds persons whose attributes contain the specified keyword");
+        HelpCommand expected = new HelpCommand(SearchCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(SearchCommand.COMMAND_WORD));
     }
 
     @Test
     public void parse_sortCommand_returnsCorrectHelpCommand() throws ParseException {
-        HelpCommand expected = new HelpCommand(
-                SortCommand.COMMAND_WORD,
-                SortCommand.MESSAGE_USAGE,
-                "Sorts current displayed list according to given Prefix");
+        HelpCommand expected = new HelpCommand(SortCommand.MESSAGE_USAGE);
         assertEquals(expected, parser.parse(SortCommand.COMMAND_WORD));
+    }
+
+    @Test
+    public void parse_addNoteCommand_returnsCorrectHelpCommand() throws ParseException {
+        HelpCommand expected = new HelpCommand(AddNoteCommand.MESSAGE_USAGE);
+        assertEquals(expected, parser.parse(AddNoteCommand.COMMAND_WORD));
+    }
+
+    @Test
+    public void parse_deleteNoteCommand_returnsCorrectHelpCommand() throws ParseException {
+        HelpCommand expected = new HelpCommand(DeleteNoteCommand.MESSAGE_USAGE);
+        assertEquals(expected, parser.parse(DeleteNoteCommand.COMMAND_WORD));
+    }
+
+    @Test
+    public void parse_toggleCommand_returnsCorrectHelpCommand() throws ParseException {
+        HelpCommand expected = new HelpCommand(ToggleCommand.MESSAGE_USAGE);
+        assertEquals(expected, parser.parse(ToggleCommand.COMMAND_WORD));
     }
 
     @Test

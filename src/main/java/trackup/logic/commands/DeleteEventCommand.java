@@ -29,14 +29,15 @@ public class DeleteEventCommand extends Command {
 
     public static final String COMMAND_WORD = "delevent";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes events that match the given filters.\n"
-            + "Parameters: "
-            + "[" + PREFIX_EVENT_TITLE + "TITLE_KEYWORD] "
-            + "[" + PREFIX_EVENT_START + "START_DATETIME] "
-            + "[" + PREFIX_EVENT_END + "END_DATETIME] "
-            + "[" + PREFIX_EVENT_CONTACT + "CONTACT_INDEX]...\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes events from TrackUp based on specified filters.\n"
+            + "Parameter(s): "
+            + "[" + PREFIX_EVENT_TITLE + "<TITLE_KEYWORD>] "
+            + "[" + PREFIX_EVENT_START + "<START_DATETIME>] "
+            + "[" + PREFIX_EVENT_END + "<END_DATETIME>] "
+            + "[" + PREFIX_EVENT_CONTACT + "<CONTACT_INDEX>]...\n"
             + "Example: " + COMMAND_WORD + " "
-            + PREFIX_EVENT_TITLE + "Meeting ";
+            + PREFIX_EVENT_TITLE + "Meeting";
 
     public static final String MESSAGE_SUCCESS = "Deleted event(s): %1$s";
     public static final String MESSAGE_EVENT_NOT_FOUND = "No matching events found";
