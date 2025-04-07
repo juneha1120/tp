@@ -144,7 +144,9 @@ public class DeleteByCommand extends Command {
         List<Person> filteredList = model.getFilteredPersonList().stream().filter(getPredicate()).toList();
 
         if (filteredList.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_PERSON_TO_DELETE);
+            ToStringBuilder stringBuilder = new ToStringBuilder("Criteria");
+            addCriteriaToStringBuilder(stringBuilder);
+            throw new CommandException(String.format(MESSAGE_NO_PERSON_TO_DELETE, stringBuilder.toString()));
         } else if (filteredList.size() == 1) {
             Person personToDelete = filteredList.get(0);
 
