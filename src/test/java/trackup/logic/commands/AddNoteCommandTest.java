@@ -71,6 +71,17 @@ public class AddNoteCommandTest {
     }
 
     @Test
+    public void execute_exceedMaxCharacters_doesNotAddNote() throws Exception {
+        Person person = new PersonBuilder().build();
+        when(model.getFilteredPersonList()).thenReturn(FXCollections.observableArrayList(person));
+
+        AddNoteCommand command = new AddNoteCommand(Index.fromOneBased(1),
+                String.format("This is a long note that is longer than %d characters in length", Note.MAX_NOTE_LENGTH));
+
+        assertThrows(CommandException.class, () -> command.execute(model));
+    }
+
+    @Test
     public void equals_sameValues_returnsTrue() {
         AddNoteCommand cmd1 = new AddNoteCommand(Index.fromOneBased(1), "Same note");
         AddNoteCommand cmd2 = new AddNoteCommand(Index.fromOneBased(1), "Same note");
