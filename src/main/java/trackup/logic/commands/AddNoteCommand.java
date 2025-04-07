@@ -49,6 +49,9 @@ public class AddNoteCommand extends Command {
         }
 
         Person personToEdit = lastShownList.get(personIndex.getZeroBased());
+        if (!Note.isValidNote(noteContent)) {
+            throw new CommandException(Note.MESSAGE_CONSTRAINTS);
+        }
         Note newNote = new Note(noteContent);
 
         boolean added = personToEdit.addNote(newNote);
