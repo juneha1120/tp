@@ -114,7 +114,8 @@ public class DeleteByCommand extends Command {
                 && deleteByEmail.map(email -> email.equals(person.getEmail())).orElse(true)
                 && deleteByAddress.map(address -> address.equals(person.getAddress())).orElse(true)
                 && deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true)
-                && deleteByCategory.map(category -> category.equals(person.getCategory())).orElse(true);
+                && deleteByCategory.map(category -> person.getCategory().map(category::equals).orElse(false))
+                .orElse(true);
     }
 
     /**
