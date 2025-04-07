@@ -284,6 +284,177 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 
 ---
 
+## **Instructions for Manual Testing**
+
+Below are guidelines for performing manual testing of the app.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
+testers are expected to do more *exploratory* testing.
+
+</div>
+
+### Launch and shutdown
+
+1. **Initial launch**
+    1. Download the JAR file and place it in an empty folder.
+    2. Double-click the JAR file.
+       **Expected:** The GUI launches with a set of sample contacts displayed. The initial window size may not be optimal.
+
+2. **Saving window preferences**
+    1. Resize the window to an optimal size and move it to a preferred location. Close the window.
+    2. Re-launch the app by double-clicking the JAR file.
+       **Expected:** The most recent window size and position are retained.
+
+### Deleting a contact
+
+1. **Deleting a contact while all contacts are shown**
+    1. **Prerequisites:** List all contacts using the `list` command. Ensure multiple contacts are visible.
+    2. Test case: `delete 1`  
+       **Expected:** The first contact is deleted from the list. The status message displays the details of the deleted contact. The timestamp in the status bar updates.
+    3. Test case: `delete 0`  
+       **Expected:** No contact is deleted. The status message displays an error message. The status bar remains unchanged.
+    4. Other invalid delete commands to test: `delete`, `delete x`, `...` (where `x` exceeds the list size)
+       **Expected:** Similar error messages appear, and no contact is deleted.
+
+### Deleting a contact by attributes
+
+1. **Deleting a person using unique attribute**
+    1. **Prerequisites:** Add a contact with a unique name using `add -n John Doe -p 98765432 -e johnd@example.com -a 123 Street`.
+    2. Test case: `deleteby -n John Doe`  
+       **Expected:** John Doe is deleted. A confirmation message appears.
+2. **Deleting with non-unique match**
+    1. Add two persons with the same category: `Client`.
+    2. Test case: `deleteby -c Client`  
+       **Expected:** No deletion occurs. An error message about multiple matches is shown.
+3. **Invalid command**
+    1. Test case: `deleteby`  
+       **Expected:** Error shown for missing required attributes.
+
+### Editing a person
+
+1. **Editing a contact's email and phone**
+    1. **Prerequisites:** Add a contact using `add`.
+    2. Test case: `edit 1 -p 91234567 -e new@example.com`  
+       **Expected:** Contact at index 1 is updated with new phone and email.
+2. **Removing all tags**
+    1. Test case: `edit 1 -t`  
+       **Expected:** All tags from contact at index 1 are removed.
+3. **Invalid index or no fields provided**
+    1. Test case: `edit 0, edit 1`  
+       **Expected:** Error about invalid index or missing fields.
+
+### Listing all persons
+
+1. **Listing all contacts**
+    1. Test case: `list`  
+       **Expected:** All contacts are displayed.
+2. **Listing by category**
+    1. Test case: `list Client`  
+       **Expected:** Only contacts categorized as `Client` are shown.
+3. **Invalid input**
+    1. Test case: `list UnknownCategory`  
+       **Expected:** No contacts shown. Possibly empty list.
+
+### Sorting persons list
+
+1. **Sort by name ascending**
+    1. Test case: `sort -n true`  
+       **Expected:** Contacts sorted alphabetically by name.
+2. **Sort by multiple fields**
+    1. Test case: `sort -t true -n false`  
+       **Expected:** Sorted by tag ascending, then name descending.
+3. **No attributes provided**
+    1. Test case: `sort`  
+       **Expected:** List is displayed without sorting.
+
+### Searching for a person
+
+1. **Search by partial name**
+    1. Test case: `search John`  
+       **Expected:** Contacts with "John" in any field are listed.
+2. **Search by phone**
+    1. Test case: `search 9876`  
+       **Expected:** Contacts whose phone numbers contain 9876 are shown.
+3. **No match**
+    1. Test case: `search qwerty`  
+       **Expected:** Empty result list with status message.
+
+### Adding an event
+
+1. **Add event without contacts**
+    1. Test case: `addevent -t Demo -s 2025-04-01 10:00 -e 2025-04-01 11:00`  
+       **Expected:** Event is added and appears in the calendar view.
+2. **Add event linked to contacts**
+    1. Test case: `addevent -t Sync -s 2025-04-01 14:00 -e 2025-04-01 15:00 -c 1 -c 2`  
+       **Expected:** Event is created and linked to specified contacts.
+3. **Invalid datetime**
+    1. Test case: `addevent -t Invalid -s 2025-04-01 -e 2025-04-01`  
+       **Expected:** Error for invalid date format.
+
+### Deleting an event
+
+1. **Delete by title keyword**
+    1. Test case: `delevent -t Demo`  
+       **Expected:** Events with "Demo" in the title are deleted.
+2. **Delete by exact datetime**
+    1. Test case: `delevent -s 2025-04-01 10:00 -e 2025-04-01 11:00`  
+       **Expected:** Events matching this time range are removed.
+3. **No filters**
+    1. Test case: `delevent`  
+       **Expected:** Error due to missing required filters.
+
+### Adding a note to a person
+
+1. **Add a valid note**
+    1. Test case: `addnote 1 Met at pitch event`  
+       **Expected:** Note is shown under the contact’s details.
+2. **Add note exceeding limit**
+    1. Add 5 notes to a contact.
+    2. Test case: `addnote 1 Sixth note`  
+       **Expected:** Error about maximum number of notes.
+3. **Note too long**
+    1. Test case: `addnote 1 This note exceeds fifty characters in total.`  
+       **Expected:** Error about note length.
+
+### Deleting a note from a person
+
+1. **Delete valid note**
+    1. Test case: `delnote 1 1`  
+       **Expected:** First note from the contact is removed.
+2. **Invalid note index**
+    1. Test case: `delnote 1 10`  
+       **Expected:** Error for invalid note index.
+3. **Invalid person index**
+    1. Test case: `delnote 0 1`  
+       **Expected:** Error for invalid person index.
+
+### Toggling field visibility
+
+1. **Hide field**
+    1. Test case: `toggle phone`  
+       **Expected:** Phone field disappears from contact list UI.
+2. **Show previously hidden field**
+    1. Execute `toggle phone` again.  
+       **Expected:** Phone field reappears.
+3. **Invalid field name**
+    1. Test case: `toggle shoesize`  
+       **Expected:** Error for unsupported field.
+
+### Saving data
+
+1. **Handling missing or corrupted data files**
+
+    1. Delete or rename the `data/trackup.json` file while the application is closed.
+        - **Expected:** When the app is launched again, it should recreate the file with default content without crashing.
+
+    2. Modify the JSON file and introduce an invalid value (e.g., change a phone number to `"abc"`).
+        - **Expected:** Upon startup, TrackUp will show an error dialog indicating corrupted data and load with an empty state.
+
+    3. Save a contact or event and then restart the app.
+        - **Expected:** The newly added data should persist across restarts.
+
+---
+
 ## **Planned Enhancements**
 
 Team size: 4
@@ -596,176 +767,5 @@ Use case ends.
 * **Parameter** A required or optional input that modifies the behavior of a command.
 * **Pagination** A method of displaying large lists in smaller, more manageable sections.
 * **Sorting** Arranging displayed contacts in a specified order, such as alphabetically.
-
----
-
-## **Appendix: Instructions for manual testing**
-
-Below are guidelines for performing manual testing of the app.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
-
-</div>
-
-### Launch and shutdown
-
-1. **Initial launch**
-    1. Download the JAR file and place it in an empty folder.
-    2. Double-click the JAR file.
-       **Expected:** The GUI launches with a set of sample contacts displayed. The initial window size may not be optimal.
-
-2. **Saving window preferences**
-    1. Resize the window to an optimal size and move it to a preferred location. Close the window.
-    2. Re-launch the app by double-clicking the JAR file.
-       **Expected:** The most recent window size and position are retained.
-
-### Deleting a contact
-
-1. **Deleting a contact while all contacts are shown**
-    1. **Prerequisites:** List all contacts using the `list` command. Ensure multiple contacts are visible.
-    2. Test case: `delete 1`  
-       **Expected:** The first contact is deleted from the list. The status message displays the details of the deleted contact. The timestamp in the status bar updates.
-    3. Test case: `delete 0`  
-       **Expected:** No contact is deleted. The status message displays an error message. The status bar remains unchanged.
-    4. Other invalid delete commands to test: `delete`, `delete x`, `...` (where `x` exceeds the list size)
-       **Expected:** Similar error messages appear, and no contact is deleted.
-
-### Deleting a contact by attributes
-
-1. **Deleting a person using unique attribute**
-    1. **Prerequisites:** Add a contact with a unique name using `add -n John Doe -p 98765432 -e johnd@example.com -a 123 Street`. 
-    2. Test case: `deleteby -n John Doe`  
-       **Expected:** John Doe is deleted. A confirmation message appears.
-2. **Deleting with non-unique match**
-   1. Add two persons with the same category: `Client`. 
-   2. Test case: `deleteby -c Client`  
-      **Expected:** No deletion occurs. An error message about multiple matches is shown.
-3. **Invalid command**
-   1. Test case: `deleteby`  
-      **Expected:** Error shown for missing required attributes.
-
-### Editing a person
-
-1. **Editing a contact's email and phone**
-   1. **Prerequisites:** Add a contact using `add`.  
-   2. Test case: `edit 1 -p 91234567 -e new@example.com`  
-      **Expected:** Contact at index 1 is updated with new phone and email.
-2. **Removing all tags**
-   1. Test case: `edit 1 -t`  
-      **Expected:** All tags from contact at index 1 are removed.
-3. **Invalid index or no fields provided**
-   1. Test case: `edit 0, edit 1`  
-      **Expected:** Error about invalid index or missing fields.
-
-### Listing all persons
-
-1. **Listing all contacts**
-   1. Test case: `list`  
-      **Expected:** All contacts are displayed.
-2. **Listing by category**
-   1. Test case: `list Client`  
-      **Expected:** Only contacts categorized as `Client` are shown.
-3. **Invalid input**
-   1. Test case: `list UnknownCategory`  
-      **Expected:** No contacts shown. Possibly empty list.
-
-### Sorting persons list
-
-1. **Sort by name ascending**
-   1. Test case: `sort -n true`  
-      **Expected:** Contacts sorted alphabetically by name.
-2. **Sort by multiple fields**
-   1. Test case: `sort -t true -n false`  
-      **Expected:** Sorted by tag ascending, then name descending.
-3. **No attributes provided** 
-   1. Test case: `sort`  
-      **Expected:** List is displayed without sorting.
-
-### Searching for a person
-
-1. **Search by partial name**
-   1. Test case: `search John`  
-      **Expected:** Contacts with "John" in any field are listed. 
-2. **Search by phone**
-   1. Test case: `search 9876`  
-      **Expected:** Contacts whose phone numbers contain 9876 are shown.
-3. **No match**
-   1. Test case: `search qwerty`  
-      **Expected:** Empty result list with status message.
-
-### Adding an event
-
-1. **Add event without contacts**
-   1. Test case: `addevent -t Demo -s 2025-04-01 10:00 -e 2025-04-01 11:00`  
-      **Expected:** Event is added and appears in the calendar view.
-2. **Add event linked to contacts**
-   1. Test case: `addevent -t Sync -s 2025-04-01 14:00 -e 2025-04-01 15:00 -c 1 -c 2`  
-      **Expected:** Event is created and linked to specified contacts.
-3. **Invalid datetime**
-   1. Test case: `addevent -t Invalid -s 2025-04-01 -e 2025-04-01`  
-      **Expected:** Error for invalid date format.
-
-### Deleting an event
-
-1. **Delete by title keyword**
-   1. Test case: `delevent -t Demo`  
-      **Expected:** Events with "Demo" in the title are deleted.
-2. **Delete by exact datetime**
-   1. Test case: `delevent -s 2025-04-01 10:00 -e 2025-04-01 11:00`  
-      **Expected:** Events matching this time range are removed.
-3. **No filters**
-   1. Test case: `delevent`  
-      **Expected:** Error due to missing required filters.
-
-### Adding a note to a person
-
-1. **Add a valid note**
-   1. Test case: `addnote 1 Met at pitch event`  
-      **Expected:** Note is shown under the contact’s details.
-2. **Add note exceeding limit**
-   1. Add 5 notes to a contact.
-   2. Test case: `addnote 1 Sixth note`  
-      **Expected:** Error about maximum number of notes.
-3. **Note too long**
-   1. Test case: `addnote 1 This note exceeds fifty characters in total.`  
-      **Expected:** Error about note length.
-
-### Deleting a note from a person
-
-1. **Delete valid note**
-   1. Test case: `delnote 1 1`  
-      **Expected:** First note from the contact is removed.
-2. **Invalid note index**
-   1. Test case: `delnote 1 10`  
-      **Expected:** Error for invalid note index.
-3. **Invalid person index**
-   1. Test case: `delnote 0 1`  
-      **Expected:** Error for invalid person index.
-
-### Toggling field visibility
-
-1. **Hide field**
-   1. Test case: `toggle phone`  
-      **Expected:** Phone field disappears from contact list UI.
-2. **Show previously hidden field**
-   1. Execute `toggle phone` again.  
-      **Expected:** Phone field reappears.
-3. **Invalid field name**
-   1. Test case: `toggle shoesize`  
-      **Expected:** Error for unsupported field.
-
-### Saving data
-
-1. **Handling missing or corrupted data files**
-
-    1. Delete or rename the `data/trackup.json` file while the application is closed.
-        - **Expected:** When the app is launched again, it should recreate the file with default content without crashing.
-
-    2. Modify the JSON file and introduce an invalid value (e.g., change a phone number to `"abc"`).
-        - **Expected:** Upon startup, TrackUp will show an error dialog indicating corrupted data and load with an empty state.
-
-    3. Save a contact or event and then restart the app.
-        - **Expected:** The newly added data should persist across restarts.
 
 ---
