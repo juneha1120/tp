@@ -35,21 +35,21 @@ public class SortCommandParserTest {
     @Test
     public void parse_validSingleFieldAscending_success() throws ParseException {
         // Test single field ascending sort
-        SortCommand command = parser.parse(" " + PREFIX_NAME + "false");
+        SortCommand command = parser.parse(" " + PREFIX_NAME + "true");
         assertEquals(new SortCommand(Comparators.NAME_COMPARATOR), command);
     }
 
     @Test
     public void parse_validSingleFieldDescending_success() throws ParseException {
         // Test single field descending sort
-        SortCommand command = parser.parse(" " + PREFIX_EMAIL + "true");
+        SortCommand command = parser.parse(" " + PREFIX_EMAIL + "false");
         assertEquals(new SortCommand(Comparators.EMAIL_COMPARATOR.reversed()), command);
     }
 
     @Test
     public void parse_validMultipleFields_success() throws ParseException {
         // Test multiple fields sort with correct order
-        SortCommand command = parser.parse(" " + PREFIX_NAME + "false " + PREFIX_EMAIL + "true");
+        SortCommand command = parser.parse(" " + PREFIX_NAME + "true " + PREFIX_EMAIL + "false");
         Comparator<Person> expected = Comparators.NAME_COMPARATOR
                 .thenComparing(Comparators.EMAIL_COMPARATOR.reversed());
         assertComparatorEquals(expected, command.getComparator());;
@@ -78,12 +78,12 @@ public class SortCommandParserTest {
     public void parse_allFields_success() throws ParseException {
         // Test all possible fields
         String args = String.join(" ",
-                PREFIX_NAME + "false",
-                PREFIX_PHONE + "true",
-                PREFIX_EMAIL + "false",
-                PREFIX_ADDRESS + "true",
-                PREFIX_TAG + "false",
-                PREFIX_CATEGORY + "true");
+                PREFIX_NAME + "true",
+                PREFIX_PHONE + "false",
+                PREFIX_EMAIL + "true",
+                PREFIX_ADDRESS + "false",
+                PREFIX_TAG + "true",
+                PREFIX_CATEGORY + "false");
 
         SortCommand command = parser.parse(" " + args);
         Comparator<Person> expected = Comparators.NAME_COMPARATOR
@@ -98,7 +98,7 @@ public class SortCommandParserTest {
     @Test
     public void parse_fieldsInDifferentOrder_success() throws ParseException {
         // Test fields in different order than declaration
-        SortCommand command = parser.parse(" " + PREFIX_EMAIL + "false " + PREFIX_NAME + "true");
+        SortCommand command = parser.parse(" " + PREFIX_EMAIL + "true " + PREFIX_NAME + "false");
         Comparator<Person> expected = Comparators.EMAIL_COMPARATOR
                 .thenComparing(Comparators.NAME_COMPARATOR.reversed());
         assertComparatorEquals(expected, command.getComparator());

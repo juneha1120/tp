@@ -63,10 +63,10 @@ public class SortCommandParser implements Parser<SortCommand> {
                     throw new ParseException(String.format(INVALID_SORT_VALUE_MESSAGE, prefix.getPrefix(), rawValue));
                 }
 
-                boolean isDescending = Boolean.parseBoolean(value);
+                boolean isAscending = Boolean.parseBoolean(value);
                 Comparator<Person> comparator = comparatorMap.get(prefix);
                 Integer index = args.indexOf(prefix.getPrefix());
-                comparators.add(new Pair<>(index, isDescending ? comparator.reversed() : comparator));
+                comparators.add(new Pair<>(index, isAscending ? comparator : comparator.reversed()));
             }
         }
 
