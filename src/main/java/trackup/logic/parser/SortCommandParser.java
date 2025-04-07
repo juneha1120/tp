@@ -28,7 +28,8 @@ import trackup.model.person.Person;
 public class SortCommandParser implements Parser<SortCommand> {
 
     private static final String INVALID_SORT_VALUE_MESSAGE =
-            "Invalid sort order for prefix '%s': '%s'. Expected 'true' or 'false' (case-insensitive).";
+            "Invalid sort order for prefix '%s': '%s'."
+            + "Expected 'true' (ascending) or 'false' (descending) (case-insensitive).";
 
     /**
      * Parses the given {@code String} of arguments in the context of the SortCommand
