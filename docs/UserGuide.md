@@ -115,7 +115,7 @@ Format: `delete <INDEX>`
 - `INDEX` refers to the contact's index in the **current** list (must be a positive integer).
 
 **Examples:**
-- `delete 3` — deletes the third contact in the current list.
+- `delete 3` - deletes the third contact in the current list.
 - `list` followed by `delete 2` - deletes the 2nd person in the address book.
 - `find Betsy` followed by `delete 1` - deletes the 1st person in the results of the `find` command.
 
@@ -153,8 +153,8 @@ Format: `edit <INDEX> [-n <NAME>] [-p <PHONE>] [-e <EMAIL>] [-a <ADDRESS>] [-c <
 - You can **remove** all the person’s tags by typing `-t` without specifying any tags after it.
 
 **Examples:**
-- `edit 1 -p 91234567 -e johnd@example.com` — updates the phone number and email of the first contact.
-- `edit 2 -n Betsy Crower -c Investor` — updates the name and sets the category to Investor for the second contact.
+- `edit 1 -p 91234567 -e johnd@example.com` - updates the phone number and email of the first contact.
+- `edit 2 -n Betsy Crower -c Investor` - updates the name and sets the category to Investor for the second contact.
 
 ### Listing all persons: `list`
 
@@ -168,9 +168,9 @@ Format: `list [<CATEGORY>]`
 - If a category is provided, **only** contacts from that category are shown.
 
 **Examples:**
-- `list` — displays all contacts.
-- `list Client` — displays only contacts categorised as Client.
-- `list Investor` — displays only contacts categorised as Investor.
+- `list` - displays all contacts.
+- `list Client` - displays only contacts categorised as Client.
+- `list Investor` - displays only contacts categorised as Investor.
 
 ### Sorting persons list: `sort`
 
@@ -185,12 +185,14 @@ Format: `sort [-n <BOOLEAN>] [-p <BOOLEAN>] [-e <BOOLEAN>] [-a <BOOLEAN>] [-c <B
 - Prefixes for attributes: `-n` for name, `-p` for phone, `-e` for email, `-a` for address, `-c` for category, and `-t` for tag.
 
 **Examples:**
-- `sort` — displays all contacts.
-- `sort -n true` — displays persons list sorted by name in ascending order.
+- `sort` - displays all contacts.
+- `sort -n true` - displays persons list sorted by name in ascending order.
+
 ![sort by name in ascending order](images/sortByNameAscending.png)
 - `sort -n false` - displays persons list sorted by name in descending order.
+
 ![sort by name in descending order](images/sortByNameDescending.png)
-- `sort -t true -n false` — displays persons list first sorted by tag in ascending order, then sorted by name in descending order.
+- `sort -t true -n false` - displays persons list first sorted by tag in ascending order, then sorted by name in descending order.
 
 ### Locating persons by name: `find`
 
@@ -208,6 +210,7 @@ Format: `find <KEYWORD> [<MORE_KEYWORDS>]...`
 **Examples:**
 - `find John` - returns persons with name such as `John Doe`.
 - `find alex david` - returns persons with names such as  `Alex Yeoh` and `David Li`.
+
 ![find alex david](images/findAlexDavid.png)
 
 ### Searching for a person: `search`
@@ -230,6 +233,7 @@ Format: `search <KEYWORD>`
 - `search friends` - returns persons who have the tag **friends**.
 - `search client` - returns persons categorised as **Client**.
 - `search doe` - returns persons whose attributes contain **"doe"**, such as **John Doe** and **johndoe@example.com**.
+
 ![search doe](images/searchDoe.png)
 
 ### Adding an event: `addevent`
@@ -251,6 +255,7 @@ An event can have any number of contacts linked (including 0)
 **Examples:**
 - `addevent -t Team Meeting -s 2025-03-30 14:00 -e 2025-03-30 15:00 -c 1 -c 3` - adds Team Meeting event from 14:00 to 15:00 on March 30, 2025, linking it to contacts at index 1 and 3.
 - `addevent -t Project Deadline -s 2025-04-01 23:59 -e 2025-04-02 00:00` - adds Project Deadline event without linking any contacts.
+
 ![add event](images/addEvent.png)
 
 ### Deleting an event: `delevent`
@@ -289,6 +294,7 @@ Format: `addnote <PERSON_INDEX> <NOTE_TEXT>`
 **Examples:**
 - `addnote 1 Met at tech networking event`
 - `addnote 2 Follow up next week regarding proposal`
+
 ![add note](images/addNote.png)
 
 ### Deleting a note from a person: `delnote`
@@ -303,8 +309,8 @@ Format: `delnote <PERSON_INDEX> <NOTE_INDEX>`
 - Notes are displayed in order; the first note is index 1.
 
 **Examples:**
-- `delnote 2 1` — deletes the **first** note from the **second** person in the list.
-- `find John` followed by `delnote 1 2` — deletes the **second** note from the **first person** in the search results for "John".
+- `delnote 2 1` - deletes the **first** note from the **second** person in the list.
+- `find John` followed by `delnote 1 2` - deletes the **second** note from the **first person** in the search results for "John".
 
 ### Toggling field visibility: `toggle`
 
@@ -332,9 +338,11 @@ Format: `toggle <FIELD>`
 **Examples:**
 - `toggle name` - toggles the visibility of the name field.
 - `toggle phone` - toggles the visibility of the phone field.
+
 ![toggle phone](images/togglePhone.png)
 - `toggle note` - toggles the visibility of the note field.
 - `toggle datetime` - toggles the visibility of the datetime field.
+
 ![toggle datetime](images/toggleDateTime.png)
 
 ### Using keyboard shortcuts
@@ -344,7 +352,7 @@ TrackUp provides convenient keyboard shortcuts to quickly navigate and perform a
 **Shortcuts and Actions:**
 - `F1` - opens the Help Window.
 - `F2` - shows the person list in the list panel. 
-- `F3` — shows the event list in the list panel.
+- `F3` - shows the event list in the list panel.
 - `←` (Left Arrow) - moves to the previous week in the weekly calendar.
 - `→` (Right Arrow) - moves to the next week in the weekly calendar.
 
@@ -354,10 +362,9 @@ TrackUp provides convenient keyboard shortcuts to quickly navigate and perform a
 
 ### Clearing all entries: `clear`
 
-Clears all contacts from TrackUp.
+Clears all contacts and events from TrackUp.
 
 Format: `clear`
-
 
 ### Exiting the program: `exit`
 
