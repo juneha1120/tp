@@ -17,8 +17,10 @@ public class DeleteNoteCommand extends Command {
 
     public static final String COMMAND_WORD = "delnote";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a note from the specified person.\n"
-            + "Parameters: PERSON_INDEX NOTE_INDEX\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Deletes a specific note from a person in TrackUp.\n"
+            + "Parameter(s): "
+            + "<PERSON_INDEX> <NOTE_INDEX>\n"
             + "Example: " + COMMAND_WORD + " 1 2";
 
     public static final String MESSAGE_SUCCESS = "Deleted note %1$d from %2$s.";

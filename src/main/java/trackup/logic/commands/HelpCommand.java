@@ -9,28 +9,29 @@ public class HelpCommand extends Command {
 
     public static final String COMMAND_WORD = "help";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows program usage instructions.\n"
-            + "Example: " + COMMAND_WORD + " + [COMMAND_WORD]";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Shows a full usage of given command with examples.\n"
+            + "Parameter(s): "
+            + "[<COMMAND_WORD>]\n"
+            + "Example: " + COMMAND_WORD + " add";
 
     public static final String SHOWING_HELP_MESSAGE = "Opened help window.\n";
 
-    private final String showingCommandMessage;
+    private final String usage;
+
     /**
      * Creates an HelpCommand
      */
     public HelpCommand() {
-        this.showingCommandMessage = "";
+        this.usage = "";
     }
 
     /**
      * Creates an HelpCommand according to the specified {@code Command}'s
-     * @param command {@code COMMAND_WORD} of the command
      * @param usage {@code COMMAND_USAGE} of the command
-     * @param description the description of the command
      */
-    public HelpCommand(String command, String usage, String description) {
-        String message = "Usage:" + usage + "\nDescription:" + description;
-        this.showingCommandMessage = message;
+    public HelpCommand(String usage) {
+        this.usage = usage;
     }
     @Override
     public boolean equals(Object other) {
@@ -44,13 +45,13 @@ public class HelpCommand extends Command {
         }
 
         HelpCommand otherFindCommand = (HelpCommand) other;
-        return showingCommandMessage.equals(otherFindCommand.showingCommandMessage);
+        return usage.equals(otherFindCommand.usage);
     }
 
     @Override
     public CommandResult execute(Model model) {
-        if (!showingCommandMessage.isEmpty()) {
-            return new CommandResult(showingCommandMessage, false, false);
+        if (!usage.isEmpty()) {
+            return new CommandResult(usage, false, false);
         }
         return new CommandResult(SHOWING_HELP_MESSAGE + MESSAGE_USAGE, true, false);
     }

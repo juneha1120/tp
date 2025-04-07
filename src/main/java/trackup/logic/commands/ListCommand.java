@@ -14,9 +14,10 @@ public class ListCommand extends Command {
 
     public static final String COMMAND_WORD = "list";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows a list of all persons in the address book. "
-            + "Parameters: "
-            + "[CATEGORY]...\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Displays all contacts in TrackUp, optionally filtering by category.\n"
+            + "Parameter(s): "
+            + "[<CATEGORY>]\n"
             + "Example: " + COMMAND_WORD + " "
             + "Client";
 
