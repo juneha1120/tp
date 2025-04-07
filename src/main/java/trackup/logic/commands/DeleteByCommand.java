@@ -37,13 +37,14 @@ public class DeleteByCommand extends Command {
     public static final String COMMAND_WORD = "deleteby";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by any attribute used to identify the person.\n"
-            + PREFIX_NAME + "NAME "
-            + PREFIX_PHONE + "PHONE "
-            + PREFIX_EMAIL + "EMAIL "
-            + PREFIX_ADDRESS + "ADDRESS"
-            + PREFIX_TAG + "TAG"
-            + PREFIX_CATEGORY + "CATEGORY\n"
+            + ": Deletes a contact from TrackUp using one or more attributes.\n"
+            + "Parameter(s): "
+            + "[" + PREFIX_NAME + "<NAME>] "
+            + "[" + PREFIX_PHONE + "<PHONE>] "
+            + "[" + PREFIX_EMAIL + "<EMAIL>] "
+            + "[" + PREFIX_ADDRESS + "<ADDRESS>] "
+            + "[" + PREFIX_TAG + "<TAG>] "
+            + "[" + PREFIX_CATEGORY + "<CATEGORY>]\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "

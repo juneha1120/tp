@@ -18,8 +18,10 @@ public class AddNoteCommand extends Command {
 
     public static final String COMMAND_WORD = "addnote";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a note to the specified person. "
-            + "Parameters: PERSON_INDEX NOTE_TEXT\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds a short note to the specified person in TrackUp.\n"
+            + "Parameter(s): "
+            + "<PERSON_INDEX> <NOTE_TEXT>\n"
             + "Example: " + COMMAND_WORD + " 1 Met at networking event, follow up next week";
 
     public static final String MESSAGE_SUCCESS = "New note added to %1$s: \"%2$s\"";

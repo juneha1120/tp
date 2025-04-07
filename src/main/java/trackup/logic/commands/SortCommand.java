@@ -22,23 +22,15 @@ public class SortCommand extends Command {
     public static final String COMMAND_WORD = "sort";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Sorts the address book according to given attribute in the input order."
-            + " [true]: optional, to indicate a descending order,\n"
-            + " if [true] is not indicated then ascending order by default.\n"
-            + "Parameters: "
-            + PREFIX_NAME + "[true] "
-            + PREFIX_PHONE + "[true] "
-            + PREFIX_EMAIL + "[true] "
-            + PREFIX_ADDRESS + "[true] "
-            + PREFIX_TAG + "[true]"
-            + PREFIX_CATEGORY + "[true]\n"
-            + "Example: " + COMMAND_WORD + "\n"
-            + COMMAND_WORD + " "
-            + PREFIX_NAME + "true\n"
-            + COMMAND_WORD + " "
-            + PREFIX_CATEGORY + "true "
-            + PREFIX_PHONE + "\n"
-            + COMMAND_WORD + " "
+            + ": Sorts displayed contacts the current list by the given attributes.\n"
+            + "Parameter(s): "
+            + "[" + PREFIX_NAME + "<BOOLEAN>] "
+            + "[" + PREFIX_PHONE + "<BOOLEAN>] "
+            + "[" + PREFIX_EMAIL + "<BOOLEAN>] "
+            + "[" + PREFIX_ADDRESS + "<BOOLEAN>] "
+            + "[" + PREFIX_TAG + "<BOOLEAN>] "
+            + "[" + PREFIX_CATEGORY + "<BOOLEAN>]\n"
+            + "Example: " + COMMAND_WORD + " "
             + PREFIX_TAG + "true "
             + PREFIX_NAME + "true";
 
