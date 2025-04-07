@@ -122,7 +122,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### `AddCommandParser` Logic Enhancement
-- The `AddCommandParser` validates required fields (name, phone, email, address) individually 
+- The `AddCommandParser` validates required fields (name, phone, email, address) individually
   and throws descriptive error messages for each missing attribute.
 - This improves user feedback and avoids a generic format error.
 
@@ -274,7 +274,7 @@ _{more aspects and alternatives to be added}_
 
 To provide users with more informative feedback during failed deletions (e.g., due to contact links in events), we plan to enhance the `DeleteCommand` and `DeleteByCommand` classes to inspect references before deletion.
 
-The command will throw a `CommandException` with a message such as:  
+The command will throw a `CommandException` with a message such as:
 `"The contact Amy Lee could not be deleted as it is referenced by event: Pitch Call with Investors."`
 
 This prevents silent failure and helps users take corrective action quickly.
@@ -300,7 +300,7 @@ The following enhancements are planned for upcoming iterations:
 
 1. **More Specific Error Messages for Contact Deletion**
     - *Current Behavior*: Shows a generic failure message.
-    - *Planned*: Display messages like  
+    - *Planned*: Display messages like
       `"The contact Amy Lee could not be deleted as it is referenced by another contact Ben Chua."`
     - *Reason*: Improves clarity and user understanding.
 
@@ -314,7 +314,7 @@ The following enhancements are planned for upcoming iterations:
 
 These were considered but not implemented for v1.6:
 
-- **Automatic Merging of Duplicate Contacts**  
+- **Automatic Merging of Duplicate Contacts**
   Rejected due to complexity in detecting semantic duplicates.
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -447,7 +447,7 @@ These were considered but not implemented for v1.6:
 2. TrackUp displays the list of contacts.
 3. User requests to edit a specific contact in the list, specifying the new details.
 4. TrackUp updates the contact's details.
-5. TrackUp displays a confirmation message.  
+5. TrackUp displays a confirmation message.
    Use case ends.
 
 #### Extensions
@@ -475,7 +475,7 @@ These were considered but not implemented for v1.6:
 1. User requests to list contacts.
 2. TrackUp displays a list of contacts.
 3. User requests to delete a specific contact in the list.
-4. TrackUp deletes the contact and displays a confirmation message.  
+4. TrackUp deletes the contact and displays a confirmation message.
    Use case ends.
 
 #### Extensions
@@ -497,18 +497,18 @@ These were considered but not implemented for v1.6:
 ### Use Case: Add an Event
 
 #### Main Success Scenario (MSS)
-1. User requests to add an event. 
+1. User requests to add an event.
 2. TrackUp creates the event and links the specified contacts.
-3. TrackUp updates the weekly calendar view to display the new event. 
-4. TrackUp displays a confirmation message.  
+3. TrackUp updates the weekly calendar view to display the new event.
+4. TrackUp displays a confirmation message.
 Use case ends.
 
 #### Extensions
-- 1a. The start datetime is after the end datetime. 
+- 1a. The start datetime is after the end datetime.
   - 1a1. TrackUp shows an error message: `"End datetime provided is before start datetime"`
   - Use case resumes at step 1.
 
-- 1b. One or more specified contact indices are invalid. 
+- 1b. One or more specified contact indices are invalid.
   - 1b1. TrackUp shows an error message: `"The person index provided is invalid"`
   - Use case resumes at step 1.
 
@@ -521,11 +521,11 @@ Use case ends.
 2. TrackUp finds all matching events.
 3. TrackUp deletes all occurrences of the matching events.
 4. TrackUp updates the weekly calendar view to remove the deleted events.
-5. TrackUp displays a confirmation message.   
+5. TrackUp displays a confirmation message.
 Use case ends.
 
 #### Extensions
-- 2a. No matching events are found. 
+- 2a. No matching events are found.
   - 2a1. TrackUp shows a message: `"No matching events found."`
   - Use case ends.
 
