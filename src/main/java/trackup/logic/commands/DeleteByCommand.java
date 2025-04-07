@@ -114,7 +114,8 @@ public class DeleteByCommand extends Command {
                 && deleteByEmail.map(email -> email.equals(person.getEmail())).orElse(true)
                 && deleteByAddress.map(address -> address.equals(person.getAddress())).orElse(true)
                 && deleteByTag.map(tag -> person.getTags().contains(tag)).orElse(true)
-                && deleteByCategory.map(category -> category.equals(person.getCategory())).orElse(true);
+                && deleteByCategory.map(category -> person.getCategory().map(category::equals).orElse(false))
+                .orElse(true);
     }
 
     /**
@@ -144,7 +145,9 @@ public class DeleteByCommand extends Command {
         List<Person> filteredList = model.getFilteredPersonList().stream().filter(getPredicate()).toList();
 
         if (filteredList.isEmpty()) {
-            throw new CommandException(MESSAGE_NO_PERSON_TO_DELETE);
+            ToStringBuilder stringBuilder = new ToStringBuilder("Criteria");
+            addCriteriaToStringBuilder(stringBuilder);
+            throw new CommandException(String.format(MESSAGE_NO_PERSON_TO_DELETE, stringBuilder.toString()));
         } else if (filteredList.size() == 1) {
             Person personToDelete = filteredList.get(0);
 

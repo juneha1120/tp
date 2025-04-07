@@ -72,7 +72,7 @@ public class Email implements Comparable<Email> {
         }
 
         Email otherEmail = (Email) other;
-        return value.equals(otherEmail.value);
+        return value.equalsIgnoreCase(otherEmail.value);
     }
 
     @Override
