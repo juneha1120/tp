@@ -9,7 +9,7 @@ import static trackup.commons.util.AppUtil.checkArgument;
  */
 public class Note {
 
-    private static final int MAX_NOTE_LENGTH = 50;
+    public static final int MAX_NOTE_LENGTH = 50;
 
     public static final String MESSAGE_CONSTRAINTS =
             String.format("Note text should be not more than %d characters", MAX_NOTE_LENGTH);
