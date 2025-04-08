@@ -145,7 +145,7 @@ public class DeleteByCommand extends Command {
         List<Person> filteredList = model.getFilteredPersonList().stream().filter(getPredicate()).toList();
 
         if (filteredList.isEmpty()) {
-            ToStringBuilder stringBuilder = new ToStringBuilder("Criteria");
+            ToStringBuilder stringBuilder = new ToStringBuilder("");
             addCriteriaToStringBuilder(stringBuilder);
             throw new CommandException(String.format(MESSAGE_NO_PERSON_TO_DELETE, stringBuilder.toString()));
         } else if (filteredList.size() == 1) {
@@ -168,7 +168,9 @@ public class DeleteByCommand extends Command {
             return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, Messages.format(personToDelete)));
         } else {
             model.updateFilteredPersonList(predicate);
-            return new CommandResult(MESSAGE_MULTIPLE_PEOPLE_TO_DELETE);
+            ToStringBuilder stringBuilder = new ToStringBuilder("");
+            addCriteriaToStringBuilder(stringBuilder);
+            return new CommandResult(String.format(MESSAGE_MULTIPLE_PEOPLE_TO_DELETE, stringBuilder.toString()));
         }
     }
 

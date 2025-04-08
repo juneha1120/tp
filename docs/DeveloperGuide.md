@@ -2,6 +2,7 @@
 layout: page
 title: Developer Guide
 ---
+
 * Table of Contents
 {:toc}
 
@@ -9,7 +10,16 @@ title: Developer Guide
 
 ## **Acknowledgements**
 
-- {list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+- This project is based on the [se-education's **AddressBook-Level3 (AB3)**](https://github.com/se-edu/addressbook-level3), with extensive enhancements and feature additions.
+- [**ChatGPT**](https://openai.com/index/chatgpt/) was used as a development assistant during the project for code review, debugging help, and architectural suggestions, but not for writing or generating entire features.
+- The following third-party libraries/tools were reused or integrated into the project:
+  - The **[Shadow](https://github.com/GradleUp/shadow)** plugin was reused to generate fat JARs for deployment.
+  - The **[Checkstyle](https://docs.gradle.org/current/userguide/checkstyle_plugin.html)** plugin was reused with a custom configuration to enforce consistent code style.
+  - The **[JaCoCo](https://docs.gradle.org/current/userguide/jacoco_plugin.html)** plugin was reused from public examples to generate code coverage reports.
+  - The **[JUnit 5 (JUnit Jupiter)](https://junit.org/junit5/)** testing framework was reused for unit and integration tests.
+  - The **[Mockito](https://site.mockito.org/)** testing library was reused for writing mock-based unit tests, particularly for logic and command tests.
+  - The **[Jackson](https://github.com/FasterXML/jackson)** library was reused for JSON (de)serialisation of events, contacts, and application data.
+  - The [OpenJFX (JavaFX)](https://openjfx.io/) library was reused for building the GUI. Components like ListView, VBox, and FXML were adapted with custom designs.
 
 ---
 
@@ -37,8 +47,6 @@ The following sequence diagram illustrates the process of adding a contact and h
 The following diagram illustrates how the `deleteby` command is parsed and executed.
 
 ![DeleteByCommand Sequence Diagram](images/DeleteByCommandSequenceDiagram.png)
-
-
 
 ### Architecture
 
@@ -132,17 +140,19 @@ How the parsing works:
 - If multiple contacts match the criteria, a warning message is shown.
 - If one match is found, the contact is deleted.
 
-
 ### Model component
 **API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/trackup/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
-
 The `Model` component,
 
-- Stores all TrackUp data — specifically, Person objects contained within a UniquePersonList.
-- Maintains a filtered list of currently displayed Person objects (for example, the result of a search query). This list is exposed as an unmodifiable ObservableList<Person>, which allows the UI to automatically update whenever the underlying data changes.
+- Stores all TrackUp data, including:
+  - Person objects contained within a UniquePersonList
+  - Event objects contained within a UniqueEventList
+- Maintains a filtered list of currently displayed Person objects and Event objects.
+  - The filtered person list supports searching, listing by category, and sorting by multiple fields.
+  - These lists are exposed as unmodifiable ObservableLists, allowing the UI to update automatically when data changes.
 - Holds a UserPref object that represents the user's preferences. This is exposed externally as a ReadOnlyUserPref object.
 - Operates independently of the other three components. As the Model represents domain entities, it is designed to make sense on its own without depending on other components.
 
@@ -157,7 +167,6 @@ The `Model` component,
 The following diagram shows the relationship between `DeleteByCommand` and core model classes.
 
 ![DeleteByCommand Class Diagram](images/DeleteByCommandClassDiagram.png)
-
 
 ### Storage component
 
@@ -267,23 +276,6 @@ The following activity diagram summarizes what happens when a user executes a ne
     * Pros: More memory-efficient (for example, `delete` only stores the deleted contact).
     * Cons: Increases complexity — every command must correctly implement and manage undo/redo behavior.
 
-
-_{more aspects and alternatives to be added}_
-
-### Specific Error Messaging for Contact Deletion
-
-To provide users with more informative feedback during failed deletions (e.g., due to contact links in events), we plan to enhance the `DeleteCommand` and `DeleteByCommand` classes to inspect references before deletion.
-
-The command will throw a `CommandException` with a message such as:
-`"The contact Amy Lee could not be deleted as it is referenced by event: Pitch Call with Investors."`
-
-This prevents silent failure and helps users take corrective action quickly.
-
-A possible update to the sequence diagram to accommodate this logic is shown below:
-
-![DeleteCommand Specific Error Sequence Diagram](images/DeleteCommandSpecificErrorDiagram.png)
-
-
 ### \[Proposed\] Data archiving
 
 - We propose implementing data archiving by allowing the user to archive inactive contacts. Archived contacts
@@ -292,30 +284,216 @@ data will be saved in a designated JSON file, archive.json, and displayed upon u
 
 ---
 
+## **Instructions for Manual Testing**
+
+Below are guidelines for performing manual testing of the app.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
+testers are expected to do more *exploratory* testing.
+
+</div>
+
+### Launch and shutdown
+
+1. **Initial launch**
+   1. Download the JAR file and place it in an empty folder.
+   2. Double-click the JAR file.
+      **Expected:** The GUI launches with a set of sample contacts displayed. The initial window size may not be optimal.
+
+2. **Saving window preferences**
+   1. Resize the window to an optimal size and move it to a preferred location. Close the window.
+   2. Re-launch the app by double-clicking the JAR file.
+      **Expected:** The most recent window size and position are retained.
+
+### Deleting a contact
+
+1. **Deleting a contact while all contacts are shown**
+   1. **Prerequisites:** List all contacts using the `list` command. Ensure multiple contacts are visible.
+   2. Test case: `delete 1`  
+      **Expected:** The first contact is deleted from the list. The status message displays the details of the deleted contact. The timestamp in the status bar updates.
+   3. Test case: `delete 0`  
+      **Expected:** No contact is deleted. The status message displays an error message. The status bar remains unchanged.
+   4. Other invalid delete commands to test: `delete`, `delete x`, `...` (where `x` exceeds the list size)
+      **Expected:** Similar error messages appear, and no contact is deleted.
+
+### Deleting a contact by attributes
+
+1. **Deleting a person using unique attribute**
+   1. **Prerequisites:** Add a contact with a unique name using `add -n John Doe -p 98765432 -e johnd@example.com -a 123 Street`.
+   2. Test case: `deleteby -n John Doe`  
+      **Expected:** John Doe is deleted. A confirmation message appears.
+2. **Deleting with non-unique match**
+   1. Add two persons with the same category: `Client`.
+   2. Test case: `deleteby -c Client`  
+      **Expected:** No deletion occurs. An error message about multiple matches is shown.
+3. **Invalid command**
+   1. Test case: `deleteby`  
+      **Expected:** Error shown for missing required attributes.
+
+### Editing a person
+
+1. **Editing a contact's email and phone**
+   1. **Prerequisites:** Add a contact using `add`.
+   2. Test case: `edit 1 -p 91234567 -e new@example.com`  
+      **Expected:** Contact at index 1 is updated with new phone and email.
+2. **Removing all tags**
+   1. Test case: `edit 1 -t`  
+      **Expected:** All tags from contact at index 1 are removed.
+3. **Invalid index or no fields provided**
+   1. Test case: `edit 0, edit 1`  
+      **Expected:** Error about invalid index or missing fields.
+
+### Listing all persons
+
+1. **Listing all contacts**
+   1. Test case: `list`  
+      **Expected:** All contacts are displayed.
+2. **Listing by category**
+   1. Test case: `list Client`  
+      **Expected:** Only contacts categorised as `Client` are shown.
+3. **Invalid input**
+   1. Test case: `list UnknownCategory`  
+      **Expected:** Error about invalid category.
+
+### Sorting persons list
+
+1. **Sort by name ascending**
+   1. Test case: `sort -n true`  
+      **Expected:** Contacts sorted alphabetically by name.
+2. **Sort by multiple fields**
+   1. Test case: `sort -t true -n false`  
+      **Expected:** Sorted by tag ascending, then name descending.
+3. **No attributes provided**
+   1. Test case: `sort`  
+      **Expected:** List is displayed without sorting.
+
+### Searching for a person
+
+1. **Search by partial name**
+   1. **Prerequisites:** Add a contact with a unique name using `add -n John Doe -p 98765432 -e johnd@example.com -a 123 Street`.
+   2. Test case: `search John`  
+      **Expected:** Contacts with "John" in any field are listed.
+2. **Search by phone**
+   1. **Prerequisites:** Add a contact with a unique name using `add -n John Doe -p 98765432 -e johnd@example.com -a 123 Street`.
+   2. Test case: `search 9876`  
+      **Expected:** Contacts whose phone numbers contain 9876 are shown.
+3. **No match**
+   1. Test case: `search qwerty`  
+      **Expected:** Empty result list with status message.
+
+### Adding an event
+
+1. **Add event without contacts**
+   1. Test case: `addevent -t Demo -s 2025-04-01 10:00 -e 2025-04-01 11:00`  
+      **Expected:** Event is added and appears in the calendar view.
+2. **Add event linked to contacts**
+   1. Test case: `addevent -t Sync -s 2025-04-01 14:00 -e 2025-04-01 15:00 -c 1 -c 2`  
+      **Expected:** Event is created and linked to specified contacts.
+3. **Invalid datetime**
+   1. Test case: `addevent -t Invalid -s 2025-04-01 -e 2025-04-01`  
+      **Expected:** Error for invalid date time format.
+
+### Deleting an event
+
+1. **Delete by title keyword**
+   1.  **Prerequisites:** Add an event using `addevent -t Demo -s 2025-04-01 10:00 -e 2025-04-01 11:00`.
+   2. Test case: `delevent -t Demo`  
+      **Expected:** Events with "Demo" in the title are deleted.
+2. **Delete by exact datetime**
+   1.  **Prerequisites:** Add an event using `addevent -t Demo -s 2025-04-01 10:00 -e 2025-04-01 11:00`.
+   2. Test case: `delevent -s 2025-04-01 10:00 -e 2025-04-01 11:00`  
+      **Expected:** Events matching this time range are removed.
+3. **No filters**
+    1. Test case: `delevent`  
+       **Expected:** Error due to invalid command format.
+
+### Adding a note to a person
+
+1. **Add a valid note**
+   1. **Prerequisites:** Add a contact using `add`.
+   2. Test case: `addnote 1 Met at pitch event`  
+       **Expected:** Note is shown under the contact’s details.
+2. **Add note exceeding limit**
+   1. 1. **Prerequisites:** Add a contact using `add` and add 5 notes.
+   2. Test case: `addnote 1 Sixth note`  
+      **Expected:** Error about maximum number of notes.
+3. **Note too long**
+   1. Test case: `addnote 1 This example note exceeds fifty characters in total.`  
+      **Expected:** Error about note length.
+
+### Deleting a note from a person
+
+1. **Delete valid note**
+   1. **Prerequisites:** Add a note using `addnote 1 Met at pitch event`.
+   2. Test case: `delnote 1 1`  
+      **Expected:** First note from the contact is removed.
+2. **Invalid note index**
+   1. Test case: `delnote 1 10`  
+      **Expected:** Error for invalid note index.
+3. **Invalid person index**
+   1. Test case: `delnote 0 1`  
+      **Expected:** Error for invalid person index.
+
+### Toggling field visibility
+
+1. **Hide field**
+    1. Test case: `toggle phone`  
+       **Expected:** Phone field disappears from contact list UI.
+2. **Show previously hidden field**
+    1. Execute `toggle phone` again.  
+       **Expected:** Phone field reappears.
+3. **Invalid field name**
+    1. Test case: `toggle shoesize`  
+       **Expected:** Error for unsupported field.
+
+### Saving data
+
+1. **Handling missing or corrupted data files**
+
+    1. Delete or rename the `data/trackup.json` file while the application is closed.
+        - **Expected:** When the app is launched again, it should recreate the file with default content without crashing.
+
+    2. Modify the JSON file and introduce an invalid value (e.g., change a phone number to `"abc"`).
+        - **Expected:** Upon startup, TrackUp will show an error dialog indicating corrupted data and load with an empty state.
+
+    3. Save a contact or event and then restart the app.
+        - **Expected:** The newly added data should persist across restarts.
+
 ---
 
 ## **Planned Enhancements**
 
-The following enhancements are planned for upcoming iterations:
+Team size: 4
 
-1. **More Specific Error Messages for Contact Deletion**
-    - *Current Behavior*: Shows a generic failure message.
-    - *Planned*: Display messages like
-      `"The contact Amy Lee could not be deleted as it is referenced by another contact Ben Chua."`
-    - *Reason*: Improves clarity and user understanding.
+1. **Smart Contact Deletion Warnings**
+    - *Current*: The app deletes a contact immediately when the delete or deleteby command is used, without checking relationships.
+    - *Planned*: If a contact is linked to an event or mentioned in a note (e.g., "Amy Lee is lead for this meeting"), the app prompts the user for confirmation:
+      `This contact is referenced in one or more events or notes. Are you sure you want to delete Amy Lee? (y/n)`
+    - *Reason*: Prevents accidental loss of linked data and improves user awareness of contact associations.
 
 2. **Edit Command Input Validation Enhancements**
     - *Current*: Accepts input with missing fields without clear feedback.
     - *Planned*: Explicitly alert users when all fields are missing in an edit command.
+      For example: `No fields provided. Please specify at least one field to edit.`
+    - *Reason* : Reduces user confusion and enforces proper command usage.
 
-> ℹ️ As per the module guidelines, only the first _N = (teamSize × 2)_ enhancements here are protected from bug reports.
+3. **Auto-Restore Contact List After Empty Search/Find**
+   - *Current*: When the search or find command returns no matching persons, the UI shows an empty contact list. To view contacts again, users must manually run the list command. 
+   - *Planned*: Automatically display a message such as `No matching persons found. Showing all contacts again.`
+   and immediately restore the full contact list in the UI. 
+   - *Reason*: Saves users from having to re-run the list command and improves flow when navigating back after a failed search.
 
-## **Rejected Enhancements**
+4. **Accurate Feedback for Empty List Command with Category Results**
+    - *Current*: When the list command is used with a category (e.g., list Other) and no contacts exist in that category, the app still displays the message: `Listed all persons in category: [Other]` even though the resulting list is empty.
+    - *Planned*: Detect when no contacts are found and display a clearer message such as: `No contacts found in category: [Other]` to distinguish it from a successful filtered listing.
+    - *Reason*: Prevents confusion and helps users understand that the category exists but currently has no matching contacts.
 
-These were considered but not implemented for v1.6:
+5. **Undo Support for Destructive Commands**
+    - *Current*: Commands like clear, delete, delevent, or delnote cannot be reversed. 
+    - *Planned*: Introduce a basic undo feature that allows reverting the most recent destructive command. 
+    - *Reason*: Offers a safety net for mistakes and enhances user trust.
 
-- **Automatic Merging of Duplicate Contacts**
-  Rejected due to complexity in detecting semantic duplicates.
+---
 
 ## **Documentation, logging, testing, configuration, dev-ops**
 
@@ -333,14 +511,14 @@ These were considered but not implemented for v1.6:
 
 **Target user profile**:
 
-- Business owners and startup founders
-- Need to manage and keep track of client and investor contacts
-- Regularly track meetings and events with clients and investors
-- Prefer desktop-based applications over web or mobile platforms
-- Type quickly and favor CLI-based interactions over GUI navigation
-- Are reasonably comfortable working with CLI-based tools
+- **Startup founders** who
+  - Need to manage and keep track of client and investor contacts
+  - Regularly track meetings and events with clients and investors
+  - Prefer desktop-based applications over web or mobile platforms
+  - Type quickly and favor CLI-based interactions over GUI navigation
+  - Are reasonably comfortable working with CLI-based tools
 
-**Value proposition**: A fast, secure, and offline-first contact management tool designed for business owners to consolidate contacts and event information in one place. It streamlines workflows, aids better decision-making, and enhances productivity with features for logging communication, scheduling meetings, and reviewing notes — accessible in-office or on the go.
+**Value proposition**: A fast, secure, and offline-first contact management tool designed for startup founders to consolidate contacts and event information in one place. It streamlines workflows, aids better decision-making, and enhances productivity with features for logging communication, scheduling meetings, and reviewing notes — accessible in-office or on the go.
 
 ### User stories
 
@@ -568,7 +746,6 @@ Use case ends.
 3. Data Integrity: Data should not be corrupted even in the event of an unexpected shutdown.
 4. Informative Deletion Errors: When deletion fails due to dependencies (e.g., linked events), the app should indicate which contact or event is causing the block.
 
-
 **Testability**
 1. Automated Testing: The application should support unit and integration testing to ensure correctness.
 2. Manual Testing Feasibility: The application should be testable by peer testers without requiring complex setups.
@@ -596,62 +773,5 @@ Use case ends.
 * **Parameter** A required or optional input that modifies the behavior of a command.
 * **Pagination** A method of displaying large lists in smaller, more manageable sections.
 * **Sorting** Arranging displayed contacts in a specified order, such as alphabetically.
-
----
-
-## **Appendix: Instructions for manual testing**
-
-Below are guidelines for performing manual testing of the app.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** These instructions only provide a starting point for testers to work on;
-testers are expected to do more *exploratory* testing.
-
-</div>
-
-### Launch and shutdown
-
-### Launching and shutting down
-
-1. **Initial launch**
-    1. Download the JAR file and place it in an empty folder.
-    1. Double-click the JAR file.
-       **Expected:** The GUI launches with a set of sample contacts displayed. The initial window size may not be optimal.
-
-2. **Saving window preferences**
-    1. Resize the window to an optimal size and move it to a preferred location. Close the window.
-    1. Re-launch the app by double-clicking the JAR file.
-       **Expected:** The most recent window size and position are retained.
-
-3. _{ Add additional test scenarios here }_
-
-
-### Deleting a contact
-
-1. **Deleting a contact while all contacts are shown**
-    1. **Prerequisites:** List all contacts using the `list` command. Ensure multiple contacts are visible.
-    1. Test case: `delete 1`
-       **Expected:** The first contact is deleted from the list. The status message displays the details of the deleted contact. The timestamp in the status bar updates.
-    1. Test case: `delete 0`
-       **Expected:** No contact is deleted. The status message displays an error message. The status bar remains unchanged.
-    1. Other invalid delete commands to test: `delete`, `delete x`, `...` (where `x` exceeds the list size)
-       **Expected:** Similar error messages appear, and no contact is deleted.
-
-2. _{ Add more delete-related test cases here }_
-
----
-
-### Saving data
-
-1. **Handling missing or corrupted data files**
-
-    1. Delete or rename the `data/addressbook.json` file while the application is closed.
-        - **Expected:** When the app is launched again, it should recreate the file with default content without crashing.
-
-    2. Modify the JSON file and introduce an invalid value (e.g., change a phone number to `"abc"`).
-        - **Expected:** Upon startup, TrackUp will show an error dialog indicating corrupted data and load with an empty state.
-
-    3. Save a contact or event and then restart the app.
-        - **Expected:** The newly added data should persist across restarts.
-
 
 ---
